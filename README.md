@@ -30,4 +30,4 @@ def exp():
 
 #反馈
 mail:i@cdxy.me  
-http://www/cdxy/.me  
+http://www.cdxy.me  
