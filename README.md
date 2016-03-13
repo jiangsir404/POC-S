@@ -3,8 +3,8 @@
   
 #结构  
 ##POC-T.py  
-快速开始-`python POC-T.py -t [线程数] -m [POC脚本] -f [目标列表文件] -o [输出路径]`  
-查看帮助-`-h`  
+快速开始 `python POC-T.py -t [线程数] -m [POC脚本] -f [目标列表文件] -o [输出路径]`  
+查看帮助 `-h`  
 查看可用模块-`--show`  
 ##module  
 POC脚本库  
