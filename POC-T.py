@@ -20,20 +20,25 @@ class POC_T:
         self.module_obj = imp.load_module("_", fp, pathname, description)
 
         self.filepath = filepath
+
+        self.cancel_output = False
         self.output = output if output else \
             './output/' \
             + time.strftime('%Y%m%d-%H:%M:%S', time.localtime(time.time())) \
             + module_name \
             + '.txt'
+        if self.output in ['N', 'n']:
+            self.cancel_output = True
+
         self.thread_count = self.threads_num = threads_num
         self.scan_count = self.found_count = 0
         self.lock = threading.Lock()
         self.console_width = getTerminalSize()[0]
         self.console_width -= 2  # Cal width when starts up
         self._load_pass()
-        self.headers = {  #TODO
-            "Content-Type": "application/x-www-form-urlencoded"
-        }
+        self.headers = {  # TODO
+                          "Content-Type": "application/x-www-form-urlencoded"
+                          }
 
     # 读入队列
     def _load_pass(self):
@@ -70,9 +75,11 @@ class POC_T:
                 pass
             if poced:  # 不能把open语句放在try块里，因为当打开文件出现异常时，文件对象file_object无法执行close()方法
                 self.lock.acquire()
-                f = open(self.output, 'a')
-                f.write(payload + '\n')
-                f.close()
+                self.found_count += 1
+                if not self.cancel_output:
+                    f = open(self.output, 'a')
+                    f.write(payload + '\n')
+                    f.close()
                 self.lock.release()
             self._update_scan_count()
             self._print_progress()
@@ -123,7 +130,7 @@ if __name__ == '__main__':
         sys.exit(0)
 
     d = POC_T(threads_num=options.threads_num,
-                   module_name=options.module_name,
-                   filepath=options.filepath,
-                   output=options.output)
+              module_name=options.module_name,
+              filepath=options.filepath,
+              output=options.output)
     d.run()
