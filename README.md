@@ -1,11 +1,14 @@
 #POC-T  
-批量漏洞验证框架，支持多线程，个人维护字典库和poc库  
+简易批量漏洞验证框架，给脚本搭上多线程的顺风车   
   
 #结构  
 ##POC-T.py  
-快速开始 `python POC-T.py -t [线程数] -m [POC脚本] -f [目标列表文件] -o [输出路径]`  
+快速开始 `python POC-T.py`  
 查看帮助 `-h`  
 查看可用模块 `--show`  
+取消实时进度打印 `--nS`  
+取消结果文件输出 `--nF`  
+  
 ##module  
 POC脚本库  
 ##dic  
@@ -26,9 +29,16 @@ def exp():
   
 #开发日志  
 ##V 1.0  
-2016.03.12 - 完成多线程框架，增加-t -m -f -o --show选项  
-2016.04.11 - 提取参数处理函数到/lib/cmdline.py，增加--nF --nS选项  
+2016.03.12 - 完成多线程框架，增加`-t` `-m` `-f` `-o` `--show`选项 
+##V 1.1
+2016.04.11 - 优化参数处理，整理函数到`/lib/cmdline.py`，增加`--nF` `--nS`选项  
   
-#反馈
-mail:i@cdxy.me  
-http://www.cdxy.me  
+#已有模块/POC  
+脚本在`./module/`目录下:  
+ - `test.py` 测试模块  
+ - `pycurl_ip.py` 下载指定IP的html页面  
+ - `spider.py` B站用户签名档爬虫  
+  
+#反馈  
+ - mail:i@cdxy.me  
+ - [http://www.cdxy.me](http://www.cdxy.me)  
