@@ -27,7 +27,8 @@ def exp():
 #开发日志  
 ##V 1.0  
 2016.03.12 - 完成多线程框架，增加-t -m -f -o --show选项  
-
+2016.04.11 - 提取参数处理函数到/lib/cmdline.py，增加--nF --nS选项  
+  
 #反馈
 mail:i@cdxy.me  
 http://www.cdxy.me  
