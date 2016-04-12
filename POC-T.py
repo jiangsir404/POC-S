@@ -14,7 +14,7 @@ from lib.cmdline import parse_args
 
 
 class POC_T:
-    def __init__(self, threads_num, module_name, filepath, output, f_flag, s_flag):
+    def __init__(self, threads_num, module_name, filepath, output, f_flag, s_flag, i):
 
         # 动态加载外部模块
         fp, pathname, description = imp.find_module(module_name, ["module"])
@@ -24,6 +24,7 @@ class POC_T:
         self.cancel_print = False
         self.f_flag = f_flag
         self.s_flag = s_flag
+        self.i = i
         self.output = output if output else \
             './output/' \
             + time.strftime('%Y%m%d-%H:%M:%S', time.localtime(time.time())) \
@@ -42,16 +43,30 @@ class POC_T:
 
     # 读入队列
     def _load_pass(self):
+        # self._print_message("[*] Loading payloads ...")
         self.queue = Queue.Queue()
-        with open(self.filepath) as f:
-            for line in f:
-                sub = line.strip()
-                if sub:
-                    self.queue.put(sub)
+        if self.i:
+            _int = self.i.strip().split('-')
+            for each in range(int(_int[0].strip()), int(_int[1].strip())):
+                self.queue.put(str(each))
+        elif self.filepath:
+            with open(self.filepath) as f:
+                for line in f:
+                    sub = line.strip()
+                    if sub:
+                        self.queue.put(sub)
+        else:
+            raise Exception('both [self.i] and [self.filepath] are NULL.')
 
     def _update_scan_count(self):
         self.lock.acquire()
         self.scan_count += 1
+        self.lock.release()
+
+    def _print_message(self, msg):
+        self.lock.acquire()
+        sys.stdout.write('\r' + msg + ' ' * (self.console_width - len(msg)) + '\n\r')
+        sys.stdout.flush()
         self.lock.release()
 
     def _print_progress(self):
@@ -62,37 +77,50 @@ class POC_T:
         sys.stdout.flush()
         self.lock.release()
 
+    def _increase_scan_count(self):
+        self.lock.acquire()
+        self.scan_count += 1
+        self.lock.release()
+
+    def _increase_found_count(self):
+        self.lock.acquire()
+        self.found_count += 1
+        self.lock.release()
+
+    def _decrease_thread_count(self):
+        self.lock.acquire()
+        self.thread_count -= 1
+        self.lock.release()
+
+    def _output2file(self, msg):
+        self.lock.acquire()
+        f = open(self.output, 'a')
+        f.write(msg + '\n')
+        f.close()
+        self.lock.release()
+
     def _scan(self):
         while self.queue.qsize() > 0:
             payload = self.queue.get(timeout=1.0)
             poced = False
 
             try:
-                if self.module_obj.poc(payload):
-                    poced = True
-                else:
-                    pass
+                poced = True if self.module_obj.poc(payload) else False
             except:
                 pass
 
-            if poced:  # 不能把open语句放在try块里，因为当打开文件出现异常时，文件对象file_object无法执行close()方法
-                self.lock.acquire()
-                self.found_count += 1
+            if poced:
+                self._print_message(payload)
+                self._increase_found_count()
                 if self.f_flag:
-                    f = open(self.output, 'a')
-                    f.write(payload + '\n')
-                    f.close()
-                self.lock.release()
+                    self._output2file(payload)
             self._update_scan_count()
-
             if self.s_flag:
                 self._print_progress()
 
         if self.s_flag:
             self._print_progress()
-        self.lock.acquire()
-        self.thread_count -= 1
-        self.lock.release()
+        self._decrease_thread_count()
 
     def run(self):
         self.start_time = time.time()
@@ -100,6 +128,7 @@ class POC_T:
             t = threading.Thread(target=self._scan, name=str(i))
             t.setDaemon(True)
             t.start()
+        # 为了一个Ctrl-C就能退出
         while self.thread_count > 0:
             time.sleep(0.01)
 
@@ -111,6 +140,7 @@ if __name__ == '__main__':
               filepath=args.f,
               output=args.o,
               f_flag=args.nF,
-              s_flag=args.nS
+              s_flag=args.nS,
+              i=args.i
               )
     d.run()
