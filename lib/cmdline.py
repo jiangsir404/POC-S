@@ -22,7 +22,7 @@ def parse_args():
     parser.add_argument('-i', metavar='int_string', type=str, default='',
                         help='-i [start_int]-[end_int]: test payloads from int(start) to int(end) with step 1.')
     parser.add_argument('-t', metavar='threads_num', type=int, default=10,
-                        help='Num of scan threads for each scan process, 20 by default')
+                        help='Num of scan threads for each scan process, 10 by default')
     parser.add_argument('-o', metavar='output', type=str, default='',
                         help='Output file path&name. default in ./output/')
     parser.add_argument('--show', default=False, action='store_true',
@@ -31,7 +31,7 @@ def parse_args():
                         help='Disable file output.')
     parser.add_argument('--nS', default=True, action='store_false',
                         help='Disable screen output.')
-    parser.add_argument('-v', action='version', version='%(prog)s 1.2    By cdxy (http://www.cdxy.me)')
+    parser.add_argument('-v', action='version', version='%(prog)s 1.1    By cdxy (http://www.cdxy.me)')
 
     if len(sys.argv) == 1:
         sys.argv.append('-h')
@@ -68,7 +68,8 @@ def check_args(args):
         try:
             _int = args.i.strip().split('-')
             if int(_int[0]) < int(_int[1]):
-                print "\n[*] Loading Payloads from " + _int[0] + " to " + _int[1] + " ..\n"
+                pass
+                # print "\n[*] Loading Payloads from " + _int[0] + " to " + _int[1] + " ..\n"
                 # TODO
             else:
                 print help_str
