@@ -6,8 +6,6 @@ import Queue
 import sys
 import threading
 import time
-import optparse
-import glob
 import imp
 from lib.consle_width import getTerminalSize
 from lib.cmdline import parse_args
