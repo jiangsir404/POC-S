@@ -108,8 +108,9 @@ class POC_T:
                 pass
 
             if poced:
-                self._print_message(payload)
                 self._increase_found_count()
+                if self.s_flag:
+                    self._print_message(payload)
                 if self.f_flag:
                     self._output2file(payload)
             self._update_scan_count()
