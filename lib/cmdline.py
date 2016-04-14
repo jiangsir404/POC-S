@@ -13,24 +13,30 @@ def parse_args():
     parser = argparse.ArgumentParser(prog='POC-T',
                                      formatter_class=argparse.RawTextHelpFormatter,
                                      description='From i@cdxy.me http://www.cdxy.me',
-                                     usage='POC-T.py [options]')
+                                     usage='POC-T.py [-m] [-f or -i] [options]\n'
+                                           '\nExample:\n'
+                                           'python POC-T.py -m test -f ./dic/1-20.txt\n'
+                                           'python POC-T.py -m test -i 1-20')
 
-    parser.add_argument('-m', metavar='module_name', type=str, default='',
-                        help='Select Module/POC name in ./module/')
-    parser.add_argument('-f', metavar='filepath', type=str, default='',
-                        help='Load targets from TargetFile')
-    parser.add_argument('-i', metavar='int_string', type=str, default='',
-                        help='-i [start_int]-[end_int]: test payloads from int(start) to int(end) with step 1.')
-    parser.add_argument('-t', metavar='threads_num', type=int, default=10,
-                        help='Num of scan threads for each scan process, 10 by default')
-    parser.add_argument('-o', metavar='output', type=str, default='',
-                        help='Output file path&name. default in ./output/')
-    parser.add_argument('--show', default=False, action='store_true',
-                        help='Show available module/POC names')
+    parser.add_argument('-m', metavar='[module]', type=str, default='',
+                        help='select Module/POC name in ./module/')
+    parser.add_argument('-f', metavar='[target]', type=str, default='',
+                        help='load targets from TargetFile')
+    parser.add_argument('-i', metavar='[start]-[end]', type=str, default='',
+                        help='generate payloads from int(start) to int(end)')
+    parser.add_argument('-t', metavar='[threads]', type=int, default=10,
+                        help='num of scan threads, 10 by default')
+    parser.add_argument('-o', metavar='[output]', type=str, default='',
+                        help='output file path&name. default in ./output/')
+
     parser.add_argument('--nF', default=True, action='store_false',
-                        help='Disable file output.')
+                        help='disable file output')
     parser.add_argument('--nS', default=True, action='store_false',
-                        help='Disable screen output.')
+                        help='disable screen output')
+    parser.add_argument('--show', default=False, action='store_true',
+                        help='show available module/POC names and exit')
+    parser.add_argument('--info', default=False, action='store_true',
+                        help='show module/POC info and exit')
     parser.add_argument('-v', action='version', version='%(prog)s 1.1    By cdxy (http://www.cdxy.me)')
 
     if len(sys.argv) == 1:
@@ -42,39 +48,60 @@ def parse_args():
 
 
 def check_args(args):
-    if args.show:
+    module = args.m
+    f = args.f
+    i = args.i
+    show = args.show
+
+    if show:
         module_name_list = glob.glob(r'./module/*.py')
-        print '\nModule Num: ' + str(len(module_name_list) - 1)
+        print '\nNum: ' + str(len(module_name_list) - 1)
+        print 'Module Name:'
         for each in module_name_list:
-            _str = each.split('/')[-1].strip('.py')
+            # match both on Win & Linux
+            _str = each.split('/')[-1].split('\\')[-1].strip('.py')
             if _str not in ['__init__']:
-                print _str
+                print '  '+_str
+        print '\nSystem exit!'
         sys.exit(0)
 
-    if not args.m:
+    if not module:
         msg = 'Use -m to select a module name.'
-        raise Exception(msg)
-    if args.m and not os.path.isfile("./module/" + args.m + ".py"):
-        msg = 'module not exist.\nUse --show to view all available module names.'
-        raise Exception(msg)
+        print msg+'\nSystem exit!'
+        sys.exit(0)
 
-    if (not args.f and not args.i) or (args.f and args.i):
+    if module and not os.path.isfile("./module/" + module + ".py"):
+        msg = 'module not exist.\nUse --show to view all available module names.'
+        print msg+'\nSystem exit!'
+        sys.exit(0)
+
+    if (not f and not i) or (f and i):
         msg = 'Use -f to set TargetFile or -i to set Payload.'
-        raise Exception(msg)
-    if args.f and not os.path.isfile(args.f):
-        raise Exception('TargetFile not found: %s' % args.f)
-    if args.i:
-        help_str = "invalid input in [-i]\n Example: python POC-T -m test -i 1-100"
+        print msg+'\nSystem exit!'
+        sys.exit(0)
+
+    if f and not os.path.isfile(f):
+        msg = 'TargetFile not found: %s' % f
+        print msg+'\nSystem exit!'
+        sys.exit(0)
+
+    if i:
+        help_str = "invalid input in [-i]\n Example: python POC-T test -i 1-100"
         try:
-            _int = args.i.strip().split('-')
+            _int = i.strip().split('-')
             if int(_int[0]) < int(_int[1]):
-                pass
-                # print "\n[*] Loading Payloads from " + _int[0] + " to " + _int[1] + " ..\n"
-                # TODO
+                if int(_int[1])-int(_int[0]) >1000000:
+                    print 'Loading %d Payloads...' % (int(_int[1])-int(_int[0]))
+                    a = raw_input('Maybe its too much, continue? [Y/n]')
+                    if a in ('','Y','y','yes'):
+                        pass
+                    else:
+                        print 'User quit!'
+                        sys.exit(0)
             else:
-                print help_str
+                print help_str+'\nSystem exit!'
                 sys.exit(0)
         except Exception, e:
             print e
-            print help_str
+            print help_str+'\nSystem exit!'
             sys.exit(0)

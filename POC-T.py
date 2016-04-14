@@ -127,7 +127,7 @@ class POC_T:
             t = threading.Thread(target=self._scan, name=str(i))
             t.setDaemon(True)
             t.start()
-        # 为了一个Ctrl-C就能退出
+        # It can quit with Ctrl-C
         while self.thread_count > 0:
             time.sleep(0.01)
 
