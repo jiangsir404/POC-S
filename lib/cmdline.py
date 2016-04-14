@@ -86,7 +86,7 @@ def check_args(args):
         sys.exit(0)
 
     if i:
-        help_str = "invalid input in [-i]\n Example: python POC-T test -i 1-100"
+        help_str = "invalid input in [-i]\n Example: python POC-T -m test -i 1-100"
         try:
             _int = i.strip().split('-')
             if int(_int[0]) < int(_int[1]):
