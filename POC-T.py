@@ -25,7 +25,7 @@ class POC_T:
         self.i = i
         self.output = output if output else \
             './output/' \
-            + time.strftime('%Y%m%d-%H:%M:%S', time.localtime(time.time())) \
+            + time.strftime('[%Y%m%d-%H%M%S]', time.localtime(time.time())) \
             + module_name \
             + '.txt'
 
