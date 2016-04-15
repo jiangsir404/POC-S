@@ -1,6 +1,8 @@
 #POC-T  
 简易批量漏洞验证框架，给脚本搭上多线程的顺风车   
   
+![效果图](http://www.cdxy.me/wp-content/uploads/2016/04/2016-04-15-102129屏幕截图.png)  
+  
 #结构  
 ##POC-T.py  
 快速开始 `python POC-T.py`  
