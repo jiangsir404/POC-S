@@ -15,8 +15,8 @@ def parse_args():
                                      description='From i@cdxy.me http://www.cdxy.me',
                                      usage='POC-T.py [-m] [-f or -i] [options]\n'
                                            '\nExample:\n'
-                                           'python POC-T.py -m test -f ./dic/1-20.txt\n'
-                                           'python POC-T.py -m test -i 1-20')
+                                           'python POC-T.py -m test -f ./dic/1-100.txt\n'
+                                           'python POC-T.py -m test -i 1-100')
 
     parser.add_argument('-m', metavar='[module]', type=str, default='',
                         help='select Module/POC name in ./module/')
