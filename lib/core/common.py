@@ -1,10 +1,7 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+# !/usr/bin/env python
+#  -*- coding: utf-8 -*-
+__author__ = 'xy'
 
-"""
-Copyright (c) 2014-2015 pocsuite developers (http://seebug.org)
-See the file 'docs/COPYING' for copying permission
-"""
 import os
 from lib.core.data import *
 

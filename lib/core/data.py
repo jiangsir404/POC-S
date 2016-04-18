@@ -1,6 +1,6 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
+# !/usr/bin/env python
+#  -*- coding: utf-8 -*-
+__author__ = 'xy'
 
 # object to share within function and classes command
 # line options and settings

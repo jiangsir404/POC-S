@@ -1,7 +1,6 @@
-#!/usr/bin/env python
-#
-#  Parse command line arguments
-#
+# !/usr/bin/env python
+#  -*- coding: utf-8 -*-
+__author__ = 'xy'
 
 import argparse
 import sys

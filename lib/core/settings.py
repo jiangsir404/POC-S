@@ -1,5 +1,7 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+# !/usr/bin/env python
+#  -*- coding: utf-8 -*-
+__author__ = 'xy'
+
 import os
 
 VERSION = '1.2'
