@@ -1,18 +1,36 @@
 #POC-T 
 [![Python 2.6|2.7](https://img.shields.io/badge/python-2.6|2.7-yellow.svg)](https://www.python.org/) [![License](https://img.shields.io/badge/license-GPLv2-red.svg)](https://raw.githubusercontent.com/sqlmapproject/sqlmap/master/doc/COPYING)  
   
-简易并发框架，为用户脚本提供并发解决方案．  
+简易并发框架，为用户脚本提供并发解决方案。  
+支持 **多线程** 和 **协程(单线程异步)** 两种并发模式。
   
-支持多线程和协程(单线程异步)两种并发模式．可用于:  
- - 批量漏洞验证  
- - 爆破&扫描  
- - 爬虫&采集  
-
-开发中，如有功能不稳定请提issue  
+(开发中，一些功能不稳定，欢迎issue)  
+##它能做什么？  
+我们只提供了一个并发框架，附带一些示例模块，功能需要用户自行添加模块实现。   
   
-##效果图
-![效果图](http://www.cdxy.me/wp-content/uploads/2016/04/2016-04-15-102129屏幕截图.png)  
-
+###功能示例  
+####批量漏洞验证  
+ - `./module/jboss.py` JBoss三处漏洞检测  
+ - `./module/fzxy_sqli.py` 方正翔宇某系统SQLI检测  
+ - `./module/w_sqli.py` 泛微某版本SQLI检测  
+  
+####爆破&扫描  
+ - 待添加  
+  
+####爬虫&采集  
+ - `./module/spider.py` B站用户签名档爬虫  
+ - `./module/pycurl_ip` html页面采集示例  
+  
+####其他  
+ - `./module/vote++.py` 给基友开发的刷票脚本  
+ - 等你开脑洞  
+  
+  
+##运行效果  
+###B站用户爬虫模块(kali2)  
+![](http://www.cdxy.me/wp-content/uploads/2016/04/2016-04-15-102129屏幕截图.png)  
+###JBoss漏洞检测模块(win7)  
+![](http://www.cdxy.me/wp-content/uploads/2016/04/微信截图_20160419213553.png)  
   
 ##开始  
 ###快速开始  
@@ -20,7 +38,7 @@
   
 ###参数中文说明  
 ```
-usage: POC-T.py [-m] [-f or -i] [options]
+usage: POC-T.py [-T or -C] [-m] [-f or -i] [options]
 
 optional arguments:
   -h, --help        
@@ -81,5 +99,5 @@ def exp():
     
 ##反馈  
  - mail:i@cdxy.me  
- - [http://www.cdxy.me](http://www.cdxy.me)  
+ - 博客:[http://www.cdxy.me](http://www.cdxy.me)  
   
