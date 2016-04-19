@@ -1,12 +1,14 @@
 #POC-T 
 [![Python 2.6|2.7](https://img.shields.io/badge/python-2.6|2.7-yellow.svg)](https://www.python.org/) [![License](https://img.shields.io/badge/license-GPLv2-red.svg)](https://raw.githubusercontent.com/sqlmapproject/sqlmap/master/doc/COPYING)  
   
-多线程应用框架, 加载用户自定义脚本  
+简易并发框架，为用户脚本提供并发解决方案．  
   
-可用于:
+支持多线程和协程(单线程异步)两种并发模式．可用于:  
  - 批量漏洞验证  
  - 爆破&扫描  
  - 爬虫&采集  
+
+开发中，如有功能不稳定请提issue  
   
 ##效果图
 ![效果图](http://www.cdxy.me/wp-content/uploads/2016/04/2016-04-15-102129屏幕截图.png)  
@@ -24,7 +26,12 @@ optional arguments:
   -h, --help        
   --version         
   --show            显示./module/文件夹下所有可用的模块名称
-
+  
+engine:
+  -T                多线程模式
+  -C                协程(单线程异步)模式
+  -t [num]          设置并发数量(线程数量)
+  
 module:
   -m [module]       指定加载的POC或模块名称
 
@@ -33,7 +40,6 @@ target mode:
   -i [start]-[end]  给定起始数字和结束数字，自动生成payload(常用于有数字规则的遍历，爬虫等)
 
 optimization:
-  -t [threads]      线程数，默认为10
   -o [output]       输出文件路径，默认保存在./output/目录下
   --single          当验证到一个结果时退出(常用于密码爆破)
   --nF              取消文件输出
