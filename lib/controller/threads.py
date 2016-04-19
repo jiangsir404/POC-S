@@ -6,7 +6,6 @@ import threading
 import time
 import imp
 import sys
-
 from lib.core.data import th, conf
 from lib.utils.consle import getTerminalSize
 from lib.utils.versioncheck import PYVERSION
@@ -18,10 +17,8 @@ class POC_T:
         self.module_name = conf['MODULE_FILE_PATH'].split('/')[-1].strip('.py')
         fp, pathname, description = imp.find_module(self.module_name, ["module"])
         self.module_obj = imp.load_module("_", fp, pathname, description)
-        self.filepath = conf['INPUT_FILE_PATH']
         self.f_flag = conf['FILE_OUTPUT']
         self.s_flag = conf['SCREEN_OUTPUT']
-        self.i = conf['I_NUM2']
         self.queue = th['queue']
         self.output = conf['OUTPUT_FILE_PATH']
         self.thread_count = self.threads_num = th['THREADS_NUM']

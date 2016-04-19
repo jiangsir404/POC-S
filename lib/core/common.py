@@ -6,22 +6,14 @@ import os
 from lib.core.data import *
 
 
-def modulePath():
-    """
-    @function the function will get us the program's directory
-    """
-    return os.path.dirname(os.path.realpath(__file__))
-
-
-def setPath():
+def setPaths():
     """
     Sets absolute paths for project directories and files
     """
-    _ROOT_PATH = modulePath()
-    paths['ROOT_PATH'] = _ROOT_PATH
-    paths['DATA_PATH'] = os.path.join(_ROOT_PATH, "data")
-    paths['MODULES_PATH'] = os.path.join(_ROOT_PATH, "module")
-    paths['OUTPUT_PATH'] = os.path.join(_ROOT_PATH, "output")
+    ROOT_PATH = paths['ROOT_PATH']
+    paths['DATA_PATH'] = os.path.join(ROOT_PATH, "data")
+    paths['MODULES_PATH'] = os.path.join(ROOT_PATH, "module")
+    paths['OUTPUT_PATH'] = os.path.join(ROOT_PATH, "output")
     paths['UA_LIST_PATH'] = os.path.join(paths['DATA_PATH'], "user-agents.txt")
     paths['WEAK_PASS'] = os.path.join(paths['DATA_PATH'], "password-top100.txt")
     paths['LARGE_WEAK_PASS'] = os.path.join(paths['DATA_PATH'], "password-top1000.txt")

@@ -21,6 +21,6 @@ def load_payloads():
                 if sub:
                     th['queue'].put(sub)
     else:
-        raise Exception('both [self.i] and [self.filepath] are NULL.')
+        raise Exception('conf[\'MODULE_MODE\'] value ERROR.')
 
 

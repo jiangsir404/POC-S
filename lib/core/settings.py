@@ -18,4 +18,4 @@ BANNER = "POC-T"
 
 UNICODE_ENCODING = "utf-8"
 
-DEBUG = False
+DEBUG = True

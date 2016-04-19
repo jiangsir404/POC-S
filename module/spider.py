@@ -13,19 +13,6 @@ def exp():
     pass
 
 
-# reload(sys)
-# sys.setdefaultencoding('utf-8')
-
-# urls = []
-
-# time1 = time.time()
-# for i in range(1000, 1500):
-#     url = 'http://space.bilibili.com/ajax/member/GetInfo?mid=' + str(i)
-#     urls.append(url)
-
-
-
-
 def poc(str):
     url = 'http://space.bilibili.com/ajax/member/GetInfo?mid=' + str
     head = {
