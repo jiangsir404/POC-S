@@ -1,6 +1,11 @@
+# coding:utf-8
 __author__ = 'xy'
 
 import requests
+
+"""
+泛微某版本SQLI检测
+"""
 
 
 def info():

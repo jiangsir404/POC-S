@@ -64,7 +64,7 @@ class CoroutineEngine:
             try:
                 poced = True if self.module_obj.poc(payload) else False
             except Exception, e:
-                self._print_message(e)
+                print e
                 self.is_continue = False
 
             if poced:

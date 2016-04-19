@@ -1,8 +1,15 @@
 # !/usr/bin/env python
 #  -*- coding: utf-8 -*-
 __author__ = 'xy'
+import sys
 
-import pycurl
+try:
+    import pycurl
+except ImportError, e:
+    sys.exit(e)
+"""
+下载IP对应的html页面
+"""
 
 
 def info():

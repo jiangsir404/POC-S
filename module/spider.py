@@ -1,8 +1,22 @@
-# -*-coding:utf8-*-
+# coding:utf-8
 
 import requests
 import json
-import MySQLdb
+import sys
+
+try:
+    import MySQLdb
+except ImportError, e:
+    sys.exit(e)
+
+"""
+bilibili用户签名档爬虫，存入数据库
+详细见我的博客文章：
+http://www.cdxy.me/python/bilibili-2000w%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E7%88%AC%E5%8F%96/
+
+依赖 MySQLdb
+需在下方代码修改数据库配置
+"""
 
 
 def info():

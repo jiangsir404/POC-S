@@ -4,6 +4,10 @@ __author__ = 'xy'
 
 import requests
 
+"""
+测试用例
+"""
+
 
 def info():
     return "info"
