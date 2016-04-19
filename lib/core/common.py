@@ -14,9 +14,8 @@ def setPaths():
     paths['DATA_PATH'] = os.path.join(ROOT_PATH, "data")
     paths['MODULES_PATH'] = os.path.join(ROOT_PATH, "module")
     paths['OUTPUT_PATH'] = os.path.join(ROOT_PATH, "output")
-    paths['UA_LIST_PATH'] = os.path.join(paths['DATA_PATH'], "user-agents.txt")
-    paths['WEAK_PASS'] = os.path.join(paths['DATA_PATH'], "password-top100.txt")
-    paths['LARGE_WEAK_PASS'] = os.path.join(paths['DATA_PATH'], "password-top1000.txt")
+    paths['WEAK_PASS'] = os.path.join(paths['DATA_PATH'], "pass100.txt")
+    paths['LARGE_WEAK_PASS'] = os.path.join(paths['DATA_PATH'], "pass1000.txt")
 
 
 def checkFile(filename):

@@ -24,6 +24,7 @@ conf
     OUTPUT_FILE_PATH   path
     THREADS_NUM        int
     I_NUM2             string
+    SINGLE_MODE        T / F
 
 th
     queue

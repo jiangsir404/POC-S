@@ -13,7 +13,6 @@ from lib.utils.versioncheck import PYVERSION
 
 class POC_T:
     def __init__(self):
-        # 动态加载外部模块
         self.module_name = conf['MODULE_FILE_PATH'].split('/')[-1].strip('.py')
         fp, pathname, description = imp.find_module(self.module_name, ["module"])
         self.module_obj = imp.load_module("_", fp, pathname, description)
@@ -22,10 +21,12 @@ class POC_T:
         self.queue = th['queue']
         self.output = conf['OUTPUT_FILE_PATH']
         self.thread_count = self.threads_num = th['THREADS_NUM']
+        self.single_mode = conf['SINGLE_MODE']
         self.scan_count = self.found_count = 0
         self.lock = threading.Lock()
         self.console_width = getTerminalSize()[0]
         self.console_width -= 2  # Cal width when starts up
+        self.is_continue = True
 
     def _update_scan_count(self):
         self.lock.acquire()
@@ -76,7 +77,7 @@ class POC_T:
             thread.setDaemon(True)
 
     def _scan(self):
-        while self.queue.qsize() > 0:
+        while self.queue.qsize() > 0 and self.is_continue:
             payload = self.queue.get(timeout=1.0)
             poced = False
 
@@ -91,6 +92,10 @@ class POC_T:
                     self._print_message(payload)
                 if self.f_flag:
                     self._output2file(payload)
+                if self.single_mode:
+                    msg = "\n[single-mode] found! :" + payload + "\nwaiting for other threads return...\n"
+                    self._print_message(msg)
+                    self.is_continue = False
             self._update_scan_count()
             if self.s_flag:
                 self._print_progress()

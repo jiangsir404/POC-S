@@ -38,7 +38,8 @@ def parse_args():
                               help='num of scan threads, 10 by default')
     optimization.add_argument('-o', metavar='[output]', type=str, default='',
                               help='output file path&name. default in ./output/')
-
+    optimization.add_argument('--single', default=False, action='store_true',
+                              help='exit after finding the first victim/password.')
     optimization.add_argument('--nF', default=True, action='store_false',
                               help='disable file output')
     optimization.add_argument('--nS', default=True, action='store_false',
@@ -120,6 +121,7 @@ def set_args(args):
     conf['THREADS_NUM'] = args.t
     conf['SCREEN_OUTPUT'] = args.nS
     conf['FILE_OUTPUT'] = args.nF
+    conf['SINGLE_MODE'] = args.single
 
     # TODO
     th['THREADS_NUM'] = conf['THREADS_NUM']
