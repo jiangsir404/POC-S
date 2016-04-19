@@ -2,14 +2,21 @@
 #  -*- coding: utf-8 -*-
 __author__ = 'xy'
 
-import time
+import requests
+
+
 def info():
     return "info"
 
+
 def poc(str):
-    # print(str)
-    time.sleep(10)
-    return True
+    url = 'http://www.baidu.com'
+    c = requests.get(url).content
+    return True if c else False
+
 
 def exp():
     return "exp"
+
+
+print poc(1)

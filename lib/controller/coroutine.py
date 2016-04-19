@@ -2,16 +2,18 @@
 #  -*- coding: utf-8 -*-
 __author__ = 'xy'
 
-import threading
+from gevent import monkey;monkey.patch_all()
+import gevent
+# TODO gevent 针对https的请求会出现错误
+
 import time
-import imp
 import sys
+import imp
 from lib.core.data import th, conf
 from lib.utils.consle import getTerminalSize
-from lib.utils.versioncheck import PYVERSION
 
 
-class ThreadsEngine:
+class CoroutineEngine:
     def __init__(self):
         self.module_name = conf['MODULE_NAME']
         fp, pathname, description = imp.find_module(self.module_name, ["module"])
@@ -23,58 +25,36 @@ class ThreadsEngine:
         self.thread_count = self.threads_num = th['THREADS_NUM']
         self.single_mode = conf['SINGLE_MODE']
         self.scan_count = self.found_count = 0
-        self.lock = threading.Lock()
         self.console_width = getTerminalSize()[0]
         self.console_width -= 2  # Cal width when starts up
         self.is_continue = True
 
     def _update_scan_count(self):
-        self.lock.acquire()
         self.scan_count += 1
-        self.lock.release()
 
     def _print_message(self, msg):
-        self.lock.acquire()
         sys.stdout.write('\r' + msg + ' ' * (self.console_width - len(msg)) + '\n\r')
         sys.stdout.flush()
-        self.lock.release()
 
     def _print_progress(self):
-        self.lock.acquire()
         msg = '%s found | %s remaining | %s scanned in %.2f seconds' % (
             self.found_count, self.queue.qsize(), self.scan_count, time.time() - self.start_time)
         sys.stdout.write('\r' + ' ' * (self.console_width - len(msg)) + msg)
         sys.stdout.flush()
-        self.lock.release()
 
     def _increase_scan_count(self):
-        self.lock.acquire()
         self.scan_count += 1
-        self.lock.release()
 
     def _increase_found_count(self):
-        self.lock.acquire()
         self.found_count += 1
-        self.lock.release()
 
     def _decrease_thread_count(self):
-        self.lock.acquire()
         self.thread_count -= 1
-        self.lock.release()
 
     def _output2file(self, msg):
-        self.lock.acquire()
         f = open(self.output, 'a')
         f.write(msg + '\n')
         f.close()
-        self.lock.release()
-
-    def _set_daemon(self, thread):
-        # Reference: http://stackoverflow.com/questions/190010/daemon-threads-explanation
-        if PYVERSION >= "2.6":
-            thread.daemon = True
-        else:
-            thread.setDaemon(True)
 
     def _scan(self):
         while self.queue.qsize() > 0 and self.is_continue:
@@ -107,10 +87,6 @@ class ThreadsEngine:
 
     def run(self):
         self.start_time = time.time()
-        for i in range(self.threads_num):
-            t = threading.Thread(target=self._scan, name=str(i))
-            self._set_daemon(t)
-            t.start()
-        # It can quit with Ctrl-C
-        while self.thread_count > 0:
-            time.sleep(0.01)
+        while self.queue.qsize() > 0 and self.is_continue:
+            gevent.joinall([gevent.spawn(self._scan) for i in xrange(1, self.threads_num) if
+                            self.queue.qsize() > 0])

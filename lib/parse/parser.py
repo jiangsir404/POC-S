@@ -15,12 +15,22 @@ def parse_args():
     parser = argparse.ArgumentParser(prog='POC-T',
                                      formatter_class=argparse.RawTextHelpFormatter,
                                      description='From i@cdxy.me http://www.cdxy.me',
-                                     usage='POC-T.py [-m] [-f or -i] [options]\n'
+                                     usage='POC-T.py [-m] [-T or -C] [-f or -i] [options]\n'
                                            '\nExample:\n'
-                                           'python POC-T.py -m test -f ./dic/1-100.txt\n'
-                                           'python POC-T.py -m test -i 1-100')
+                                           'python POC-T.py -m test -T -f ./dic/1-100.txt\n'
+                                           'python POC-T.py -m test -C -i 1-100')
 
     parser.add_argument('--version', action='version', version='%(prog)s 1.1    By cdxy (http://www.cdxy.me)')
+
+    engine = parser.add_argument_group('engine')
+    engine.add_argument('-T', default=False, action='store_true',
+                        help='load Multi-Threaded engine')
+
+    engine.add_argument('-C', default=False, action='store_true',
+                        help='load Coroutine engine (single-threaded with asynchronous)')
+
+    engine.add_argument('-t', metavar='[num]', type=int, default=10,
+                              help='num of threads/concurrent, 10 by default')
 
     module = parser.add_argument_group('module')
 
@@ -34,8 +44,7 @@ def parse_args():
                         help='generate payloads from int(start) to int(end)')
 
     optimization = parser.add_argument_group('optimization')
-    optimization.add_argument('-t', metavar='[threads]', type=int, default=10,
-                              help='num of scan threads, 10 by default')
+
     optimization.add_argument('-o', metavar='[output]', type=str, default='',
                               help='output file path&name. default in ./output/')
     optimization.add_argument('--single', default=False, action='store_true',
@@ -60,6 +69,8 @@ def check_args(args):
     f = args.f
     i = args.i
     show = args.show
+    T = args.T
+    C = args.C
 
     if show:
         module_name_list = glob.glob(r'./module/*.py')
@@ -71,6 +82,11 @@ def check_args(args):
             if _str not in ['__init__']:
                 print '  ' + _str
         print '\nSystem exit!'
+        sys.exit(0)
+
+    if (not T and not C) or (T and C):
+        msg = 'Use -T to set Multi-Threaded mode or -T to set Coroutine mode.'
+        print msg + '\nSystem exit!'
         sys.exit(0)
 
     if not module:
@@ -126,10 +142,15 @@ def set_args(args):
     # TODO
     th['THREADS_NUM'] = conf['THREADS_NUM']
 
+    if args.T:
+        conf['ENGINE'] = 't'
+    elif args.C:
+        conf['ENGINE'] = 'c'
+
     if args.f:
         conf['MODULE_MODE'] = 'f'
         conf['INPUT_FILE_PATH'] = args.f
-    else:
+    elif args.i:
         conf['MODULE_MODE'] = 'i'
         conf['I_NUM2'] = args.i
         conf['INPUT_FILE_PATH'] = None
