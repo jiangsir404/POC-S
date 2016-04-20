@@ -77,15 +77,14 @@ def check_args(args):
         print '\nNum: ' + str(len(module_name_list) - 1)
         print 'Module Name:'
         for each in module_name_list:
-            # match both on Win & Linux
-            _str = each.split('/')[-1].split('\\')[-1].strip('.py')
+            _str = os.path.splitext(os.path.split(each)[1])[0]
             if _str not in ['__init__']:
                 print '  ' + _str
         print '\nSystem exit!'
         sys.exit(0)
 
     if (not T and not C) or (T and C):
-        msg = 'Use -T to set Multi-Threaded mode or -T to set Coroutine mode.'
+        msg = 'Use -T to set Multi-Threaded mode or -C to set Coroutine mode.'
         print msg + '\nSystem exit!'
         sys.exit(0)
 
