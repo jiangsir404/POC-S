@@ -23,4 +23,3 @@ def exp():
     return "exp"
 
 
-print poc(1)

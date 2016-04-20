@@ -5,7 +5,6 @@ __author__ = 'xy'
 import os
 
 VERSION = '1.2'
-SITE = "http://www.cdxy.me"
 VERSION_STRING = "POC-T"
 
 PLATFORM = os.name

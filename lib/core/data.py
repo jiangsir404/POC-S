@@ -25,6 +25,7 @@ conf
     THREADS_NUM        int
     I_NUM2             string
     SINGLE_MODE        T / F
+    ENGINE             t / c
 
 th
     queue

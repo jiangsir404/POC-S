@@ -13,7 +13,11 @@ except ImportError, e:
 
 
 def info():
-    return "info"
+    pass
+
+
+def exp():
+    pass
 
 
 def poc(str):
@@ -27,7 +31,3 @@ def poc(str):
         c.close()
 
     return True
-
-
-def exp():
-    return "exp"

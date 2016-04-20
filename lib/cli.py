@@ -5,8 +5,6 @@ __author__ = 'xy'
 import os.path
 from lib.parse.parser import parse_args
 from lib.controller.loader import load_payloads
-from lib.controller.threads import ThreadsEngine
-from lib.controller.coroutine import CoroutineEngine
 from lib.core.common import setPaths
 from lib.core.data import paths, th, conf
 from lib.core.settings import DEBUG
@@ -27,8 +25,10 @@ def main():
 
     print "[*]testing with " + str(th["THREADS_NUM"]) + " threads..."
     if conf['ENGINE'] is 't':
+        from lib.controller.threads import ThreadsEngine
         ThreadsEngine().run()
     elif conf['ENGINE'] is 'c':
+        from lib.controller.coroutine import CoroutineEngine
         CoroutineEngine().run()
 
 
