@@ -57,4 +57,4 @@ def poc():
 
 if __name__ == "__main__":
     for i in range(0, 20):
-        poc()
+        print poc()
