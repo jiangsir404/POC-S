@@ -1,6 +1,8 @@
 #POC-T 
 [![Python 2.6|2.7](https://img.shields.io/badge/python-2.6|2.7-yellow.svg)](https://www.python.org/) [![License](https://img.shields.io/badge/license-GPLv2-red.svg)](https://raw.githubusercontent.com/sqlmapproject/sqlmap/master/doc/COPYING)  
   
+![](http://www.cdxy.me/wp-content/uploads/2016/04/2016-04-23-180429屏幕截图.png)  
+  
 简易并发框架，为用户脚本提供并发解决方案。  
 支持 **多线程** 和 **协程(单线程异步)** 两种并发模式。
   
@@ -10,12 +12,11 @@
   
 ###功能示例  
 ####批量漏洞验证  
- - `./module/jboss.py` JBoss三处漏洞检测  
+ - `./module/jboss.py` JBoss漏洞检测  
  - `./module/fzxy_sqli.py` 方正翔宇某系统SQLI检测  
- - `./module/w_sqli.py` 泛微某版本SQLI检测  
   
 ####爆破&扫描  
- - 待添加  
+ - `./module/zabbix_wp.py` zabbix弱口令扫描  
   
 ####爬虫&采集  
  - `./module/spider.py` B站用户签名档爬虫  
@@ -62,7 +63,7 @@ optimization:
   --single          当验证到一个结果时退出(常用于密码爆破)
   --nF              取消文件输出
   --nS              取消屏幕输出
-
+　--debug           开启debug模式，输出一些细节
 ```  
   
 ##结构  
@@ -88,14 +89,16 @@ def exp():
 ```  
 
 ##开发日志  
-####V 1.0  
+####1.0  
 2016.03.12 - 完成多线程框架，增加`-t` `-m` `-f` `-o` `--show`选项  
-####V 1.1  
+####1.1  
 2016.04.11 - 优化参数处理，增加`--nF` `--nS`参数  
 2016.04.12 - 添加`-i`参数  
-####V 1.2  
+####1.2  
 2016.04.18 - 参考sqlmap重构项目，增加`--single`参数  
 2016.04.19 - 添加协程引擎，增加`-T -C`参数    
+####1.3
+2016.04.23 - 使用`logging`优化输出，增加`banner`和`--debug`参数，修复bugs
     
 ##反馈  
  - mail:i@cdxy.me  
