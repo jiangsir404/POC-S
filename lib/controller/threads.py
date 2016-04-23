@@ -6,9 +6,10 @@ import threading
 import time
 import imp
 import sys
-from lib.core.data import th, conf
+from lib.core.data import th, conf, logger
 from lib.utils.consle import getTerminalSize
 from lib.utils.versioncheck import PYVERSION
+from lib.core.enums import CUSTOM_LOGGING
 
 
 class ThreadsEngine:
@@ -76,6 +77,13 @@ class ThreadsEngine:
         else:
             thread.setDaemon(True)
 
+    def _single_mode(self, payload):
+        self.lock.acquire()
+        msg = "\n[single-mode] found! :" + payload + "\nwaiting for other threads return...\n"
+        logger.log(CUSTOM_LOGGING.SUCCESS, msg)
+        self.is_continue = False
+        self.lock.release()
+
     def _scan(self):
         while self.queue.qsize() > 0 and self.is_continue:
             payload = str(self.queue.get(timeout=1.0))
@@ -94,23 +102,25 @@ class ThreadsEngine:
                 if self.f_flag:
                     self._output2file(payload)
                 if self.single_mode:
-                    msg = "\n[single-mode] found! :" + payload + "\nwaiting for other threads return...\n"
-                    self._print_message(msg)
-                    self.is_continue = False
+                    self._single_mode(payload)
             self._update_scan_count()
             if self.s_flag:
                 self._print_progress()
-
         if self.s_flag:
             self._print_progress()
         self._decrease_thread_count()
 
     def run(self):
         self.start_time = time.time()
+        msg = 'Set the number of concurrent: %d' % self.threads_num
+        logger.log(CUSTOM_LOGGING.SUCCESS, msg)
         for i in range(self.threads_num):
             t = threading.Thread(target=self._scan, name=str(i))
             self._set_daemon(t)
             t.start()
         # It can quit with Ctrl-C
-        while self.thread_count > 0:
-            time.sleep(0.01)
+        try:
+            while self.thread_count > 0:
+                time.sleep(0.01)
+        except KeyboardInterrupt, e:
+            logger.log(CUSTOM_LOGGING.ERROR, 'User quit!')

@@ -2,12 +2,15 @@
 #  -*- coding: utf-8 -*-
 __author__ = 'xy'
 
-from lib.core.data import th, conf
 import Queue
+from lib.core.data import th, conf, logger
+from lib.core.enums import CUSTOM_LOGGING
+from lib.core.common import debugPause
 
 
 def load_payloads():
-    # self._print_message("[*] Loading payloads ...")
+    infoMsg = 'Loading payloads...'
+    logger.log(CUSTOM_LOGGING.SUCCESS, infoMsg)
     th['queue'] = Queue.Queue()
     if conf['MODULE_MODE'] is 'i':
         _int = conf['I_NUM2'].strip().split('-')
@@ -22,5 +25,5 @@ def load_payloads():
                     th['queue'].put(sub)
     else:
         raise Exception('conf[\'MODULE_MODE\'] value ERROR.')
-
-
+    logger.log(CUSTOM_LOGGING.SUCCESS, 'Total: %s' % str(th['queue'].qsize()))
+    debugPause()

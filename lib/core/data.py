@@ -2,6 +2,7 @@
 #  -*- coding: utf-8 -*-
 __author__ = 'xy'
 
+from lib.core.log import LOGGER
 # object to share within function and classes command
 # line options and settings
 """
@@ -27,14 +28,21 @@ conf
     SINGLE_MODE        T / F
     ENGINE             t / c
 
+    # TODO
+    DISABLE_COLOR      T / F
+    DEBUG              T / F
 th
     queue
     THREADS_NUM
 
 """
 
+logger = LOGGER
+
+
 conf = {}
 
 paths = {}
 
 th = {}
+

@@ -3,8 +3,11 @@
 __author__ = 'xy'
 
 import os
+import re
+import sys
 from lib.core.data import *
-
+from lib.core.log import CUSTOM_LOGGING,LOGGER_HANDLER
+from lib.core.settings import BANNER
 
 def setPaths():
     """
@@ -37,3 +40,23 @@ def checkFile(filename):
 
     if not valid:
         raise Exception("unable to read file '%s'" % filename)
+
+
+def debugPause():
+    if conf['DEBUG']:
+        raw_input('[Debug] Press any key to continue.')
+
+
+def showDebugData():
+    logger.log(CUSTOM_LOGGING.SYSINFO, '----conf---=\n%s' % conf)
+    logger.log(CUSTOM_LOGGING.SYSINFO, '----paths---=\n%s' % paths)
+    logger.log(CUSTOM_LOGGING.SYSINFO, '----th---=\n%s' % th)
+    debugPause()
+
+def banner():
+    _ = BANNER
+    if not getattr(LOGGER_HANDLER, "is_tty", False):
+        _ = re.sub("\033.+?m", "", _)
+    # dataToStdout(_)
+    sys.stdout.flush()
+    print BANNER

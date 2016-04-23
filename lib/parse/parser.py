@@ -4,11 +4,8 @@ __author__ = 'xy'
 
 import argparse
 import sys
-import os
-import glob
-import time
 
-from lib.core.data import conf, paths, th
+from lib.parse.handler import check_args, set_args
 
 
 def parse_args():
@@ -30,7 +27,7 @@ def parse_args():
                         help='load Coroutine engine (single-threaded with asynchronous)')
 
     engine.add_argument('-t', metavar='[num]', type=int, default=10,
-                              help='num of threads/concurrent, 10 by default')
+                        help='num of threads/concurrent, 10 by default')
 
     module = parser.add_argument_group('module')
 
@@ -53,110 +50,13 @@ def parse_args():
                               help='disable file output')
     optimization.add_argument('--nS', default=True, action='store_false',
                               help='disable screen output')
-    parser.add_argument('--show', default=False, action='store_true',
+    optimization.add_argument('--show', default=False, action='store_true',
                         help='show available module/POC names and exit')
+    optimization.add_argument('--debug', default=False, action='store_true',
+                        help='show more details while running')
 
     if len(sys.argv) == 1:
         sys.argv.append('-h')
     args = parser.parse_args()
-
     check_args(args)
     set_args(args)
-
-
-def check_args(args):
-    module = args.m
-    f = args.f
-    i = args.i
-    show = args.show
-    T = args.T
-    C = args.C
-
-    if show:
-        module_name_list = glob.glob(r'./module/*.py')
-        print '\nNum: ' + str(len(module_name_list) - 1)
-        print 'Module Name:'
-        for each in module_name_list:
-            _str = os.path.splitext(os.path.split(each)[1])[0]
-            if _str not in ['__init__']:
-                print '  ' + _str
-        print '\nSystem exit!'
-        sys.exit(0)
-
-    if (not T and not C) or (T and C):
-        msg = 'Use -T to set Multi-Threaded mode or -C to set Coroutine mode.'
-        print msg + '\nSystem exit!'
-        sys.exit(0)
-
-    if not module:
-        msg = 'Use -m to select a module name.'
-        print msg + '\nSystem exit!'
-        sys.exit(0)
-
-    if module and not os.path.isfile("./module/" + module + ".py"):
-        msg = 'module not exist.\nUse --show to view all available module names.'
-        print msg + '\nSystem exit!'
-        sys.exit(0)
-
-    if (not f and not i) or (f and i):
-        msg = 'Use -f to set TargetFile or -i to set Payload.'
-        print msg + '\nSystem exit!'
-        sys.exit(0)
-
-    if f and not os.path.isfile(f):
-        msg = 'TargetFile not found: %s' % f
-        print msg + '\nSystem exit!'
-        sys.exit(0)
-
-    if i:
-        help_str = "invalid input in [-i]\n Example: python POC-T -m test -i 1-100"
-        try:
-            _int = i.strip().split('-')
-            if int(_int[0]) < int(_int[1]):
-                if int(_int[1]) - int(_int[0]) > 1000000:
-                    print 'Loading %d Payloads...' % (int(_int[1]) - int(_int[0]))
-                    a = raw_input('Maybe its too much, continue? [Y/n]')
-                    if a in ('', 'Y', 'y', 'yes'):
-                        pass
-                    else:
-                        print 'User quit!'
-                        sys.exit(0)
-            else:
-                print help_str + '\nSystem exit!'
-                sys.exit(0)
-        except Exception, e:
-            print e
-            print help_str + '\nSystem exit!'
-            sys.exit(0)
-
-
-def set_args(args):
-    conf['MODULE_NAME'] = args.m
-    conf['MODULE_FILE_PATH'] = os.path.join(paths['MODULES_PATH'], conf['MODULE_NAME'] + ".py")
-    conf['THREADS_NUM'] = args.t
-    conf['SCREEN_OUTPUT'] = args.nS
-    conf['FILE_OUTPUT'] = args.nF
-    conf['SINGLE_MODE'] = args.single
-
-    # TODO
-    th['THREADS_NUM'] = conf['THREADS_NUM']
-
-    if args.T:
-        conf['ENGINE'] = 't'
-    elif args.C:
-        conf['ENGINE'] = 'c'
-
-    if args.f:
-        conf['MODULE_MODE'] = 'f'
-        conf['INPUT_FILE_PATH'] = args.f
-    elif args.i:
-        conf['MODULE_MODE'] = 'i'
-        conf['I_NUM2'] = args.i
-        conf['INPUT_FILE_PATH'] = None
-
-    conf['OUTPUT_FILE_PATH'] = args.o if args.o else \
-        os.path.join(paths['OUTPUT_PATH'],
-                     time.strftime('[%Y%m%d-%H%M%S]', time.localtime(time.time())) + conf['MODULE_NAME'] + '.txt')
-
-    conf['SCREEN_OUTPUT'] = args.nS
-    conf['FILE_OUTPUT'] = args.nF

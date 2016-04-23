@@ -2,15 +2,18 @@
 #  -*- coding: utf-8 -*-
 __author__ = 'xy'
 
-from gevent import monkey;monkey.patch_all()
+from gevent import monkey;
+
+monkey.patch_all()
 import gevent
 # TODO gevent 针对https的请求会出现错误
 
 import time
 import sys
 import imp
-from lib.core.data import th, conf
+from lib.core.data import th, conf, logger
 from lib.utils.consle import getTerminalSize
+from lib.core.enums import CUSTOM_LOGGING
 
 
 class CoroutineEngine:
@@ -56,6 +59,11 @@ class CoroutineEngine:
         f.write(msg + '\n')
         f.close()
 
+    def _single_mode(self, payload):
+        msg = "\n[single-mode] found! :" + payload + "\nwaiting for other threads return...\n"
+        logger.log(CUSTOM_LOGGING.SUCCESS, msg)
+        self.is_continue = False
+
     def _scan(self):
         while self.queue.qsize() > 0 and self.is_continue:
             payload = str(self.queue.get(timeout=1.0))
@@ -64,7 +72,7 @@ class CoroutineEngine:
             try:
                 poced = True if self.module_obj.poc(payload) else False
             except Exception, e:
-                print e
+                logger.log(CUSTOM_LOGGING.WARNING, e)
                 self.is_continue = False
 
             if poced:
@@ -74,9 +82,7 @@ class CoroutineEngine:
                 if self.f_flag:
                     self._output2file(payload)
                 if self.single_mode:
-                    msg = "\n[single-mode] found! :" + payload + "\nwaiting for other threads return...\n"
-                    self._print_message(msg)
-                    self.is_continue = False
+                    self._single_mode(payload)
             self._update_scan_count()
             if self.s_flag:
                 self._print_progress()
@@ -87,6 +93,11 @@ class CoroutineEngine:
 
     def run(self):
         self.start_time = time.time()
-        while self.queue.qsize() > 0 and self.is_continue:
-            gevent.joinall([gevent.spawn(self._scan) for i in xrange(1, self.threads_num) if
-                            self.queue.qsize() > 0])
+        msg = 'Set the number of concurrent: %d' % self.threads_num
+        logger.log(CUSTOM_LOGGING.SUCCESS, msg)
+        try:
+            while self.queue.qsize() > 0 and self.is_continue:
+                gevent.joinall([gevent.spawn(self._scan) for i in xrange(1, self.threads_num) if
+                                self.queue.qsize() > 0])
+        except KeyboardInterrupt, e:
+            logger.log(CUSTOM_LOGGING.ERROR, 'User quit!')
