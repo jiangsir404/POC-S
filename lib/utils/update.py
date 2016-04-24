@@ -55,7 +55,6 @@ def update():
                 errMsg += "from GitHub (e.g. 'git clone https://github.com/POC-Tproject/POC-T.git POC-T')"
                 logger.error(errMsg)
             else:
-                print stderr
                 logger.debug()
                 logger.error("update could not be completed ('%s')" % re.sub(r"\W+", " ", stderr).strip())
 
