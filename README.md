@@ -40,11 +40,6 @@
 ###参数中文说明  
 ```
 usage: POC-T.py [-T or -C] [-m] [-f or -i] [options]
-
-optional arguments:
-  -h, --help        
-  --version         
-  --show            显示./module/文件夹下所有可用的模块名称
   
 engine:
   -T                多线程模式
@@ -63,7 +58,9 @@ optimization:
   --single          当验证到一个结果时退出(常用于密码爆破)
   --nF              取消文件输出
   --nS              取消屏幕输出
+  --show            显示./module/文件夹下所有可用的模块名称
 　--debug           开启debug模式，输出一些细节
+  --update          自动从github更新程序
 ```  
   
 ##结构  
@@ -99,7 +96,8 @@ def exp():
 2016.04.19 - 添加协程引擎，增加`-T -C`参数    
 ####1.3
 2016.04.23 - 使用`logging`优化输出，增加`banner`和`--debug`参数，修复bugs
-    
+2016.04.24 - 增加`--update`支持自动更新  
+  
 ##反馈  
  - mail:i@cdxy.me  
  - 博客:[http://www.cdxy.me](http://www.cdxy.me)  
