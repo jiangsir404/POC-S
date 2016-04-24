@@ -51,8 +51,8 @@ def update():
             logger.info("%s the latest revision '%s'" % ("already at" if "Already" in stdout else "updated to", _))
         else:
             if "Not a git repository" in stderr:
-                errMsg = "not a valid git repository. Please checkout the 'POC-Tproject/POC-T' repository "
-                errMsg += "from GitHub (e.g. 'git clone https://github.com/POC-Tproject/POC-T.git POC-T')"
+                errMsg = "not a valid git repository. Please checkout the 'Xyntax/POC-T' repository "
+                errMsg += "from GitHub (e.g. 'git clone https://github.com/Xyntax/POC-T.git POC-T')"
                 logger.error(errMsg)
             else:
                 logger.debug()
