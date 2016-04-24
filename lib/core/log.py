@@ -37,7 +37,7 @@ except ImportError:
     LOGGER_HANDLER = logging.StreamHandler(sys.stdout)
 
 # there can't be -> if conf['DEBUG']:
-if "--debug" in sys.argv:
+if "debug" in sys.argv:
     FORMATTER = logging.Formatter("\r[%(asctime)s] [%(levelname)s] %(message)s", "%H:%M:%S")
 else:
     FORMATTER = logging.Formatter("\r[%(levelname)s] %(message)s", "%H:%M:%S")

@@ -17,8 +17,6 @@ def parse_args():
                                            'python POC-T.py -m test -T -f ./dic/1-100.txt\n'
                                            'python POC-T.py -m test -C -i 1-100')
 
-    parser.add_argument('--version', action='version', version='%(prog)s 1.1    By cdxy (http://www.cdxy.me)')
-
     engine = parser.add_argument_group('engine')
     engine.add_argument('-T', default=False, action='store_true',
                         help='load Multi-Threaded engine')
@@ -54,6 +52,8 @@ def parse_args():
                         help='show available module/POC names and exit')
     optimization.add_argument('--debug', default=False, action='store_true',
                         help='show more details while running')
+    optimization.add_argument('--update', default=False, action='store_true',
+                        help='update POC-T from github')
 
     if len(sys.argv) == 1:
         sys.argv.append('-h')

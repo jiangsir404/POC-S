@@ -27,10 +27,11 @@ conf
     I_NUM2             string
     SINGLE_MODE        T / F
     ENGINE             t / c
-
+    DEBUG              T / F
+    UPDATE             T / F
     # TODO
     DISABLE_COLOR      T / F
-    DEBUG              T / F
+
 th
     queue
     THREADS_NUM

@@ -8,7 +8,7 @@ from lib.controller.loader import load_payloads
 from lib.core.common import setPaths, showDebugData, banner
 from lib.core.data import paths, conf, logger
 from lib.core.enums import CUSTOM_LOGGING
-
+from lib.utils.update import update
 
 def main():
     try:
@@ -17,8 +17,11 @@ def main():
 
         parse_args()
         banner()
+
         if conf['DEBUG']:
             showDebugData()
+        if conf['UPDATE']:
+            update()
 
         load_payloads()
 

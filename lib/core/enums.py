@@ -6,3 +6,7 @@ class CUSTOM_LOGGING:
     SUCCESS = 8
     ERROR = 7
     WARNING = 6
+
+class CONTENT_STATUS:
+    IN_PROGRESS = 0
+    COMPLETE = 1

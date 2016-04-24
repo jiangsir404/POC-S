@@ -17,6 +17,10 @@ def check_args(args):
     show = args.show
     T = args.T
     C = args.C
+    update = args.update
+
+    if update:
+        return
 
     if show:
         module_name_list = glob.glob(r'./module/*.py')
@@ -76,6 +80,7 @@ def set_args(args):
     conf['FILE_OUTPUT'] = args.nF
     conf['SINGLE_MODE'] = args.single
     conf['DEBUG'] = args.debug
+    conf['UPDATE'] = args.update
 
     # TODO
     th['THREADS_NUM'] = conf['THREADS_NUM']
