@@ -14,6 +14,7 @@ def check_args(args):
     module = args.m
     f = args.f
     i = args.i
+    n = args.n
     show = args.show
     T = args.T
     C = args.C
@@ -43,8 +44,8 @@ def check_args(args):
         msg = 'module not exist. Use --show to view all available module names.'
         sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
 
-    if (not f and not i) or (f and i):
-        msg = 'Use -f to set TargetFile or -i to set Payload.'
+    if (not f and not i and not n) or (f and i) or (f and n) or (i and n):
+        msg = 'To load targets,please choose one from -i,-f and -n.'
         sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
 
     if f and not os.path.isfile(f):
@@ -70,6 +71,10 @@ def check_args(args):
                 sys.exit(logger.log(CUSTOM_LOGGING.ERROR, help_str))
         except Exception, e:
             sys.exit(logger.log(CUSTOM_LOGGING.ERROR, help_str))
+    if n:
+        # TODO 添加规则以增加稳定性
+        pass
+
 
 
 def set_args(args):
@@ -81,6 +86,7 @@ def set_args(args):
     conf['SINGLE_MODE'] = args.single
     conf['DEBUG'] = args.debug
     conf['UPDATE'] = args.update
+    conf['NETWORK_STR'] = args.n
 
     # TODO
     th['THREADS_NUM'] = conf['THREADS_NUM']
@@ -96,6 +102,9 @@ def set_args(args):
     elif args.i:
         conf['MODULE_MODE'] = 'i'
         conf['I_NUM2'] = args.i
+        conf['INPUT_FILE_PATH'] = None
+    elif args.n:
+        conf['MODULE_MODE'] = 'n'
         conf['INPUT_FILE_PATH'] = None
 
     conf['OUTPUT_FILE_PATH'] = args.o if args.o else \

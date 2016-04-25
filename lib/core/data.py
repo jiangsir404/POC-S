@@ -18,7 +18,7 @@ paths
 conf
     MODULE_NAME        **
     MODULE_FILE_PATH   **.py
-    MODULE_MODE        f / i
+    MODULE_MODE        f / i / n
     INPUT_FILE_PATH    path
     SCREEN_OUTPUT      T / F
     FILE_OUTPUT        T / F
@@ -29,6 +29,7 @@ conf
     ENGINE             t / c
     DEBUG              T / F
     UPDATE             T / F
+    NETWORK_STR        string
     # TODO
     DISABLE_COLOR      T / F
 

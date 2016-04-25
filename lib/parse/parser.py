@@ -12,10 +12,11 @@ def parse_args():
     parser = argparse.ArgumentParser(prog='POC-T',
                                      formatter_class=argparse.RawTextHelpFormatter,
                                      description='From i@cdxy.me http://www.cdxy.me',
-                                     usage='POC-T.py [-m] [-T or -C] [-f or -i] [options]\n'
+                                     usage='POC-T.py [-T|-C] [-m] [-f|-i|-n] [options]\n'
                                            '\nExample:\n'
-                                           'python POC-T.py -m test -T -f ./dic/1-100.txt\n'
-                                           'python POC-T.py -m test -C -i 1-100')
+                                           'python POC-T.py -T -m test -f ./dic/1-100.txt\n'
+                                           'python POC-T.py -C -m test -i 1-100\n'
+                                           'python POC-T.py -C -m spider -n 10.0.0.0/24')
 
     engine = parser.add_argument_group('engine')
     engine.add_argument('-T', default=False, action='store_true',
@@ -37,7 +38,8 @@ def parse_args():
                         help='load targets from TargetFile')
     target.add_argument('-i', metavar='[start]-[end]', type=str, default='',
                         help='generate payloads from int(start) to int(end)')
-
+    target.add_argument('-n', metavar='[network]', type=str, default='',
+                        help='load target IPs from IP/MASK. eg. 127.0.0.0/30')
     optimization = parser.add_argument_group('optimization')
 
     optimization.add_argument('-o', metavar='[output]', type=str, default='',
