@@ -44,7 +44,7 @@ def poc(url):
 
     try:
         s = requests.get(poc_url)
-        if s.status_code == 200 and '.jsp' in s.content:
+        if s.status_code == 200 and jsp_file in s.content:
             # print s.content
             return True
         else:
