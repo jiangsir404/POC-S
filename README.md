@@ -14,6 +14,7 @@
 #### 批量漏洞验证 
  - `./module/jboss.py` JBoss漏洞检测  
  - `./module/fzxy_sqli.py` 方正翔宇某系统SQLI检测  
+ - `./module/S2032.py` Struts2 S2-032 远程命令执行  
   
 #### 爆破&扫描 
  - `./module/zabbix_wp.py` zabbix弱口令扫描  
