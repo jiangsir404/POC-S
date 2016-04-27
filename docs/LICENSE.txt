@@ -1,8 +1,6 @@
 COPYING -- Describes the terms under which POC-T is distributed. A copy
 of the GNU General Public License (GPL) is appended to this file.
 
-POC-T is (C) 2014-2015 cdxy@cdxy.me
-
 This program is free software; you may redistribute and/or modify it under
 the terms of the GNU General Public License as published by the Free
 Software Foundation; Version 2 (or later) with the clarifications and

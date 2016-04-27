@@ -6,32 +6,32 @@
 简易并发框架，为用户脚本提供并发解决方案。  
 支持 **多线程** 和 **协程(单线程异步)** 两种并发模式。
   
-(开发中，一些功能不稳定，欢迎issue)  
+(开发中，欢迎提交POC和改进建议)  
 ## 它能做什么？  
 它只提供了一个并发框架，附带一些示例模块，功能需要用户自行添加模块实现。   
   
 ### 功能示例 
 #### 批量漏洞验证 
- - `./module/jboss.py` JBoss漏洞检测  
- - `./module/fzxy_sqli.py` 方正翔宇某系统SQLI检测  
- - `./module/S2032.py` Struts2 S2-032 远程命令执行  
+* `./module/jboss.py` JBoss漏洞检测  
+* `./module/fzxy_sqli.py` 方正翔宇某系统SQLI检测  
+* `./module/S2032.py` Struts2 S2-032 远程命令执行  
   
 #### 爆破&扫描 
- - `./module/zabbix_wp.py` zabbix弱口令扫描  
+* `./module/zabbix_wp.py` zabbix弱口令扫描  
   
 #### 爬虫&采集
- - `./module/spider.py` B站用户签名档爬虫  
- - `./module/pycurl_ip` html页面采集示例  
+* `./module/spider.py` B站用户签名档爬虫  
+* `./module/pycurl_ip` html页面采集示例  
   
 #### 其他 
- - `./module/vote++.py` 给基友开发的刷票脚本  
- - 等你开脑洞  
+* `./module/vote++.py` 给基友开发的刷票脚本  
+* 等你开脑洞  
   
 
 ## 开始 
 ### 快速开始 
- - `pip install -r requirement.txt` 
- - `python POC-T.py`  
+* `pip install -r requirement.txt` 
+* `python POC-T.py`  
 
 ### 参数中文说明 
 ```
@@ -67,17 +67,17 @@ optimization:
   
 ## 运行效果  
   
-### B站用户爬虫模块(kali2) 
-![](http://www.cdxy.me/wp-content/uploads/2016/04/2016-04-15-102129屏幕截图.png)  
-### JBoss漏洞检测模块(win7)  
-![](http://www.cdxy.me/wp-content/uploads/2016/04/微信截图_20160419213553.png)  
+* B站用户爬虫模块(kali2) 
+ ![](http://www.cdxy.me/wp-content/uploads/2016/04/2016-04-15-102129屏幕截图.png)  
+* JBoss漏洞检测模块(win7)  
+ ![](http://www.cdxy.me/wp-content/uploads/2016/04/微信截图_20160419213553.png)  
   
   
 ## 结构  
- - `POC-T.py` 程序入口  
- - `module` POC脚本库  
- - `data` 资源库  
- - `lib` 项目代码  
+* `POC-T.py` 程序入口  
+* `module` POC脚本库  
+* `data` 资源库  
+* `lib` 项目代码  
   
 ## 模块编写规则
 新建py文件,添加以下三个函数,其中**poc()**必需要有,添加逻辑使验证成功(漏洞存在)时`return True`,验证失败时`return False`    
@@ -95,21 +95,17 @@ def exp():
     return True or false
 ```  
 
-## 开发日志 
-#### 1.0 
-2016.03.12 - 完成多线程框架，增加`-t` `-m` `-f` `-o` `--show`选项    
-#### 1.1 
-2016.04.11 - 优化参数处理，增加`--nF` `--nS`参数  
-2016.04.12 - 添加`-i`参数  
-#### 1.2 
-2016.04.18 - 参考sqlmap重构项目，增加`--single`参数  
-2016.04.19 - 添加协程引擎，增加`-T -C`参数    
-#### 1.3 
-2016.04.23 - 使用`logging`优化输出，增加`banner`和`--debug`参数，修复bugs  
-2016.04.24 - 增加`--update`支持自动更新  
-2016.04.25 - 增加`-n`支持从网段导入IP地址列表  
-  
-## 反馈  
- - mail:i@cdxy.me  
- - 博客:[http://www.cdxy.me](http://www.cdxy.me)  
+相关链接
+----
+* [感谢列表](./docs/THANKS.md)
+* [开发日志](./docs/CHANGELOG.md)
+* [问题/BUG反馈](https://github.com/Xyntax/POC-T/issues)
+* [版权声明](./docs/LICENSE.txt)
+* [中文文档](./docs/USAGE.md)
+
+
+联系作者
+----
+* mail:i@cdxy.me  
+* 博客:[http://www.cdxy.me](http://www.cdxy.me)  
   

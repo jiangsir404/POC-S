@@ -2,16 +2,18 @@
 #  -*- coding: utf-8 -*-
 __author__ = 'xy'
 
-from gevent import monkey;
-
-monkey.patch_all()
-import gevent
-# TODO gevent 针对https的请求会出现错误
-
-import time
 import sys
-import imp
 from lib.core.data import th, conf, logger
+try:
+    from gevent import monkey
+
+    monkey.patch_all()
+    import gevent
+# TODO gevent 针对https的请求会出现错误
+except ImportError, e:
+    sys.exit(logger.error(str(e) + '\nPlease run command: pip install -r requirements.txt\n'))
+import time
+import imp
 from lib.utils.consle import getTerminalSize
 from lib.core.enums import CUSTOM_LOGGING
 
@@ -29,7 +31,6 @@ class CoroutineEngine:
         self.single_mode = conf['SINGLE_MODE']
         self.scan_count = self.found_count = 0
         self.console_width = getTerminalSize()[0]
-        self.console_width -= 2  # Cal width when starts up
         self.is_continue = True
 
     def _update_scan_count(self):
