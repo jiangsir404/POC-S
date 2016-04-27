@@ -31,6 +31,7 @@ class CoroutineEngine:
         self.single_mode = conf['SINGLE_MODE']
         self.scan_count = self.found_count = 0
         self.console_width = getTerminalSize()[0]
+        self.console_width -=2
         self.is_continue = True
 
     def _update_scan_count(self):
