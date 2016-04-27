@@ -33,6 +33,6 @@ BANNER = """\033[01;34m
  / /___/   \____/   \____/            / /
 /_/                                  /_/
     \033[01;37m{\033[01;m Version %s by %s mail:%s \033[01;37m}\033[0m
-""" % (VERSION, AUTHOR, MAIL)
+\n""" % (VERSION, AUTHOR, MAIL)
 
 # print BANNER

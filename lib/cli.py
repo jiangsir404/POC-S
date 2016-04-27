@@ -9,13 +9,17 @@ from lib.core.common import setPaths, showDebugData, banner
 from lib.core.data import paths, conf, logger
 from lib.core.enums import CUSTOM_LOGGING
 from lib.utils.update import update
+from lib.core.settings import IS_WIN
+from thirdparty.colorama.initialise import init as win_color_init
 
 def main():
     try:
         paths['ROOT_PATH'] = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
         setPaths()
-
         parse_args()
+
+        if IS_WIN:
+            win_color_init()
         banner()
 
         if conf['DEBUG']:

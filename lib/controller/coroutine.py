@@ -33,7 +33,7 @@ class CoroutineEngine:
         self.console_width = getTerminalSize()[0]
         self.console_width -=2
         self.is_continue = True
-
+        self.found_single = False
     def _update_scan_count(self):
         self.scan_count += 1
 
@@ -62,9 +62,8 @@ class CoroutineEngine:
         f.close()
 
     def _single_mode(self, payload):
-        msg = "\n[single-mode] found! :" + payload + "\nwaiting for other threads return...\n"
-        logger.log(CUSTOM_LOGGING.SUCCESS, msg)
         self.is_continue = False
+        self.found_single = True
 
     def _scan(self):
         while self.queue.qsize() > 0 and self.is_continue:
@@ -99,7 +98,12 @@ class CoroutineEngine:
         logger.log(CUSTOM_LOGGING.SUCCESS, msg)
         try:
             while self.queue.qsize() > 0 and self.is_continue:
-                gevent.joinall([gevent.spawn(self._scan) for i in xrange(1, self.threads_num) if
+                gevent.joinall([gevent.spawn(self._scan) for i in xrange(0, self.threads_num) if
                                 self.queue.qsize() > 0])
+            if self.found_single:
+                msg = "[single-mode] found!"
+                sys.stdout.write('\n')
+                sys.stdout.flush()
+                logger.log(CUSTOM_LOGGING.SYSINFO, msg)
         except KeyboardInterrupt, e:
             logger.log(CUSTOM_LOGGING.ERROR, 'User quit!')
