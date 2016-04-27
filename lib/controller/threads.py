@@ -26,7 +26,6 @@ class ThreadsEngine:
         self.scan_count = self.found_count = 0
         self.lock = threading.Lock()
         self.console_width = getTerminalSize()[0]
-        self.console_width -= 2  # Cal width when starts up
         self.is_continue = True
 
     def _update_scan_count(self):

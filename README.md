@@ -108,6 +108,7 @@ def exp():
 2016.04.23 - 使用`logging`优化输出，增加`banner`和`--debug`参数，修复bugs  
 2016.04.24 - 增加`--update`支持自动更新  
 2016.04.25 - 增加`-n`支持从网段导入IP地址列表  
+2016.04.27 - 规范化`docs`，将`IPy`加入`thirdparty`，处理`ImportError`
   
 ## 反馈  
  - mail:i@cdxy.me  

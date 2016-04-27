@@ -3,12 +3,11 @@
 __author__ = 'xy'
 
 import Queue
-import IPy
 import sys
 from lib.core.data import th, conf, logger
 from lib.core.enums import CUSTOM_LOGGING
 from lib.core.common import debugPause
-
+from thirdparty.IPy import IPy
 
 def load_payloads():
     infoMsg = 'Loading payloads...'
