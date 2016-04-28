@@ -7,9 +7,11 @@ import re
 import sys
 import time
 from lib.core.data import *
-from lib.core.log import CUSTOM_LOGGING,LOGGER_HANDLER
-from lib.core.settings import BANNER,UNICODE_ENCODING,NULL,INVALID_UNICODE_CHAR_FORMAT
-from lib.core.enums import CONTENT_STATUS
+from lib.core.log import CUSTOM_LOGGING, LOGGER_HANDLER
+from lib.core.settings import BANNER, UNICODE_ENCODING, NULL, INVALID_UNICODE_CHAR_FORMAT
+from lib.core.convert import stdoutencode
+from thirdparty.termcolor.termcolor import colored
+
 
 def setPaths():
     """
@@ -21,6 +23,12 @@ def setPaths():
     paths['OUTPUT_PATH'] = os.path.join(ROOT_PATH, "output")
     paths['WEAK_PASS'] = os.path.join(paths['DATA_PATH'], "pass100.txt")
     paths['LARGE_WEAK_PASS'] = os.path.join(paths['DATA_PATH'], "pass1000.txt")
+    if not os.path.exists(paths['MODULES_PATH']):
+        os.mkdir(paths['MODULES_PATH'])
+    if not os.path.exists(paths['OUTPUT_PATH']):
+        os.mkdir(paths['OUTPUT_PATH'])
+    if not os.path.exists(paths['DATA_PATH']):
+        os.mkdir(paths['DATA_PATH'])
 
 
 def checkFile(filename):
@@ -55,13 +63,46 @@ def showDebugData():
     logger.log(CUSTOM_LOGGING.SYSINFO, '----th---=\n%s' % th)
     debugPause()
 
+
 def banner():
+    """
+    Function prints banner with its version
+    """
     _ = BANNER
     if not getattr(LOGGER_HANDLER, "is_tty", False):
         _ = re.sub("\033.+?m", "", _)
-    # dataToStdout(_)
-    sys.stdout.flush()
-    print BANNER
+    dataToStdout(_)
+
+
+def dataToStdout(data, bold=False):
+    """
+    Writes text to the stdout (console) stream
+    """
+    if conf['SCREEN_OUTPUT']:
+        message = ""
+
+        if isinstance(data, unicode):
+            message = stdoutencode(data)
+        else:
+            message = data
+
+        sys.stdout.write(setColor(message, bold))
+
+        try:
+            sys.stdout.flush()
+        except IOError:
+            pass
+    return
+
+
+def setColor(message, bold=False):
+    retVal = message
+
+    if message and getattr(LOGGER_HANDLER, "is_tty", False):  # colorizing handler
+        if bold:
+            retVal = colored(message, color=None, on_color=None, attrs=("bold",))
+
+    return retVal
 
 
 def pollProcess(process, suppress_errors=False):
@@ -91,6 +132,7 @@ def pollProcess(process, suppress_errors=False):
                 elif returncode > 0:
                     print " quit unexpectedly with return code %d\n" % returncode
             break
+
 
 def getSafeExString(ex, encoding=None):
     """
@@ -137,7 +179,8 @@ def getUnicode(value, encoding=None, noneToNull=False):
                 try:
                     return unicode(value, UNICODE_ENCODING)
                 except:
-                    value = value[:ex.start] + "".join(INVALID_UNICODE_CHAR_FORMAT % ord(_) for _ in value[ex.start:ex.end]) + value[ex.end:]
+                    value = value[:ex.start] + "".join(
+                        INVALID_UNICODE_CHAR_FORMAT % ord(_) for _ in value[ex.start:ex.end]) + value[ex.end:]
     else:
         try:
             return unicode(value)

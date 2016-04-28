@@ -24,51 +24,56 @@ class ThreadsEngine:
         self.thread_count = self.threads_num = th['THREADS_NUM']
         self.single_mode = conf['SINGLE_MODE']
         self.scan_count = self.found_count = 0
-        self.lock = threading.Lock()
+        self.num_lock = threading.Lock()
+        self.file_lock = threading.Lock()
+        self.single_lock = threading.Lock()
+        self.load_lock = threading.Lock()
+        self.print_lock = threading.Lock()
         self.console_width = getTerminalSize()[0]
-        self.console_width -=2
+        self.console_width -= 2
         self.is_continue = True
+        self.found_single = False
 
     def _update_scan_count(self):
-        self.lock.acquire()
+        self.num_lock.acquire()
         self.scan_count += 1
-        self.lock.release()
+        self.num_lock.release()
 
     def _print_message(self, msg):
-        self.lock.acquire()
+        self.print_lock.acquire()
         sys.stdout.write('\r' + msg + ' ' * (self.console_width - len(msg)) + '\n\r')
         sys.stdout.flush()
-        self.lock.release()
+        self.print_lock.release()
 
     def _print_progress(self):
-        self.lock.acquire()
+        self.print_lock.acquire()
         msg = '%s found | %s remaining | %s scanned in %.2f seconds' % (
             self.found_count, self.queue.qsize(), self.scan_count, time.time() - self.start_time)
         sys.stdout.write('\r' + ' ' * (self.console_width - len(msg)) + msg)
         sys.stdout.flush()
-        self.lock.release()
+        self.print_lock.release()
 
     def _increase_scan_count(self):
-        self.lock.acquire()
+        self.num_lock.acquire()
         self.scan_count += 1
-        self.lock.release()
+        self.num_lock.release()
 
     def _increase_found_count(self):
-        self.lock.acquire()
+        self.num_lock.acquire()
         self.found_count += 1
-        self.lock.release()
+        self.num_lock.release()
 
     def _decrease_thread_count(self):
-        self.lock.acquire()
+        self.num_lock.acquire()
         self.thread_count -= 1
-        self.lock.release()
+        self.num_lock.release()
 
     def _output2file(self, msg):
-        self.lock.acquire()
+        self.file_lock.acquire()
         f = open(self.output, 'a')
         f.write(msg + '\n')
         f.close()
-        self.lock.release()
+        self.file_lock.release()
 
     def _set_daemon(self, thread):
         # Reference: http://stackoverflow.com/questions/190010/daemon-threads-explanation
@@ -78,17 +83,22 @@ class ThreadsEngine:
             thread.setDaemon(True)
 
     def _single_mode(self, payload):
-        self.lock.acquire()
-        msg = "\n[single-mode] found! :" + payload + "\nwaiting for other threads return...\n"
-        logger.log(CUSTOM_LOGGING.SUCCESS, msg)
+        self.single_lock.acquire()
         self.is_continue = False
-        self.lock.release()
+        self.found_single = True
+        self.single_lock.release()
 
     def _scan(self):
-        while self.queue.qsize() > 0 and self.is_continue:
-            payload = str(self.queue.get(timeout=1.0))
-            poced = False
+        while 1:
+            self.load_lock.acquire()
+            if self.queue.qsize() > 0 and self.is_continue:
+                payload = str(self.queue.get(timeout=1.0))
+                self.load_lock.release()
+            else:
+                self.load_lock.release()
+                break
 
+            poced = False
             try:
                 poced = True if self.module_obj.poc(payload) else False
             except Exception, e:
@@ -122,5 +132,10 @@ class ThreadsEngine:
         try:
             while self.thread_count > 0:
                 time.sleep(0.01)
+            if self.found_single:
+                msg = "[single-mode] found!"
+                sys.stdout.write('\n')
+                sys.stdout.flush()
+                logger.log(CUSTOM_LOGGING.SYSINFO, msg)
         except KeyboardInterrupt, e:
             logger.log(CUSTOM_LOGGING.ERROR, 'User quit!')

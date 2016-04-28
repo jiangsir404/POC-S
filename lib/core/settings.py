@@ -6,7 +6,7 @@ __author__ = 'xy'
 import os
 import subprocess
 
-VERSION = '1.3'
+VERSION = '1.4'
 VERSION_STRING = "POC-T"
 AUTHOR = 'cdxy'
 MAIL = 'i@cdxy.me'
@@ -33,6 +33,6 @@ BANNER = """\033[01;34m
  / /___/   \____/   \____/            / /
 /_/                                  /_/
     \033[01;37m{\033[01;m Version %s by %s mail:%s \033[01;37m}\033[0m
-""" % (VERSION, AUTHOR, MAIL)
+\n""" % (VERSION, AUTHOR, MAIL)
 
 # print BANNER
