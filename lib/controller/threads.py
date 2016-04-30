@@ -35,45 +35,45 @@ class ThreadsEngine:
         self.found_single = False
 
     def _update_scan_count(self):
-        self.num_lock.acquire()
+        # self.num_lock.acquire()
         self.scan_count += 1
-        self.num_lock.release()
+        # self.num_lock.release()
 
     def _print_message(self, msg):
-        self.print_lock.acquire()
+        # self.print_lock.acquire()
         sys.stdout.write('\r' + msg + ' ' * (self.console_width - len(msg)) + '\n\r')
         sys.stdout.flush()
-        self.print_lock.release()
+        # self.print_lock.release()
 
     def _print_progress(self):
-        self.print_lock.acquire()
+        # self.print_lock.acquire()
         msg = '%s found | %s remaining | %s scanned in %.2f seconds' % (
             self.found_count, self.queue.qsize(), self.scan_count, time.time() - self.start_time)
         sys.stdout.write('\r' + ' ' * (self.console_width - len(msg)) + msg)
         sys.stdout.flush()
-        self.print_lock.release()
+        # self.print_lock.release()
 
     def _increase_scan_count(self):
-        self.num_lock.acquire()
+        # self.num_lock.acquire()
         self.scan_count += 1
-        self.num_lock.release()
+        # self.num_lock.release()
 
     def _increase_found_count(self):
-        self.num_lock.acquire()
+        # self.num_lock.acquire()
         self.found_count += 1
-        self.num_lock.release()
+        # self.num_lock.release()
 
     def _decrease_thread_count(self):
-        self.num_lock.acquire()
+        # self.num_lock.acquire()
         self.thread_count -= 1
-        self.num_lock.release()
+        # self.num_lock.release()
 
     def _output2file(self, msg):
-        self.file_lock.acquire()
+        # self.file_lock.acquire()
         f = open(self.output, 'a')
         f.write(msg + '\n')
         f.close()
-        self.file_lock.release()
+        # self.file_lock.release()
 
     def _set_daemon(self, thread):
         # Reference: http://stackoverflow.com/questions/190010/daemon-threads-explanation
@@ -83,10 +83,10 @@ class ThreadsEngine:
             thread.setDaemon(True)
 
     def _single_mode(self, payload):
-        self.single_lock.acquire()
+        # self.single_lock.acquire()
         self.is_continue = False
         self.found_single = True
-        self.single_lock.release()
+        # self.single_lock.release()
 
     def _scan(self):
         while 1:
@@ -129,13 +129,15 @@ class ThreadsEngine:
             self._set_daemon(t)
             t.start()
         # It can quit with Ctrl-C
-        try:
-            while self.thread_count > 0:
+        while 1:
+            if self.thread_count > 0 and self.is_continue:
                 time.sleep(0.01)
-            if self.found_single:
-                msg = "[single-mode] found!"
-                sys.stdout.write('\n')
-                sys.stdout.flush()
-                logger.log(CUSTOM_LOGGING.SYSINFO, msg)
-        except KeyboardInterrupt, e:
-            logger.log(CUSTOM_LOGGING.ERROR, 'User quit!')
+            else:
+                break
+
+        if self.found_single:
+            msg = "[single-mode] found!"
+            sys.stdout.write('\n')
+            sys.stdout.flush()
+            logger.log(CUSTOM_LOGGING.SYSINFO, msg)
+

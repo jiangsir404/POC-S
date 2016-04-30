@@ -199,3 +199,12 @@ def isListLike(value):
     """
 
     return isinstance(value, (list, tuple, set))
+
+def sysquit(status=0):
+    sys.stdout.write('\n')
+    sys.stdout.flush()
+    if status == 1:
+        logger.error('User quit!')
+    else:
+        logger.info('System exit.')
+    return

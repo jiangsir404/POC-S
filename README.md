@@ -1,14 +1,17 @@
 # POC-T
-[![Python 2.6|2.7](https://img.shields.io/badge/python-2.6|2.7-yellow.svg)](https://www.python.org/) [![License](https://img.shields.io/badge/license-GPLv2-red.svg)](https://raw.githubusercontent.com/Xyntax/POC-T/master/docs/LICENSE.txt)
+[![Python 2.6|2.7](https://img.shields.io/badge/python-2.6|2.7-yellow.svg)](https://www.python.org/) [![License](https://img.shields.io/badge/license-GPLv2-red.svg)](https://raw.githubusercontent.com/Xyntax/POC-T/master/docs/LICENSE.txt)　[![experimental](http://badges.github.io/stability-badges/dist/experimental.svg)](http://github.com/badges/stability-badges)
   
-![](http://www.cdxy.me/wp-content/uploads/2016/04/2016-04-23-180429屏幕截图.png)  
-  
-简易并发框架，为用户脚本提供并发解决方案。  
+模块化并发框架，提升用户脚本的运行效率。  
 支持 **多线程** 和 **协程(单线程异步)** 两种并发模式。
   
-(开发中，欢迎提交POC和改进建议)  
+*(开发中，欢迎提交POC和改进建议)*  
+  
+## 运行效果  
+  
+ ![](http://www.cdxy.me/wp-content/uploads/2016/04/final_banner.png)  
+  
 ## 它能做什么？  
-它只提供了一个并发框架，附带一些示例模块，功能需要用户自行添加模块实现。   
+它只提供了一个并发框架，附带一些示例模块，功能需要用户自行添加模块实现。     
   
 ### 功能示例 
 #### 批量漏洞验证 
@@ -65,19 +68,15 @@ optimization:
   --update          自动从github更新程序
 ```  
   
-## 运行效果  
-  
-* B站用户爬虫模块(kali2) 
- ![](http://www.cdxy.me/wp-content/uploads/2016/04/2016-04-15-102129屏幕截图.png)  
-* JBoss漏洞检测模块(win7)  
- ![](http://www.cdxy.me/wp-content/uploads/2016/04/微信截图_20160419213553.png)  
-  
   
 ## 结构  
 * `POC-T.py` 程序入口  
 * `module` POC脚本库  
 * `data` 资源库  
+* `output` 默认输出路径
 * `lib` 项目代码  
+* `docs` 文档及版权声明
+* `thirdparty` 第三方库
   
 ## 模块编写规则
 新建py文件,添加以下三个函数,其中**poc()**必需要有,添加逻辑使验证成功(漏洞存在)时`return True`,验证失败时`return False`    
@@ -99,10 +98,9 @@ def exp():
 ----
 * [感谢列表](./docs/THANKS.md)
 * [开发日志](./docs/CHANGELOG.md)
-* [问题/BUG反馈](https://github.com/Xyntax/POC-T/issues)
 * [版权声明](./docs/LICENSE.txt)
 * [中文文档](./docs/USAGE.md)
-
+* [问题/BUG反馈](https://github.com/Xyntax/POC-T/issues)
 
 联系作者
 ----

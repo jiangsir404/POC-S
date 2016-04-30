@@ -96,14 +96,12 @@ class CoroutineEngine:
         self.start_time = time.time()
         msg = 'Set the number of concurrent: %d' % self.threads_num
         logger.log(CUSTOM_LOGGING.SUCCESS, msg)
-        try:
-            while self.queue.qsize() > 0 and self.is_continue:
-                gevent.joinall([gevent.spawn(self._scan) for i in xrange(0, self.threads_num) if
-                                self.queue.qsize() > 0])
-            if self.found_single:
-                msg = "[single-mode] found!"
-                sys.stdout.write('\n')
-                sys.stdout.flush()
-                logger.log(CUSTOM_LOGGING.SYSINFO, msg)
-        except KeyboardInterrupt, e:
-            logger.log(CUSTOM_LOGGING.ERROR, 'User quit!')
+        while self.queue.qsize() > 0 and self.is_continue:
+            gevent.joinall([gevent.spawn(self._scan) for i in xrange(0, self.threads_num) if
+                            self.queue.qsize() > 0])
+        if self.found_single:
+            msg = "[single-mode] found!"
+            sys.stdout.write('\n')
+            sys.stdout.flush()
+            logger.log(CUSTOM_LOGGING.SYSINFO, msg)
+
