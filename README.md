@@ -1,15 +1,12 @@
 # POC-T
-[![Python 2.6|2.7](https://img.shields.io/badge/python-2.6|2.7-yellow.svg)](https://www.python.org/) [![License](https://img.shields.io/badge/license-GPLv2-red.svg)](https://raw.githubusercontent.com/Xyntax/POC-T/master/docs/LICENSE.txt)　[![experimental](http://badges.github.io/stability-badges/dist/experimental.svg)](http://github.com/badges/stability-badges)
-  
+[![Python 2.6|2.7](https://img.shields.io/badge/python-2.6|2.7-yellow.svg)](https://www.python.org/) [![License](https://img.shields.io/badge/license-GPLv2-red.svg)](https://raw.githubusercontent.com/Xyntax/POC-T/master/docs/LICENSE.txt)  
+
 模块化并发框架，提升用户脚本的运行效率。  
 支持 **多线程** 和 **协程(单线程异步)** 两种并发模式。
   
 *(开发中，欢迎提交POC和改进建议)*  
   
-## 运行效果  
-  
- ![](http://www.cdxy.me/wp-content/uploads/2016/04/final_banner.png)  
-  
+
 ## 它能做什么？  
 它只提供了一个并发框架，附带一些示例模块，功能需要用户自行添加模块实现。     
   
@@ -30,7 +27,9 @@
 * `./module/vote++.py` 给基友开发的刷票脚本  
 * 等你开脑洞  
   
-
+## 运行效果  
+![banner](http://www.cdxy.me/wp-content/uploads/2016/04/final_banner.png)  
+  
 ## 开始 
 ### 快速开始 
 * `pip install -r requirement.txt` 
