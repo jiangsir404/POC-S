@@ -6,29 +6,32 @@
   
 *(开发中，欢迎提交POC和改进建议)*  
   
+![banner.png](https://github.com/Xyntax/POC-T/blob/cdxy/docs/banner.png) 
 
 ## 它能做什么？  
-它只提供了一个并发框架，附带一些示例模块，功能需要用户自行添加模块实现。     
-  
-### 功能示例 
-#### 批量漏洞验证 
-* `./module/jboss.py` JBoss漏洞检测  
-* `./module/fzxy_sqli.py` 方正翔宇某系统SQLI检测  
-* `./module/S2032.py` Struts2 S2-032 远程命令执行  
+这个小巧的并发框架可以满足许多日常需求.  
+用户可参考以下已集成的脚本来编写您的功能模块.    
+
+#### 漏洞验证 
+* `./module/sqli-poc-example.py` SQL注入POC示例(方正翔宇某系统)  
+* `./module/jboss-poc.py`        jboss漏洞POC(jexboss去后门版)  
+* `./module/struts2-s2032.py`    Struts2 S2-032 远程命令执行  
+* `./module/zonetransfer-poc.py` DNS域传送漏洞POC
   
 #### 爆破&扫描 
-* `./module/zabbix_wp.py` zabbix弱口令扫描  
+* `./module/zabbix-weakpass.py`  zabbix弱口令扫描  
+* `./module/brute-example.py`    密码爆破示例(51idc某站)
   
 #### 爬虫&采集
-* `./module/spider.py` B站用户签名档爬虫  
-* `./module/pycurl_ip` html页面采集示例  
+* `./module/spider-example.py`   爬虫示例(B站用户签名档爬虫)  
+* `./module/collector-example.py`页面采集示例  
   
 #### 其他 
-* `./module/vote++.py` 给基友开发的刷票脚本  
+* `./module/vote-example.py`     给基友开发的刷票脚本  
 * 等你开脑洞  
   
-## 运行效果  
-![banner](http://www.cdxy.me/wp-content/uploads/2016/04/final_banner.png)  
+
+
   
 ## 开始 
 ### 快速开始 
@@ -42,7 +45,7 @@ usage: POC-T.py [-T|-C] [-m] [-f|-i|-n] [options]
 example:
     python POC-T.py -T -m test -f ./dic/1-100.txt
     python POC-T.py -C -m test -i 1-100
-    python POC-T.py -C -m spider -n 10.0.0.0/24
+    python POC-T.py -C -m spider-example -n 10.0.0.0/24
   
 engine:
   -T                多线程模式
@@ -69,13 +72,13 @@ optimization:
   
   
 ## 结构  
-* `POC-T.py` 程序入口  
-* `module` POC脚本库  
-* `data` 资源库  
-* `output` 默认输出路径
-* `lib` 项目代码  
-* `docs` 文档及版权声明
-* `thirdparty` 第三方库
+* `POC-T.py`    程序入口  
+* `module`      POC脚本库  
+* `data`        资源库  
+* `output`      默认输出路径
+* `lib`         项目代码  
+* `docs`        文档及版权声明
+* `thirdparty`  第三方库
   
 ## 模块编写规则
 新建py文件,添加以下三个函数,其中**poc()**必需要有,添加逻辑使验证成功(漏洞存在)时`return True`,验证失败时`return False`    
