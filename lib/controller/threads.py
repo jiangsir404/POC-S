@@ -129,13 +129,15 @@ class ThreadsEngine:
             self._set_daemon(t)
             t.start()
         # It can quit with Ctrl-C
-        try:
-            while self.thread_count > 0:
+        while 1:
+            if self.thread_count > 0 and self.is_continue:
                 time.sleep(0.01)
-            if self.found_single:
-                msg = "[single-mode] found!"
-                sys.stdout.write('\n')
-                sys.stdout.flush()
-                logger.log(CUSTOM_LOGGING.SYSINFO, msg)
-        except KeyboardInterrupt, e:
-            logger.log(CUSTOM_LOGGING.ERROR, 'User quit!')
+            else:
+                break
+
+        if self.found_single:
+            msg = "[single-mode] found!"
+            sys.stdout.write('\n')
+            sys.stdout.flush()
+            logger.log(CUSTOM_LOGGING.SYSINFO, msg)
+
