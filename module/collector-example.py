@@ -8,7 +8,8 @@ try:
 except ImportError, e:
     sys.exit(e)
 """
-下载IP对应的html页面
+采集示例
+简单页面采集-下载IP对应的html页面
 """
 
 
@@ -23,11 +24,13 @@ def exp():
 def poc(str):
     # As long as the file is opened in binary mode, both Python 2 and Python 3
     # can write response body to it without decoding.
-    with open(str + '.html', 'wb') as f:
-        c = pycurl.Curl()
-        c.setopt(c.URL, 'http://' + str)
-        c.setopt(c.WRITEDATA, f)
-        c.perform()
-        c.close()
-
-    return True
+    try:
+        with open(str + '.html', 'wb') as f:
+            c = pycurl.Curl()
+            c.setopt(c.URL, 'http://' + str)
+            c.setopt(c.WRITEDATA, f)
+            c.perform()
+            c.close()
+        return True
+    except:
+        return False
