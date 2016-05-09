@@ -22,4 +22,5 @@
 -----------
 * 2016.04.27 - 规范化`docs`，将`IPy`加入`thirdparty`，处理`ImportError`
 * 2016.04.27 - 解决win命令行颜色问题，优化并发模型，其他多处稳定性增强
-* 2016.05.08 - 增加`lib/utils/urlparser.py`解决POC脚本对多种URL的自适应问题
+* 2016.05.08 - 增加`lib/utils/urlparser.py`解决PoC脚本对多种URL的自适应问题
+* 2016.05.09 - 增加`lib/utils/useragent.py`获取各平台User-Agent，支持随机化UA

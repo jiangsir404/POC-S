@@ -11,6 +11,7 @@ from lib.core.log import CUSTOM_LOGGING, LOGGER_HANDLER
 from lib.core.settings import BANNER, UNICODE_ENCODING, NULL, INVALID_UNICODE_CHAR_FORMAT
 from lib.core.convert import stdoutencode
 from thirdparty.termcolor.termcolor import colored
+from thirdparty.odict.odict import OrderedDict
 
 
 def setPaths():
@@ -21,14 +22,20 @@ def setPaths():
     paths['DATA_PATH'] = os.path.join(ROOT_PATH, "data")
     paths['MODULES_PATH'] = os.path.join(ROOT_PATH, "module")
     paths['OUTPUT_PATH'] = os.path.join(ROOT_PATH, "output")
-    paths['WEAK_PASS'] = os.path.join(paths['DATA_PATH'], "pass100.txt")
-    paths['LARGE_WEAK_PASS'] = os.path.join(paths['DATA_PATH'], "pass1000.txt")
     if not os.path.exists(paths['MODULES_PATH']):
         os.mkdir(paths['MODULES_PATH'])
     if not os.path.exists(paths['OUTPUT_PATH']):
         os.mkdir(paths['OUTPUT_PATH'])
     if not os.path.exists(paths['DATA_PATH']):
         os.mkdir(paths['DATA_PATH'])
+    try:
+        paths['WEAK_PASS'] = os.path.join(paths['DATA_PATH'], "pass100.txt")
+        paths['LARGE_WEAK_PASS'] = os.path.join(paths['DATA_PATH'], "pass1000.txt")
+        paths['UA_LIST_PATH'] = os.path.join(paths['DATA_PATH'], "user-agents.txt")
+    except Exception, e:
+        msg = 'Some files in ./data are missing, it may cause an issue\n'
+        msg += 'Please use \'--update\' to get the complete program from github.com.'
+        logger.log(CUSTOM_LOGGING.WARNING, msg)
 
 
 def checkFile(filename):
@@ -54,7 +61,7 @@ def checkFile(filename):
 
 def debugPause():
     if conf['DEBUG']:
-        raw_input('[Debug] Press any key to continue.')
+        raw_input('[Debug] Press <Enter> to continue.')
 
 
 def showDebugData():
@@ -200,6 +207,7 @@ def isListLike(value):
 
     return isinstance(value, (list, tuple, set))
 
+
 def sysquit(status=0):
     sys.stdout.write('\n')
     sys.stdout.flush()
@@ -208,3 +216,48 @@ def sysquit(status=0):
     else:
         logger.info('System exit.')
     return
+
+
+def getFileItems(filename, commentPrefix='#', unicode_=True, lowercase=False, unique=False):
+    """
+    @function returns newline delimited items contained inside file
+    """
+
+    retVal = list() if not unique else OrderedDict()
+
+    checkFile(filename)
+
+    try:
+        with open(filename, 'r') as f:
+            for line in (f.readlines() if unicode_ else f.xreadlines()):
+                # xreadlines doesn't return unicode strings when codecs.open() is used
+                if commentPrefix and line.find(commentPrefix) != -1:
+                    line = line[:line.find(commentPrefix)]
+
+                line = line.strip()
+
+                if not unicode_:
+                    try:
+                        line = str.encode(line)
+                    except UnicodeDecodeError:
+                        continue
+
+                if line:
+                    if lowercase:
+                        line = line.lower()
+
+                    if unique and line in retVal:
+                        continue
+
+                    if unique:
+                        retVal[line] = True
+
+                    else:
+                        retVal.append(line)
+
+    except (IOError, OSError, MemoryError), ex:
+        errMsg = "something went wrong while trying "
+        errMsg += "to read the content of file '%s' ('%s')" % (filename, ex)
+        raise Exception(errMsg)
+
+    return retVal if not unique else retVal.keys()

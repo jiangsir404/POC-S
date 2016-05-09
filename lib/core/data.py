@@ -30,12 +30,14 @@ conf
     DEBUG              T / F
     UPDATE             T / F
     NETWORK_STR        string
+    RANDOM_UA          T / F
     # TODO
     DISABLE_COLOR      T / F
 
 th
     queue
     THREADS_NUM
+    UA_LIST
 
 """
 

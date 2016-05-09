@@ -9,9 +9,10 @@ from lib.core.enums import CUSTOM_LOGGING
 from lib.core.common import debugPause
 from thirdparty.IPy import IPy
 
+
 def load_payloads():
     infoMsg = 'Loading payloads...'
-    logger.log(CUSTOM_LOGGING.SUCCESS, infoMsg)
+    logger.log(CUSTOM_LOGGING.SYSINFO, infoMsg)
     th['queue'] = Queue.Queue()
     if conf['MODULE_MODE'] is 'i':
         int_mode()
