@@ -53,5 +53,9 @@ def poc(url):
         print e
         return False
 
+
 # 用例:
 # poc('http://www.htzai.com/filedownload/index.action')
+if __name__ == '__main__':
+    print '建议使用以下命令开启多线程验证:\n python POC-T.py -T -m struts2-s2032 -f [file]'
+    print poc(raw_input('URL >'))
