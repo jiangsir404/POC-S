@@ -1,8 +1,8 @@
 # !/usr/bin/env python
 #  -*- coding: utf-8 -*-
-__author__ = 'xy'
 
-""" getTerminalSize()
+"""
+getTerminalSize()
  - get width and height of console
  - works on linux,os x,windows,cygwin(windows)
 """

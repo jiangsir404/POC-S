@@ -1,11 +1,14 @@
 # POC-T
 [![Python 2.6|2.7](https://img.shields.io/badge/python-2.6|2.7-yellow.svg)](https://www.python.org/) [![License](https://img.shields.io/badge/license-GPLv2-red.svg)](https://raw.githubusercontent.com/Xyntax/POC-T/master/docs/LICENSE.txt)  
 
-模块化并发框架，提升用户脚本的运行效率。  
-* 支持 **多线程** 和 **协程(单线程异步)** 两种并发模式
+> 跨平台模块化并发框架，可用于采集/爬虫/爆破/批量PoC等任何需要并发的地方。
+
+* 支持两种并发模式*(多线程/单线程异步)*和多种输入方式
 * 极简式模块编写
-* 实用工具/PoC更新中  
-*(欢迎提交模块和改进建议)*
+* 无交互运行，方便部署自动化
+* 实用工具/PoC更新中
+
+*(欢迎提交代码和改进建议)*
   
 ![banner.png](https://github.com/Xyntax/POC-T/blob/cdxy/docs/banner.png) 
 
@@ -42,8 +45,7 @@
 
 
   
-## 开始 
-### 快速开始 
+## 快速开始 
 * `pip install -r requirement.txt` 
 * `python POC-T.py`  
 
@@ -81,15 +83,18 @@ optimization:
   
   
 ## 结构  
+以下含@的目录表示用户可控区域，用户可根据需要*增加/修改/调用*其中的内容
+
 | 目录 | 说明 |
 | :-----  |:-----|
 | `POC-T.py` | 程序入口 |
-| `module`   | 自定义模块/PoC脚本库 |
-| `data`     | 资源库 |
-| `output`   | 默认输出路径 |
-| `lib`      | 项目代码 |
-| `docs`     | 文档及版权声明 |
-| `thirdparty` | 第三方库 |
+| module   | @自定义模块/PoC脚本库 |
+| util     | @工具库 |
+| data     | @资源库 |
+| output   | 默认输出位置 |
+| lib      | 项目代码 |
+| docs     | 文档及版权声明 |
+| thirdparty | 第三方库 |
 
   
 ## 模块编写
@@ -111,8 +116,10 @@ def poc(input_str):
 * `python POC-T.py --show` 查看全部模块名称
 * 在命令行中使用 `-m poctest` 参数即可完成`poctest`模块的加载 (注意名称末尾不需要写`.py`)  
   
-## 实用工具 
-`./lib/core/utils`文件夹中收集了具有通用性的工具．用于简化代码，提高PoC准确性.可以在编写模块时直接调用，具体说明请查看原文件注释  
+工具目录 
+----
+`util`文件夹中收集了具有通用性的工具组件．用于简化代码，提高PoC准确性，赋予脚本更多功能.
+编写模块时，可以使用`from util.xxx import xxx()`直接调用，具体功能请查看原文件注释.  
   
 |工具|说明|
 |:---|:---|

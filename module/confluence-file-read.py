@@ -1,8 +1,9 @@
 # coding:utf8
 __author__ = 'xy'
 
-import requests, time
-from lib.utils.urlparser import iterate_path
+import requests
+
+from util.urlparser import iterate_path
 
 infostr = """
 Atlassian Confluence config file read POC [CVE-2015-8399]

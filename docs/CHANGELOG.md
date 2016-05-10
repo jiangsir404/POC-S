@@ -9,7 +9,7 @@
 
 1.2
 -----------
-* 2016.04.18 - 参考sqlmap重构项目，增加`--single`参数  
+* 2016.04.18 - 重构项目，增加`--single`参数  
 * 2016.04.19 - 添加协程引擎，增加`-T -C`参数    
 
 1.3
@@ -20,7 +20,8 @@
 
 1.4
 -----------
-* 2016.04.27 - 规范化`docs`，将`IPy`加入`thirdparty`，处理`ImportError`
+* 2016.04.27 - 规范化`docs`，增加目录`thirdparty`，处理`ImportError`
 * 2016.04.27 - 解决win命令行颜色问题，优化并发模型，其他多处稳定性增强
-* 2016.05.08 - 增加`lib/utils/urlparser.py`解决PoC脚本对多种URL的自适应问题
-* 2016.05.09 - 增加`lib/utils/useragent.py`获取各平台User-Agent，支持随机化UA
+* 2016.05.08 - 增加`urlparser.py`解决PoC脚本对多种URL的自适应问题
+* 2016.05.09 - 增加`useragent.py`获取各平台User-Agent，支持随机化UA
+* 2016.05.10 - 增加目录`util`,稳定性改进

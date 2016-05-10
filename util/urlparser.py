@@ -3,6 +3,7 @@
 # Add 2 function by cdxy:
 #     get_domain(url)
 #     iterate_path(url)
+
 """Parse (absolute and relative) URLs.
 
 urlparse module is based upon the following RFC specifications.

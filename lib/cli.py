@@ -14,8 +14,19 @@ from thirdparty.colorama.initialise import init as win_color_init
 
 
 def main():
+    """
+    Main function of POC-T when running from command line.
+    """
     try:
         paths['ROOT_PATH'] = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+        try:
+            os.path.isdir(paths['ROOT_PATH'])
+        except UnicodeEncodeError:
+            errMsg = "your system does not properly handle non-ASCII paths. "
+            errMsg += "Please move the project root directory to another location"
+            logger.error(errMsg)
+            raise SystemExit
+
         setPaths()
         parse_args()
 
