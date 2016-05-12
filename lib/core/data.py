@@ -35,6 +35,7 @@ conf
     DISABLE_COLOR      T / F
 
 th
+    module_obj
     queue
     THREADS_NUM
     UA_LIST
@@ -43,10 +44,8 @@ th
 
 logger = LOGGER
 
-
 conf = {}
 
 paths = {}
 
 th = {}
-

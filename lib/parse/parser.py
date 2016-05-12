@@ -5,10 +5,10 @@ __author__ = 'xy'
 import argparse
 import sys
 
-from lib.parse.handler import check_args, set_args
+from lib.parse.handler import checkArgs, setArgs
 
 
-def parse_args():
+def parseArgs():
     parser = argparse.ArgumentParser(prog='POC-T',
                                      formatter_class=argparse.RawTextHelpFormatter,
                                      description='From i@cdxy.me http://www.cdxy.me',
@@ -51,14 +51,14 @@ def parse_args():
     optimization.add_argument('--nS', default=True, action='store_false',
                               help='disable screen output')
     optimization.add_argument('--show', default=False, action='store_true',
-                        help='show available module/POC names and exit')
+                              help='show available module/POC names and exit')
     optimization.add_argument('--debug', default=False, action='store_true',
-                        help='show more details while running')
+                              help='show more details while running')
     optimization.add_argument('--update', default=False, action='store_true',
-                        help='update POC-T from github')
+                              help='update POC-T from github')
 
     if len(sys.argv) == 1:
         sys.argv.append('-h')
     args = parser.parse_args()
-    check_args(args)
-    set_args(args)
+    checkArgs(args)
+    setArgs(args)

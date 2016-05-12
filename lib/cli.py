@@ -3,14 +3,14 @@
 __author__ = 'xy'
 
 import os.path
-from lib.parse.parser import parse_args
-from lib.controller.loader import load_payloads
-from lib.core.common import setPaths, showDebugData, banner, sysquit
+from lib.parse.parser import parseArgs
+from lib.controller.loader import loadModule, loadPayloads
+from lib.core.common import setPaths, showDebugData, banner, systemQuit
 from lib.core.data import paths, conf, logger
 from lib.core.enums import CUSTOM_LOGGING
 from lib.utils.update import update
 from lib.core.settings import IS_WIN
-from thirdparty.colorama.initialise import init as win_color_init
+from thirdparty.colorama.initialise import init as winowsColorInit
 
 
 def main():
@@ -26,20 +26,19 @@ def main():
             errMsg += "Please move the project root directory to another location"
             logger.error(errMsg)
             raise SystemExit
-
         setPaths()
-        parse_args()
+
+        parseArgs()
 
         if IS_WIN:
-            win_color_init()
+            winowsColorInit()
         banner()
 
         if conf['DEBUG']:
             showDebugData()
-        if conf['UPDATE']:
-            update()
 
-        load_payloads()
+        loadModule()
+        loadPayloads()
 
         if conf['ENGINE'] is 't':
             from lib.controller.threads import ThreadsEngine
@@ -48,10 +47,10 @@ def main():
             from lib.controller.coroutine import CoroutineEngine
             CoroutineEngine().run()
 
-        sysquit(0)
+        systemQuit(0)
 
     except KeyboardInterrupt, e:
-        sysquit(1)
+        systemQuit(1)
 
 
 if __name__ == "__main__":

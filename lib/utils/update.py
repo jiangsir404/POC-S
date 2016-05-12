@@ -17,6 +17,7 @@ from lib.core.settings import GIT_REPOSITORY
 from lib.core.settings import IS_WIN
 from lib.core.revision import getRevisionNumber
 
+
 def update():
     if not conf['UPDATE']:
         return
@@ -38,7 +39,9 @@ def update():
         logger.info("update in progress ")
 
         try:
-            process = execute("git checkout . && git pull %s HEAD" % GIT_REPOSITORY, shell=True, stdout=PIPE, stderr=PIPE, cwd=paths['ROOT_PATH'].encode(locale.getpreferredencoding()))  # Reference: http://blog.stastnarodina.com/honza-en/spot/python-unicodeencodeerror/
+            process = execute("git checkout . && git pull %s HEAD" % GIT_REPOSITORY, shell=True, stdout=PIPE,
+                              stderr=PIPE, cwd=paths['ROOT_PATH'].encode(
+                    locale.getpreferredencoding()))  # Reference: http://blog.stastnarodina.com/honza-en/spot/python-unicodeencodeerror/
             pollProcess(process, True)
             stdout, stderr = process.communicate()
             success = not process.returncode
@@ -55,7 +58,6 @@ def update():
                 errMsg += "from GitHub (e.g. 'git clone https://github.com/Xyntax/POC-T.git POC-T')"
                 logger.error(errMsg)
             else:
-                logger.debug()
                 logger.error("update could not be completed ('%s')" % re.sub(r"\W+", " ", stderr).strip())
 
     if not success:

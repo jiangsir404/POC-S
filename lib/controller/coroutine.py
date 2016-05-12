@@ -13,16 +13,13 @@ try:
 except ImportError, e:
     sys.exit(logger.error(str(e) + '\nPlease run command: pip install -r requirements.txt\n'))
 import time
-import imp
 from lib.utils.consle import getTerminalSize
 from lib.core.enums import CUSTOM_LOGGING
-
 
 class CoroutineEngine:
     def __init__(self):
         self.module_name = conf['MODULE_NAME']
-        fp, pathname, description = imp.find_module(self.module_name, ["module"])
-        self.module_obj = imp.load_module("_", fp, pathname, description)
+        self.module_obj = th['module_obj']
         self.f_flag = conf['FILE_OUTPUT']
         self.s_flag = conf['SCREEN_OUTPUT']
         self.queue = th['queue']

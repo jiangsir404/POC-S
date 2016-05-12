@@ -208,14 +208,17 @@ def isListLike(value):
     return isinstance(value, (list, tuple, set))
 
 
-def sysquit(status=0):
+# TODO 待优化
+def systemQuit(status=0):
     sys.stdout.write('\n')
     sys.stdout.flush()
     if status == 1:
         logger.error('User quit!')
+    elif status == 2:
+        logger.error('System exit.')
     else:
         logger.info('System exit.')
-    return
+    sys.exit(0)
 
 
 def getFileItems(filename, commentPrefix='#', unicode_=True, lowercase=False, unique=False):

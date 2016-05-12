@@ -4,7 +4,6 @@ __author__ = 'xy'
 
 import threading
 import time
-import imp
 import sys
 from lib.core.data import th, conf, logger
 from lib.utils.consle import getTerminalSize
@@ -15,8 +14,7 @@ from lib.core.enums import CUSTOM_LOGGING
 class ThreadsEngine:
     def __init__(self):
         self.module_name = conf['MODULE_NAME']
-        fp, pathname, description = imp.find_module(self.module_name, ["module"])
-        self.module_obj = imp.load_module("_", fp, pathname, description)
+        self.module_obj = th['module_obj']
         self.f_flag = conf['FILE_OUTPUT']
         self.s_flag = conf['SCREEN_OUTPUT']
         self.queue = th['queue']
@@ -100,6 +98,7 @@ class ThreadsEngine:
 
             poced = False
             try:
+                # POC在执行时报错如果不被处理，线程框架会停止并退出
                 poced = True if self.module_obj.poc(payload) else False
             except Exception, e:
                 print e
@@ -140,4 +139,3 @@ class ThreadsEngine:
             sys.stdout.write('\n')
             sys.stdout.flush()
             logger.log(CUSTOM_LOGGING.SYSINFO, msg)
-

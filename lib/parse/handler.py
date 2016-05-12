@@ -8,9 +8,10 @@ import time
 import sys
 from lib.core.data import conf, paths, th, logger
 from lib.core.enums import CUSTOM_LOGGING
+from lib.utils.update import update
 
 
-def check_args(args):
+def checkArgs(args):
     module = args.m
     f = args.f
     i = args.i
@@ -77,7 +78,7 @@ def check_args(args):
 
 
 
-def set_args(args):
+def setArgs(args):
     conf['MODULE_NAME'] = args.m
     conf['MODULE_FILE_PATH'] = os.path.join(paths['MODULES_PATH'], conf['MODULE_NAME'] + ".py")
     conf['THREADS_NUM'] = args.t
@@ -85,11 +86,14 @@ def set_args(args):
     conf['FILE_OUTPUT'] = args.nF
     conf['SINGLE_MODE'] = args.single
     conf['DEBUG'] = args.debug
-    conf['UPDATE'] = args.update
     conf['NETWORK_STR'] = args.n
 
     # TODO
     th['THREADS_NUM'] = conf['THREADS_NUM']
+
+    if args.update:
+        conf['UPDATE'] = args.update
+        update()
 
     if args.T:
         conf['ENGINE'] = 't'

@@ -4,15 +4,39 @@ __author__ = 'xy'
 
 import Queue
 import sys
+import imp
 from lib.core.data import th, conf, logger
 from lib.core.enums import CUSTOM_LOGGING
-from lib.core.common import debugPause
+from lib.core.common import debugPause, systemQuit
+from lib.core.settings import ESSENTIAL_MODULE_METHODS
 from thirdparty.IPy import IPy
 
 
-def load_payloads():
+def loadModule():
+    _name = conf['MODULE_NAME']
+    infoMsg = 'Loading custom module: %s.py' % _name
+    logger.log(CUSTOM_LOGGING.SUCCESS, infoMsg)
+
+    fp, pathname, description = imp.find_module(_name, ['module'])
+    try:
+        th['module_obj'] = imp.load_module("_", fp, pathname, description)
+        for each in ESSENTIAL_MODULE_METHODS:
+            if not hasattr(th['module_obj'], each):
+                errorMsg = "Can't find essential method:'%s()' in current script:'module/%s.py'\n%s" \
+                           % (each, _name, 'Please modify your script/PoC.')
+                logger.log(CUSTOM_LOGGING.ERROR, errorMsg)
+                systemQuit(2)
+    except ImportError, e:
+        errorMsg = "Your current scipt [%s.py] caused this exception\n%s\n%s" \
+                   % (_name, '[Error Msg]: ' + str(e), 'Maybe you can download this module from pip or easy_install')
+        logger.log(CUSTOM_LOGGING.ERROR, errorMsg)
+        systemQuit(2)
+    debugPause()
+
+
+def loadPayloads():
     infoMsg = 'Loading payloads...'
-    logger.log(CUSTOM_LOGGING.SYSINFO, infoMsg)
+    logger.log(CUSTOM_LOGGING.SUCCESS, infoMsg)
     th['queue'] = Queue.Queue()
     if conf['MODULE_MODE'] is 'i':
         int_mode()
