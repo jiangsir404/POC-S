@@ -6,7 +6,7 @@ import Queue
 import sys
 import imp
 from lib.core.data import th, conf, logger
-from lib.core.enums import CUSTOM_LOGGING
+from lib.core.enums import CUSTOM_LOGGING,EXIT_STATUS
 from lib.core.common import debugPause, systemQuit
 from lib.core.settings import ESSENTIAL_MODULE_METHODS
 from thirdparty.IPy import IPy
@@ -25,12 +25,12 @@ def loadModule():
                 errorMsg = "Can't find essential method:'%s()' in current script:'module/%s.py'\n%s" \
                            % (each, _name, 'Please modify your script/PoC.')
                 logger.log(CUSTOM_LOGGING.ERROR, errorMsg)
-                systemQuit(2)
+                systemQuit(EXIT_STATUS.ERROR_EXIT)
     except ImportError, e:
         errorMsg = "Your current scipt [%s.py] caused this exception\n%s\n%s" \
                    % (_name, '[Error Msg]: ' + str(e), 'Maybe you can download this module from pip or easy_install')
         logger.log(CUSTOM_LOGGING.ERROR, errorMsg)
-        systemQuit(2)
+        systemQuit(EXIT_STATUS.ERROR_EXIT)
     debugPause()
 
 

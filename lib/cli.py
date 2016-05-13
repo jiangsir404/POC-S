@@ -7,8 +7,7 @@ from lib.parse.parser import parseArgs
 from lib.controller.loader import loadModule, loadPayloads
 from lib.core.common import setPaths, showDebugData, banner, systemQuit
 from lib.core.data import paths, conf, logger
-from lib.core.enums import CUSTOM_LOGGING
-from lib.utils.update import update
+from lib.core.enums import CUSTOM_LOGGING,EXIT_STATUS
 from lib.core.settings import IS_WIN
 from thirdparty.colorama.initialise import init as winowsColorInit
 
@@ -47,10 +46,10 @@ def main():
             from lib.controller.coroutine import CoroutineEngine
             CoroutineEngine().run()
 
-        systemQuit(0)
+        systemQuit(EXIT_STATUS.SYSETM_EXIT)
 
     except KeyboardInterrupt, e:
-        systemQuit(1)
+        systemQuit(EXIT_STATUS.USER_QUIT)
 
 
 if __name__ == "__main__":

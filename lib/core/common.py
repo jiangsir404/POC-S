@@ -10,6 +10,7 @@ from lib.core.data import *
 from lib.core.log import CUSTOM_LOGGING, LOGGER_HANDLER
 from lib.core.settings import BANNER, UNICODE_ENCODING, NULL, INVALID_UNICODE_CHAR_FORMAT
 from lib.core.convert import stdoutencode
+from enums import EXIT_STATUS
 from thirdparty.termcolor.termcolor import colored
 from thirdparty.odict.odict import OrderedDict
 
@@ -208,16 +209,17 @@ def isListLike(value):
     return isinstance(value, (list, tuple, set))
 
 
-# TODO 待优化
-def systemQuit(status=0):
+def systemQuit(status=EXIT_STATUS.SYSETM_EXIT):
     sys.stdout.write('\n')
     sys.stdout.flush()
-    if status == 1:
+    if status == EXIT_STATUS.SYSETM_EXIT:
+        logger.info('System exit.')
+    elif status == EXIT_STATUS.USER_QUIT:
         logger.error('User quit!')
-    elif status == 2:
+    elif status == EXIT_STATUS.ERROR_EXIT:
         logger.error('System exit.')
     else:
-        logger.info('System exit.')
+        raise Exception('Invalid status code: %s' % str(status))
     sys.exit(0)
 
 
