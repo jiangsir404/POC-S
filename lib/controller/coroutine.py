@@ -11,10 +11,12 @@ try:
     import gevent
 # TODO gevent 针对https的请求会出现错误
 except ImportError, e:
-    sys.exit(logger.error(str(e) + '\nPlease run command: pip install -r requirements.txt\n'))
+    logger.error(str(e) + '\nPlease run command: pip install -r requirements.txt\n')
+    sys.exit(0)
 import time
 from lib.utils.consle import getTerminalSize
 from lib.core.enums import CUSTOM_LOGGING
+from lib.core.common import dataToStdout
 
 class CoroutineEngine:
     def __init__(self):
@@ -35,14 +37,12 @@ class CoroutineEngine:
         self.scan_count += 1
 
     def _print_message(self, msg):
-        sys.stdout.write('\r' + msg + ' ' * (self.console_width - len(msg)) + '\n\r')
-        sys.stdout.flush()
+        dataToStdout('\r' + msg + ' ' * (self.console_width - len(msg)) + '\n\r')
 
     def _print_progress(self):
         msg = '%s found | %s remaining | %s scanned in %.2f seconds' % (
             self.found_count, self.queue.qsize(), self.scan_count, time.time() - self.start_time)
-        sys.stdout.write('\r' + ' ' * (self.console_width - len(msg)) + msg)
-        sys.stdout.flush()
+        dataToStdout('\r' + ' ' * (self.console_width - len(msg)) + msg)
 
     def _increase_scan_count(self):
         self.scan_count += 1

@@ -6,6 +6,7 @@ import os
 import re
 import sys
 import time
+import logging
 from lib.core.data import *
 from lib.core.log import CUSTOM_LOGGING, LOGGER_HANDLER
 from lib.core.settings import BANNER, UNICODE_ENCODING, NULL, INVALID_UNICODE_CHAR_FORMAT
@@ -87,7 +88,8 @@ def dataToStdout(data, bold=False):
     Writes text to the stdout (console) stream
     """
     if conf['SCREEN_OUTPUT']:
-        message = ""
+        if conf['ENGINE'] is 't':
+            logging._acquireLock()
 
         if isinstance(data, unicode):
             message = stdoutencode(data)
@@ -100,6 +102,9 @@ def dataToStdout(data, bold=False):
             sys.stdout.flush()
         except IOError:
             pass
+
+        if conf['ENGINE'] is 't':
+            logging._releaseLock()
     return
 
 

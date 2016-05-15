@@ -6,6 +6,7 @@ import threading
 import time
 import sys
 from lib.core.data import th, conf, logger
+from lib.core.common import dataToStdout
 from lib.utils.consle import getTerminalSize
 from lib.utils.versioncheck import PYVERSION
 from lib.core.enums import CUSTOM_LOGGING
@@ -26,9 +27,7 @@ class ThreadsEngine:
         self.file_lock = threading.Lock()
         self.single_lock = threading.Lock()
         self.load_lock = threading.Lock()
-        self.print_lock = threading.Lock()
-        self.console_width = getTerminalSize()[0]
-        self.console_width -= 2
+        self.console_width = getTerminalSize()[0] - 2
         self.is_continue = True
         self.found_single = False
 
@@ -38,18 +37,14 @@ class ThreadsEngine:
         self.num_lock.release()
 
     def _print_message(self, msg):
-        self.print_lock.acquire()
-        sys.stdout.write('\r' + msg + ' ' * (self.console_width - len(msg)) + '\n\r')
-        sys.stdout.flush()
-        self.print_lock.release()
+        dataToStdout('\r' + msg + ' ' * (self.console_width - len(msg)) + '\n\r')
 
     def _print_progress(self):
-        self.print_lock.acquire()
         msg = '%s found | %s remaining | %s scanned in %.2f seconds' % (
             self.found_count, self.queue.qsize(), self.scan_count, time.time() - self.start_time)
-        sys.stdout.write('\r' + ' ' * (self.console_width - len(msg)) + msg)
-        sys.stdout.flush()
-        self.print_lock.release()
+        out = '\r' + ' ' * (self.console_width - len(msg)) + msg
+        dataToStdout(out)
+
 
     def _increase_scan_count(self):
         self.num_lock.acquire()
