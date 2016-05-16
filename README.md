@@ -10,7 +10,7 @@
 
 *(欢迎提交代码和改进建议)*
   
-![banner.png](https://github.com/Xyntax/POC-T/blob/cdxy/docs/banner.png) 
+![banner.png](https://github.com/Xyntax/POC-T/blob/master/docs/banner.png) 
 
 ## 它能做什么？  
 这个小巧的并发框架可以满足许多日常需求.  
