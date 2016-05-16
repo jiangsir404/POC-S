@@ -77,6 +77,7 @@ optimization:
   --nF              取消文件输出
   --nS              取消屏幕输出
   --show            显示./module/文件夹下所有可用的模块名称
+  --browser         程序结束后，将运行结果在浏览器/记事本中打开
   --debug           开启debug模式，输出一些细节
   --update          自动从github更新程序
 ```  
