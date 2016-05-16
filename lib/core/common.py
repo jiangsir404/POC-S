@@ -7,6 +7,7 @@ import re
 import sys
 import time
 import logging
+import webbrowser
 from lib.core.data import *
 from lib.core.log import CUSTOM_LOGGING, LOGGER_HANDLER
 from lib.core.settings import BANNER, UNICODE_ENCODING, NULL, INVALID_UNICODE_CHAR_FORMAT
@@ -271,3 +272,13 @@ def getFileItems(filename, commentPrefix='#', unicode_=True, lowercase=False, un
         raise Exception(errMsg)
 
     return retVal if not unique else retVal.keys()
+
+
+def openBrowser():
+    path = conf['OUTPUT_FILE_PATH']
+    try:
+        webbrowser.open_new_tab(path)
+    except Exception, e:
+        dataToStdout(e)
+        msg = '[ERROR] Fail to open file with web browser: %s' % path
+        sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))

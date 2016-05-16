@@ -31,6 +31,7 @@ conf
     UPDATE             T / F
     NETWORK_STR        string
     RANDOM_UA          T / F
+    OPEN_BROWSER       T / F
     # TODO
     DISABLE_COLOR      T / F
 

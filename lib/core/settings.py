@@ -6,7 +6,7 @@ __author__ = 'xy'
 import os
 import subprocess
 
-VERSION = '1.4'
+VERSION = '1.5'
 VERSION_STRING = "POC-T"
 AUTHOR = 'cdxy'
 MAIL = 'i@cdxy.me'

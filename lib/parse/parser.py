@@ -52,6 +52,8 @@ def parseArgs():
                               help='disable screen output')
     optimization.add_argument('--show', default=False, action='store_true',
                               help='show available module/POC names and exit')
+    optimization.add_argument('--browser', default=False, action='store_true',
+                              help='Open notepad or web browser to view report after task was finished.')
     optimization.add_argument('--debug', default=False, action='store_true',
                               help='show more details while running')
     optimization.add_argument('--update', default=False, action='store_true',

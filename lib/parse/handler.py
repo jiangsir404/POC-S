@@ -60,7 +60,7 @@ def checkArgs(args):
             if int(_int[0]) < int(_int[1]):
                 if int(_int[1]) - int(_int[0]) > 1000000:
                     warnMsg = 'Loading %d Payloads...\nMaybe its too much, continue? [y/N]' % (
-                    int(_int[1]) - int(_int[0]))
+                        int(_int[1]) - int(_int[0]))
                     logger.log(CUSTOM_LOGGING.WARNING, warnMsg)
                     a = raw_input()
                     if a in ('Y', 'y', 'yes'):
@@ -76,7 +76,13 @@ def checkArgs(args):
         # TODO 添加规则以增加稳定性
         pass
 
+    if not args.nF and args.o:
+        msg = 'You cannot use [--nF] and [-o] together, please read the usage with [-h].'
+        sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
 
+    if not args.nF and args.browser:
+        msg = '[--browser] is based on file output, please remove [--nF] in your command and try again.'
+        sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
 
 def setArgs(args):
     conf['MODULE_NAME'] = args.m
@@ -87,6 +93,7 @@ def setArgs(args):
     conf['SINGLE_MODE'] = args.single
     conf['DEBUG'] = args.debug
     conf['NETWORK_STR'] = args.n
+    conf['OPEN_BROWSER'] = args.browser
 
     # TODO
     th['THREADS_NUM'] = conf['THREADS_NUM']
@@ -111,9 +118,12 @@ def setArgs(args):
         conf['MODULE_MODE'] = 'n'
         conf['INPUT_FILE_PATH'] = None
 
-    conf['OUTPUT_FILE_PATH'] = args.o if args.o else \
-        os.path.join(paths['OUTPUT_PATH'],
-                     time.strftime('[%Y%m%d-%H%M%S]', time.localtime(time.time())) + conf['MODULE_NAME'] + '.txt')
+    conf['OUTPUT_FILE_PATH'] = os.path.abspath(args.o) if args.o else \
+        os.path.abspath(
+            os.path.join(
+                paths['OUTPUT_PATH'], time.strftime(
+                    '[%Y%m%d-%H%M%S]', time.localtime(
+                        time.time())) + conf['MODULE_NAME'] + '.txt'))
 
     conf['SCREEN_OUTPUT'] = args.nS
     conf['FILE_OUTPUT'] = args.nF

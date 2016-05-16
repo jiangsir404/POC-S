@@ -5,9 +5,9 @@ __author__ = 'xy'
 import os.path
 from lib.parse.parser import parseArgs
 from lib.controller.loader import loadModule, loadPayloads
-from lib.core.common import setPaths, showDebugData, banner, systemQuit
+from lib.core.common import setPaths, showDebugData, banner, systemQuit, openBrowser
 from lib.core.data import paths, conf, logger
-from lib.core.enums import CUSTOM_LOGGING,EXIT_STATUS
+from lib.core.enums import CUSTOM_LOGGING, EXIT_STATUS
 from lib.core.settings import IS_WIN
 from thirdparty.colorama.initialise import init as winowsColorInit
 
@@ -45,6 +45,9 @@ def main():
         elif conf['ENGINE'] is 'c':
             from lib.controller.coroutine import CoroutineEngine
             CoroutineEngine().run()
+
+        if conf['OPEN_BROWSER']:
+            openBrowser()
 
         systemQuit(EXIT_STATUS.SYSETM_EXIT)
 
