@@ -6,17 +6,19 @@ import argparse
 import sys
 
 from lib.parse.handler import checkArgs, setArgs
-
+from lib.core.settings import VERSION
 
 def parseArgs():
     parser = argparse.ArgumentParser(prog='POC-T',
                                      formatter_class=argparse.RawTextHelpFormatter,
-                                     description='From i@cdxy.me http://www.cdxy.me',
-                                     usage='POC-T.py [-T|-C] [-m] [-f|-i|-n] [options]\n'
-                                           '\nExample:\n'
-                                           'python POC-T.py -T -m test -f ./dic/1-100.txt\n'
-                                           'python POC-T.py -C -m test -i 1-100\n'
-                                           'python POC-T.py -C -m spider -n 10.0.0.0/24')
+                                     description='powered by cdxy <mail:i@cdxy.me> ',
+                                     usage='\n  python POC-T.py [-T|-C] [-m NAME] [-f|-i|-n VALUE] [options]'
+                                           '\n  python POC-T.py [-h|-v|--show|--update]'
+                                           '\n\nexample:\n'
+                                           '  python POC-T.py -T -m test -f ./dic/1-100.txt\n'
+                                           '  python POC-T.py -C -m test -i 1-100\n'
+                                           '  python POC-T.py -C -m spider -n 10.0.0.0/24',
+                                     add_help=False)
 
     engine = parser.add_argument_group('engine')
     engine.add_argument('-T', default=False, action='store_true',
@@ -25,24 +27,24 @@ def parseArgs():
     engine.add_argument('-C', default=False, action='store_true',
                         help='load Coroutine engine (single-threaded with asynchronous)')
 
-    engine.add_argument('-t', metavar='[num]', type=int, default=10,
+    engine.add_argument('-t', metavar='NUM', type=int, default=10,
                         help='num of threads/concurrent, 10 by default')
 
     module = parser.add_argument_group('module')
 
-    module.add_argument('-m', metavar='[module]', type=str, default='',
-                        help='select Module/POC name in ./module/')
+    module.add_argument('-m', metavar='NAME', type=str, default='',
+                        help='select Module/POC name in ./module/ (without ".py")')
 
     target = parser.add_argument_group('target mode')
-    target.add_argument('-f', metavar='[target]', type=str, default='',
-                        help='load targets from TargetFile')
-    target.add_argument('-i', metavar='[start]-[end]', type=str, default='',
-                        help='generate payloads from int(start) to int(end)')
-    target.add_argument('-n', metavar='[network]', type=str, default='',
-                        help='load target IPs from IP/MASK. eg. 127.0.0.0/30')
+    target.add_argument('-f', metavar='FILE', type=str, default='',
+                        help='load targets from TargetFile (e.g. ./data/wooyun_domain)')
+    target.add_argument('-i', metavar='START-END', type=str, default='',
+                        help='generate payloads from int(start) to int(end) (e.g. 1-100)')
+    target.add_argument('-n', metavar='IP/MASK', type=str, default='',
+                        help='load target IPs from IP/MASK. (e.g. 127.0.0.0/24)')
     optimization = parser.add_argument_group('optimization')
 
-    optimization.add_argument('-o', metavar='[output]', type=str, default='',
+    optimization.add_argument('-o', metavar='FILE', type=str, default='',
                               help='output file path&name. default in ./output/')
     optimization.add_argument('--single', default=False, action='store_true',
                               help='exit after finding the first victim/password.')
@@ -58,6 +60,10 @@ def parseArgs():
                               help='show more details while running')
     optimization.add_argument('--update', default=False, action='store_true',
                               help='update POC-T from github')
+    optimization.add_argument('-h', '--help', action='help',
+                              help='show this help message and exit')
+    optimization.add_argument('-v', '--version', action='version', version=VERSION,
+                              help="show program's version number and exit")
 
     if len(sys.argv) == 1:
         sys.argv.append('-h')
