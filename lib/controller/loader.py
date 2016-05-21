@@ -45,6 +45,9 @@ def loadPayloads():
         file_mode()
     elif conf.MODULE_MODE is 'n':
         net_mode()
+    elif conf.MODULE_MODE is 'target':
+        single_target_mode()
+
     else:
         raise ToolkitValueException('conf[\'MODULE_MODE\'] value ERROR.')
     logger.log(CUSTOM_LOGGING.SUCCESS, 'Total: %s' % str(th.queue.qsize()))
@@ -73,3 +76,7 @@ def net_mode():
         sys.exit(logger.error('Invalid IP/MASK,%s' % e))
     for each in _list:
         th.queue.put(str(each))
+
+
+def single_target_mode():
+    th.queue.put(str(conf.SINGLE_TARGET_STR))

@@ -16,6 +16,7 @@ def checkArgs(args):
     f = args.f
     i = args.i
     n = args.n
+    target = args.TARGET
     show = args.show
     T = args.T
     C = args.C
@@ -33,20 +34,30 @@ def checkArgs(args):
                 infoMsg += '  %s\n' % _str
         sys.exit(logger.log(CUSTOM_LOGGING.SYSINFO, infoMsg))
 
-    if (not T and not C) or (T and C):
-        msg = 'Use -T to set Multi-Threaded mode or -C to set Coroutine mode.'
-        sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
-
     if not module:
         msg = 'Use -m to select a module name. Example: -m spider'
+        sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
+
+    if (not T and not C) or (T and C):
+        msg = 'Use -T to set Multi-Threaded mode or -C to set Coroutine mode.'
         sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
 
     if module and not os.path.isfile("./module/" + module + ".py"):
         msg = 'module not exist. Use --show to view all available module names.'
         sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
 
-    if (not f and not i and not n) or (f and i) or (f and n) or (i and n):
-        msg = 'To load targets,please choose one from -i,-f and -n.'
+    # TODO 待优化
+    target_mode_flag = 0
+    if target:
+        target_mode_flag += 1
+    if f:
+        target_mode_flag += 2
+    if i:
+        target_mode_flag += 4
+    if n:
+        target_mode_flag += 8
+    if target_mode_flag not in (1, 2, 4, 8):
+        msg = 'To load targets, please choose one from [TARGET|-i|-f|-n].'
         sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
 
     if f and not os.path.isfile(f):
@@ -54,7 +65,7 @@ def checkArgs(args):
         sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
 
     if i:
-        help_str = "invalid input in [-i], Example: python POC-T -m test -i 1-100"
+        help_str = "invalid input in [-i], Example: python POC-T -m test -i 1-100."
         try:
             _int = i.strip().split('-')
             if int(_int[0]) < int(_int[1]):
@@ -72,8 +83,10 @@ def checkArgs(args):
                 sys.exit(logger.log(CUSTOM_LOGGING.ERROR, help_str))
         except Exception, e:
             sys.exit(logger.log(CUSTOM_LOGGING.ERROR, help_str))
+    # TODO 添加规则以增加稳定性
     if n:
-        # TODO 添加规则以增加稳定性
+        pass
+    if target:
         pass
 
     if not args.nF and args.o:
@@ -84,46 +97,52 @@ def checkArgs(args):
         msg = '[--browser] is based on file output, please remove [--nF] in your command and try again.'
         sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
 
+
 def setArgs(args):
-    conf['MODULE_NAME'] = args.m
-    conf['MODULE_FILE_PATH'] = os.path.join(paths['MODULES_PATH'], conf['MODULE_NAME'] + ".py")
-    conf['THREADS_NUM'] = args.t
-    conf['SCREEN_OUTPUT'] = args.nS
-    conf['FILE_OUTPUT'] = args.nF
-    conf['SINGLE_MODE'] = args.single
-    conf['DEBUG'] = args.debug
-    conf['NETWORK_STR'] = args.n
-    conf['OPEN_BROWSER'] = args.browser
+    conf.MODULE_NAME = args.m
+    conf.MODULE_FILE_PATH = os.path.join(paths.MODULES_PATH, conf.MODULE_NAME + ".py")
+    conf.THREADS_NUM = args.t
+    conf.SCREEN_OUTPUT = args.nS
+    conf.FILE_OUTPUT = args.nF
+    conf.SINGLE_MODE = args.single
+    conf.DEBUG = args.debug
+    conf.NETWORK_STR = args.n
+    conf.SINGLE_TARGET_STR = args.TARGET
+    conf.OPEN_BROWSER = args.browser
 
     # TODO
-    th['THREADS_NUM'] = conf['THREADS_NUM']
+    th.THREADS_NUM = conf.THREADS_NUM
 
     if args.update:
-        conf['UPDATE'] = args.update
+        conf.UPDATE = args.update
         update()
 
     if args.T:
-        conf['ENGINE'] = 't'
+        conf.ENGINE = 't'
     elif args.C:
-        conf['ENGINE'] = 'c'
+        conf.ENGINE = 'c'
 
     if args.f:
-        conf['MODULE_MODE'] = 'f'
-        conf['INPUT_FILE_PATH'] = args.f
+        conf.MODULE_MODE = 'f'
+        conf.INPUT_FILE_PATH = args.f
     elif args.i:
-        conf['MODULE_MODE'] = 'i'
-        conf['I_NUM2'] = args.i
-        conf['INPUT_FILE_PATH'] = None
+        conf.MODULE_MODE = 'i'
+        conf.I_NUM2 = args.i
+        conf.INPUT_FILE_PATH = None
     elif args.n:
-        conf['MODULE_MODE'] = 'n'
-        conf['INPUT_FILE_PATH'] = None
+        conf.MODULE_MODE = 'n'
+        conf.INPUT_FILE_PATH = None
+    elif args.TARGET:
+        conf.MODULE_MODE = 'target'
+        th.THREADS_NUM = conf.THREADS_NUM = 1
+        conf.INPUT_FILE_PATH = None
 
-    conf['OUTPUT_FILE_PATH'] = os.path.abspath(args.o) if args.o else \
+    conf.OUTPUT_FILE_PATH = os.path.abspath(args.o) if args.o else \
         os.path.abspath(
             os.path.join(
-                paths['OUTPUT_PATH'], time.strftime(
+                paths.OUTPUT_PATH, time.strftime(
                     '[%Y%m%d-%H%M%S]', time.localtime(
-                        time.time())) + conf['MODULE_NAME'] + '.txt'))
+                        time.time())) + conf.MODULE_NAME + '.txt'))
 
-    conf['SCREEN_OUTPUT'] = args.nS
-    conf['FILE_OUTPUT'] = args.nF
+    conf.SCREEN_OUTPUT = args.nS
+    conf.FILE_OUTPUT = args.nF

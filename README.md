@@ -51,15 +51,17 @@
 
 ### 参数中文说明 
 ```
-usage: 
-  python POC-T.py [-T|-C] [-m NAME] [-f|-i|-n VALUE] [options]
-  python POC-T.py [-h|-v|--show|--update]
-
-example:
-  python POC-T.py -T -m test -f ./dic/1-100.txt
-  python POC-T.py -C -m test -i 1-100
-  python POC-T.py -C -m spider -n 10.0.0.0/24
-
+usage:                                                                              
+  python POC-T.py [-T|-C] [-m NAME] [-f|-i|-n VALUE] [options]                      
+  python POC-T.py [-T|-C] [-m NAME] [TARGET] [options]                              
+  python POC-T.py [-h|-v|--show|--update]                                           
+                                                                                    
+example:                                                                            
+  python POC-T.py -m jboss-poc http://www.cdxy.me                                   
+  python POC-T.py -T -m test -f ./dic/1-100.txt                                     
+  python POC-T.py -C -m test -i 1-100                                               
+  python POC-T.py -C -m spider -n 10.0.0.0/24                                       
+                                                                                    
 powered by cdxy <mail:i@cdxy.me> 
   
 engine:
@@ -71,6 +73,7 @@ module:
   -m NAME           指定加载的PoC或模块名称
 
 target mode:
+  TARGET            加载单个目标
   -f FILE           从文件加载目标列表(常用于扫描或批量漏洞验证)
   -i START-END      给定起始数字和结束数字，自动生成payload(常用于有数字规则的遍历，爬虫等)
   -n IP/MASK        从IP和子网掩码加载目标，如:10.0.0.0/28 (用于扫描网段)

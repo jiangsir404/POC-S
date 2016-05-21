@@ -8,13 +8,16 @@ import sys
 from lib.parse.handler import checkArgs, setArgs
 from lib.core.settings import VERSION
 
+
 def parseArgs():
     parser = argparse.ArgumentParser(prog='POC-T',
                                      formatter_class=argparse.RawTextHelpFormatter,
                                      description='powered by cdxy <mail:i@cdxy.me> ',
                                      usage='\n  python POC-T.py [-T|-C] [-m NAME] [-f|-i|-n VALUE] [options]'
+                                           '\n  python POC-T.py [-T|-C] [-m NAME] [TARGET] [options]'
                                            '\n  python POC-T.py [-h|-v|--show|--update]'
                                            '\n\nexample:\n'
+                                           '  python POC-T.py -m jboss-poc http://www.cdxy.me\n'
                                            '  python POC-T.py -T -m test -f ./dic/1-100.txt\n'
                                            '  python POC-T.py -C -m test -i 1-100\n'
                                            '  python POC-T.py -C -m spider -n 10.0.0.0/24',
@@ -36,12 +39,16 @@ def parseArgs():
                         help='select Module/POC name in ./module/ (without ".py")')
 
     target = parser.add_argument_group('target mode')
+
+    target.add_argument('TARGET', type=str, default='',
+                        help="scan a single target (e.g. www.wooyun.org)")
     target.add_argument('-f', metavar='FILE', type=str, default='',
                         help='load targets from TargetFile (e.g. ./data/wooyun_domain)')
     target.add_argument('-i', metavar='START-END', type=str, default='',
-                        help='generate payloads from int(start) to int(end) (e.g. 1-100)')
+                        help='generate targets from int(start) to int(end) (e.g. 1-100)')
     target.add_argument('-n', metavar='IP/MASK', type=str, default='',
                         help='load target IPs from IP/MASK. (e.g. 127.0.0.0/24)')
+
     optimization = parser.add_argument_group('optimization')
 
     optimization.add_argument('-o', metavar='FILE', type=str, default='',
