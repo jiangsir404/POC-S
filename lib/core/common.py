@@ -9,10 +9,11 @@ import time
 import logging
 import webbrowser
 from lib.core.data import *
+from lib.core.exception import *
 from lib.core.log import CUSTOM_LOGGING, LOGGER_HANDLER
 from lib.core.settings import BANNER, UNICODE_ENCODING, NULL, INVALID_UNICODE_CHAR_FORMAT
 from lib.core.convert import stdoutencode
-from enums import EXIT_STATUS
+from lib.core.enums import EXIT_STATUS
 from thirdparty.termcolor.termcolor import colored
 from thirdparty.odict.odict import OrderedDict
 
@@ -21,24 +22,27 @@ def setPaths():
     """
     Sets absolute paths for project directories and files
     """
-    ROOT_PATH = paths['ROOT_PATH']
-    paths['DATA_PATH'] = os.path.join(ROOT_PATH, "data")
-    paths['MODULES_PATH'] = os.path.join(ROOT_PATH, "module")
-    paths['OUTPUT_PATH'] = os.path.join(ROOT_PATH, "output")
-    if not os.path.exists(paths['MODULES_PATH']):
-        os.mkdir(paths['MODULES_PATH'])
-    if not os.path.exists(paths['OUTPUT_PATH']):
-        os.mkdir(paths['OUTPUT_PATH'])
-    if not os.path.exists(paths['DATA_PATH']):
-        os.mkdir(paths['DATA_PATH'])
-    try:
-        paths['WEAK_PASS'] = os.path.join(paths['DATA_PATH'], "pass100.txt")
-        paths['LARGE_WEAK_PASS'] = os.path.join(paths['DATA_PATH'], "pass1000.txt")
-        paths['UA_LIST_PATH'] = os.path.join(paths['DATA_PATH'], "user-agents.txt")
-    except Exception, e:
-        msg = 'Some files in ./data are missing, it may cause an issue\n'
+    ROOT_PATH = paths.ROOT_PATH
+    paths.DATA_PATH = os.path.join(ROOT_PATH, "data")
+    paths.MODULES_PATH = os.path.join(ROOT_PATH, "module")
+    paths.OUTPUT_PATH = os.path.join(ROOT_PATH, "output")
+    if not os.path.exists(paths.MODULES_PATH):
+        os.mkdir(paths.MODULES_PATH)
+    if not os.path.exists(paths.OUTPUT_PATH):
+        os.mkdir(paths.OUTPUT_PATH)
+    if not os.path.exists(paths.DATA_PATH):
+        os.mkdir(paths.DATA_PATH)
+
+    paths.WEAK_PASS = os.path.join(paths.DATA_PATH, "pass100.txt")
+    paths.LARGE_WEAK_PASS = os.path.join(paths.DATA_PATH, "pass1000.txt")
+    paths.UA_LIST_PATH = os.path.join(paths.DATA_PATH, "user-agents.txt")
+
+    if os.path.isfile(paths.WEAK_PASS) and os.path.isfile(paths.LARGE_WEAK_PASS) and os.path.isfile(paths.UA_LIST_PATH):
+        pass
+    else:
+        msg = 'Some files in ./data are missing, it may cause an issue.\n'
         msg += 'Please use \'--update\' to get the complete program from github.com.'
-        logger.log(CUSTOM_LOGGING.WARNING, msg)
+        raise ToolkitMissingPrivileges(msg)
 
 
 def checkFile(filename):
@@ -59,11 +63,11 @@ def checkFile(filename):
             valid = False
 
     if not valid:
-        raise Exception("unable to read file '%s'" % filename)
+        raise ToolkitSystemException("unable to read file '%s'" % filename)
 
 
 def debugPause():
-    if conf['DEBUG']:
+    if conf.DEBUG:
         raw_input('[Debug] Press <Enter> to continue.')
 
 
@@ -88,8 +92,8 @@ def dataToStdout(data, bold=False):
     """
     Writes text to the stdout (console) stream
     """
-    if conf['SCREEN_OUTPUT']:
-        if conf['ENGINE'] is 't':
+    if conf.SCREEN_OUTPUT:
+        if conf.ENGINE is 't':
             logging._acquireLock()
 
         if isinstance(data, unicode):
@@ -104,7 +108,7 @@ def dataToStdout(data, bold=False):
         except IOError:
             pass
 
-        if conf['ENGINE'] is 't':
+        if conf.ENGINE is 't':
             logging._releaseLock()
     return
 
@@ -225,7 +229,7 @@ def systemQuit(status=EXIT_STATUS.SYSETM_EXIT):
     elif status == EXIT_STATUS.ERROR_EXIT:
         logger.error('System exit.')
     else:
-        raise Exception('Invalid status code: %s' % str(status))
+        raise ToolkitValueException('Invalid status code: %s' % str(status))
     sys.exit(0)
 
 
@@ -269,16 +273,15 @@ def getFileItems(filename, commentPrefix='#', unicode_=True, lowercase=False, un
     except (IOError, OSError, MemoryError), ex:
         errMsg = "something went wrong while trying "
         errMsg += "to read the content of file '%s' ('%s')" % (filename, ex)
-        raise Exception(errMsg)
+        raise ToolkitSystemException(errMsg)
 
     return retVal if not unique else retVal.keys()
 
 
 def openBrowser():
-    path = conf['OUTPUT_FILE_PATH']
+    path = conf.OUTPUT_FILE_PATH
     try:
         webbrowser.open_new_tab(path)
     except Exception, e:
-        dataToStdout(e)
-        msg = '[ERROR] Fail to open file with web browser: %s' % path
-        sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
+        errMsg = '\n[ERROR] Fail to open file with web browser: %s' % path
+        raise ToolkitSystemException(errMsg)

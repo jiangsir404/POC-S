@@ -3,6 +3,7 @@
 __author__ = 'xy'
 
 from lib.core.log import LOGGER
+from lib.core.datatype import AttribDict
 # object to share within function and classes command
 # line options and settings
 """
@@ -45,8 +46,8 @@ th
 
 logger = LOGGER
 
-conf = {}
+conf = AttribDict()
 
-paths = {}
+paths = AttribDict()
 
-th = {}
+th = AttribDict()

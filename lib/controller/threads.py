@@ -14,14 +14,14 @@ from lib.core.enums import CUSTOM_LOGGING
 
 class ThreadsEngine:
     def __init__(self):
-        self.module_name = conf['MODULE_NAME']
-        self.module_obj = th['module_obj']
-        self.f_flag = conf['FILE_OUTPUT']
-        self.s_flag = conf['SCREEN_OUTPUT']
-        self.queue = th['queue']
-        self.output = conf['OUTPUT_FILE_PATH']
-        self.thread_count = self.threads_num = th['THREADS_NUM']
-        self.single_mode = conf['SINGLE_MODE']
+        self.module_name = conf.MODULE_NAME
+        self.module_obj = th.module_obj
+        self.f_flag = conf.FILE_OUTPUT
+        self.s_flag = conf.SCREEN_OUTPUT
+        self.queue = th.queue
+        self.output = conf.OUTPUT_FILE_PATH
+        self.thread_count = self.threads_num = th.THREADS_NUM
+        self.single_mode = conf.SINGLE_MODE
         self.scan_count = self.found_count = 0
         self.num_lock = threading.Lock()
         self.file_lock = threading.Lock()
@@ -44,7 +44,6 @@ class ThreadsEngine:
             self.found_count, self.queue.qsize(), self.scan_count, time.time() - self.start_time)
         out = '\r' + ' ' * (self.console_width - len(msg)) + msg
         dataToStdout(out)
-
 
     def _increase_scan_count(self):
         self.num_lock.acquire()

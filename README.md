@@ -84,7 +84,7 @@ optimization:
   --browser         程序结束后，将运行结果在浏览器/记事本中打开
   --debug           开启debug模式，输出一些细节
   --update          自动从github更新程序
-　-h, --help        打印此页帮助
+  -h, --help        打印此页帮助
   -v, --version     打印版本号  
 
 ```  

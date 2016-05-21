@@ -4,6 +4,7 @@ __author__ = 'xy'
 
 import sys
 from lib.core.data import th, conf, logger
+
 try:
     from gevent import monkey
 
@@ -18,21 +19,23 @@ from lib.utils.consle import getTerminalSize
 from lib.core.enums import CUSTOM_LOGGING
 from lib.core.common import dataToStdout
 
+
 class CoroutineEngine:
     def __init__(self):
-        self.module_name = conf['MODULE_NAME']
-        self.module_obj = th['module_obj']
-        self.f_flag = conf['FILE_OUTPUT']
-        self.s_flag = conf['SCREEN_OUTPUT']
-        self.queue = th['queue']
-        self.output = conf['OUTPUT_FILE_PATH']
-        self.thread_count = self.threads_num = th['THREADS_NUM']
-        self.single_mode = conf['SINGLE_MODE']
+        self.module_name = conf.MODULE_NAME
+        self.module_obj = th.module_obj
+        self.f_flag = conf.FILE_OUTPUT
+        self.s_flag = conf.SCREEN_OUTPUT
+        self.queue = th.queue
+        self.output = conf.OUTPUT_FILE_PATH
+        self.thread_count = self.threads_num = th.THREADS_NUM
+        self.single_mode = conf.SINGLE_MODE
         self.scan_count = self.found_count = 0
         self.console_width = getTerminalSize()[0]
-        self.console_width -=2
+        self.console_width -= 2
         self.is_continue = True
         self.found_single = False
+
     def _update_scan_count(self):
         self.scan_count += 1
 
@@ -101,4 +104,3 @@ class CoroutineEngine:
             sys.stdout.write('\n')
             sys.stdout.flush()
             logger.log(CUSTOM_LOGGING.SYSINFO, msg)
-
