@@ -23,13 +23,5 @@ class ToolkitSystemException(ToolkitBaseException):
     pass
 
 
-class ToolkitUnsupportedDBMSException(ToolkitBaseException):
-    pass
-
-
-class ToolkitUnsupportedFeatureException(ToolkitBaseException):
-    pass
-
-
 class ToolkitValueException(ToolkitBaseException):
     pass
