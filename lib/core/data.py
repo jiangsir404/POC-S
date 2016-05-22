@@ -46,8 +46,10 @@ th
 
 logger = LOGGER
 
-conf = AttribDict()
-
 paths = AttribDict()
+
+cmdLineOptions = AttribDict()
+
+conf = AttribDict()
 
 th = AttribDict()

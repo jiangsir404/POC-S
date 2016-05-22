@@ -72,9 +72,9 @@ def debugPause():
 
 
 def showDebugData():
-    logger.log(CUSTOM_LOGGING.SYSINFO, '----conf---=\n%s' % conf)
-    logger.log(CUSTOM_LOGGING.SYSINFO, '----paths---=\n%s' % paths)
-    logger.log(CUSTOM_LOGGING.SYSINFO, '----th---=\n%s' % th)
+    logger.log(CUSTOM_LOGGING.SYSINFO, '----conf----\n%s' % conf)
+    logger.log(CUSTOM_LOGGING.SYSINFO, '----paths----\n%s' % paths)
+    logger.log(CUSTOM_LOGGING.SYSINFO, '----th----\n%s' % th)
     debugPause()
 
 
@@ -285,3 +285,24 @@ def openBrowser():
     except Exception, e:
         errMsg = '\n[ERROR] Fail to open file with web browser: %s' % path
         raise ToolkitSystemException(errMsg)
+
+def checkSystemEncoding():
+    """
+    Checks for problematic encodings
+    """
+
+    if sys.getdefaultencoding() == "cp720":
+        try:
+            codecs.lookup("cp720")
+        except LookupError:
+            errMsg = "there is a known Python issue (#1616979) related "
+            errMsg += "to support for charset 'cp720'. Please visit "
+            errMsg += "'http://blog.oneortheother.info/tip/python-fix-cp720-encoding/index.html' "
+            errMsg += "and follow the instructions to be able to fix it"
+            logger.critical(errMsg)
+
+            warnMsg = "temporary switching to charset 'cp1256'"
+            logger.warn(warnMsg)
+
+            reload(sys)
+            sys.setdefaultencoding("cp1256")
