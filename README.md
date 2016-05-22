@@ -1,4 +1,4 @@
-# POC-T
+# POC-T: **P**entest **O**ver **C**oncurrent **T**oolkit 
 [![Python 2.6|2.7](https://img.shields.io/badge/python-2.6|2.7-yellow.svg)](https://www.python.org/) [![License](https://img.shields.io/badge/license-GPLv2-red.svg)](https://raw.githubusercontent.com/Xyntax/POC-T/master/docs/LICENSE.txt)  
 
 > 跨平台模块化并发框架，可用于采集/爬虫/爆破/批量PoC等任何需要并发的地方。
@@ -148,5 +148,5 @@ def poc(input_str):
 联系作者
 ----
 * mail:i@cdxy.me  
-* 博客:[http://www.cdxy.me](http://www.cdxy.me)  
+
   
