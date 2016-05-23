@@ -3,10 +3,11 @@
 __author__ = 'xy'
 
 import os.path
-from lib.parse.parser import parseArgs
+from lib.parse.cmdline import cmdLineParser
+from lib.parse.handler import initOptions
 from lib.controller.loader import loadModule, loadPayloads
 from lib.core.common import setPaths, showDebugData, banner, systemQuit, openBrowser
-from lib.core.data import paths, conf, logger
+from lib.core.data import paths, conf, logger,cmdLineOptions
 from lib.core.enums import EXIT_STATUS
 from lib.core.settings import IS_WIN
 from lib.core.exception import ToolkitUserQuitException
@@ -30,7 +31,8 @@ def main():
             raise SystemExit
         setPaths()
 
-        parseArgs()
+        cmdLineOptions.update(cmdLineParser().__dict__)
+        initOptions(cmdLineOptions)
 
         if IS_WIN:
             winowsColorInit()

@@ -4,20 +4,15 @@ __author__ = 'xy'
 
 import argparse
 import sys
-
-from lib.parse.handler import checkArgs, setArgs
 from lib.core.settings import VERSION
 
 
-def parseArgs():
-    parser = argparse.ArgumentParser(prog='POC-T',
-                                     formatter_class=argparse.RawTextHelpFormatter,
-                                     description='powered by cdxy <mail:i@cdxy.me> ',
-                                     usage='\n  python POC-T.py [-T|-C] [-m NAME] [-f|-i|-n VALUE] [options]'
-                                           '\n  python POC-T.py [-T|-C] [-m NAME] [TARGET] [options]'
+def cmdLineParser():
+    parser = argparse.ArgumentParser(description='powered by cdxy <mail:i@cdxy.me> ',
+                                     usage='\n  python POC-T.py [-T|-C] [-m NAME] [-s|-f|-i|-n VALUE] [options]'
                                            '\n  python POC-T.py [-h|-v|--show|--update]'
                                            '\n\nexample:\n'
-                                           '  python POC-T.py -m jboss-poc http://www.cdxy.me\n'
+                                           '  python POC-T.py -T -m jboss-poc -s http://www.cdxy.me\n'
                                            '  python POC-T.py -T -m test -f ./dic/1-100.txt\n'
                                            '  python POC-T.py -C -m test -i 1-100\n'
                                            '  python POC-T.py -C -m spider -n 10.0.0.0/24',
@@ -40,7 +35,7 @@ def parseArgs():
 
     target = parser.add_argument_group('target mode')
 
-    target.add_argument('TARGET', type=str, default='',
+    target.add_argument('-s', metavar='TARGET', type=str, default='',
                         help="scan a single target (e.g. www.wooyun.org)")
     target.add_argument('-f', metavar='FILE', type=str, default='',
                         help='load targets from TargetFile (e.g. ./data/wooyun_domain)')
@@ -62,18 +57,19 @@ def parseArgs():
     optimization.add_argument('--show', default=False, action='store_true',
                               help='show available module/POC names and exit')
     optimization.add_argument('--browser', default=False, action='store_true',
-                              help='Open notepad or web browser to view report after task was finished.')
+                              help='Open notepad or web browser to view report after task finished.')
     optimization.add_argument('--debug', default=False, action='store_true',
                               help='show more details while running')
     optimization.add_argument('--update', default=False, action='store_true',
                               help='update POC-T from github')
-    optimization.add_argument('-h', '--help', action='help',
-                              help='show this help message and exit')
     optimization.add_argument('-v', '--version', action='version', version=VERSION,
                               help="show program's version number and exit")
+    optimization.add_argument('-h', '--help', action='help',
+                              help='show this help message and exit')
+    optimization.add_argument('-hc', '--helpCN', default=False, action='store_true',
+                              help='打印中文帮助(show help message in Chinese)')
 
     if len(sys.argv) == 1:
         sys.argv.append('-h')
     args = parser.parse_args()
-    checkArgs(args)
-    setArgs(args)
+    return args

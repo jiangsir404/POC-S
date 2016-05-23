@@ -19,12 +19,12 @@ from lib.core.revision import getRevisionNumber
 
 
 def update():
-    if not conf['UPDATE']:
+    if not conf.UPDATE:
         return
 
     success = False
 
-    if not os.path.exists(os.path.join(paths['ROOT_PATH'], ".git")):
+    if not os.path.exists(os.path.join(paths.ROOT_PATH, ".git")):
         errMsg = "not a git repository. Please checkout the 'Xyntax/POC-T' repository "
         errMsg += "from GitHub (e.g. 'git clone https://github.com/Xyntax/POC-T.git POC-T')"
         logger.error(errMsg)
@@ -40,7 +40,7 @@ def update():
 
         try:
             process = execute("git checkout . && git pull %s HEAD" % GIT_REPOSITORY, shell=True, stdout=PIPE,
-                              stderr=PIPE, cwd=paths['ROOT_PATH'].encode(
+                              stderr=PIPE, cwd=paths.ROOT_PATH.encode(
                     locale.getpreferredencoding()))  # Reference: http://blog.stastnarodina.com/honza-en/spot/python-unicodeencodeerror/
             pollProcess(process, True)
             stdout, stderr = process.communicate()

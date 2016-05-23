@@ -1,4 +1,4 @@
-# POC-T
+# POC-T: **P**entest **O**ver **C**oncurrent **T**oolkit 
 [![Python 2.6|2.7](https://img.shields.io/badge/python-2.6|2.7-yellow.svg)](https://www.python.org/) [![License](https://img.shields.io/badge/license-GPLv2-red.svg)](https://raw.githubusercontent.com/Xyntax/POC-T/master/docs/LICENSE.txt)  
 
 > 跨平台模块化并发框架，可用于采集/爬虫/爆破/批量PoC等任何需要并发的地方。
@@ -51,45 +51,45 @@
 
 ### 参数中文说明 
 ```
-usage:                                                                              
-  python POC-T.py [-T|-C] [-m NAME] [-f|-i|-n VALUE] [options]                      
-  python POC-T.py [-T|-C] [-m NAME] [TARGET] [options]                              
-  python POC-T.py [-h|-v|--show|--update]                                           
-                                                                                    
-example:                                                                            
-  python POC-T.py -m jboss-poc http://www.cdxy.me                                   
-  python POC-T.py -T -m test -f ./dic/1-100.txt                                     
-  python POC-T.py -C -m test -i 1-100                                               
-  python POC-T.py -C -m spider -n 10.0.0.0/24                                       
-                                                                                    
-powered by cdxy <mail:i@cdxy.me> 
-  
-engine:
-  -T                多线程模式
-  -C                协程(单线程异步)模式
-  -t NUM            设置并发数量(线程数量)，默认为10
-  
-module:
-  -m NAME           指定加载的PoC或模块名称
+本文档为程序中文使用说明，您也可以使用 -h 查看英文版使用说明
+powered by cdxy <mail:i@cdxy.me>
 
-target mode:
-  TARGET            加载单个目标
-  -f FILE           从文件加载目标列表(常用于扫描或批量漏洞验证)
-  -i START-END      给定起始数字和结束数字，自动生成payload(常用于有数字规则的遍历，爬虫等)
-  -n IP/MASK        从IP和子网掩码加载目标，如:10.0.0.0/28 (用于扫描网段)
+使用方法:
+  python POC-T.py [-T|-C] [-m NAME] [-s|-f|-i|-n VALUE] [options]
+  python POC-T.py [-h|-v|--show|--update]
 
-optimization:
-  -o FILE           输出文件路径，默认保存在./output/目录下
-  --single          当验证到一个结果时退出(常用于密码爆破)
-  --nF              取消文件输出
-  --nS              取消屏幕输出
-  --show            显示./module/文件夹下所有可用的模块名称
-  --browser         程序结束后，将运行结果在浏览器/记事本中打开
-  --debug           开启debug模式，输出一些细节
-  --update          自动从github更新程序
-  -h, --help        打印此页帮助
-  -v, --version     打印版本号  
+示例:
+  python POC-T.py -T -m jboss-poc -s http://www.cdxy.me
+  python POC-T.py -T -m test -f ./dic/1-100.txt
+  python POC-T.py -C -m test -i 1-100
+  python POC-T.py -C -m spider -n 10.0.0.0/24
 
+引擎(必需项):
+  -T             多线程模式
+  -C             协程(单线程异步)模式
+  -t NUM         设置并发数量(线程数量)，默认为10
+
+模块(必需项):
+  -m NAME        指定加载的POC或模块名称(结尾不需加.py)
+
+目标(必需项):
+  -s TARGET      验证单个目标 (e.g. www.wooyun.org)
+  -f FILE        从文件加载目标列表(常用于扫描或批量漏洞验证) (e.g. ./data/wooyun_domain)
+  -i START-END   给定起始数字和结束数字，自动生成payload(常用于有数字规则的遍历，爬虫等) (e.g. 1-100)
+  -n IP/MASK     从IP和子网掩码加载目标(用于扫描网段) (e.g. 127.0.0.0/24)
+
+可选项:
+  -o FILE        输出文件路径，默认保存在./output/目录下
+  --single       当验证到一个结果时退出(常用于密码爆破)
+  --nF           取消文件输出
+  --nS           取消屏幕输出
+  --show         显示所有可用的模块名称(./module/文件夹下)
+  --browser      程序结束后，将运行结果在浏览器/记事本中打开
+  --debug        开启debug模式，运行时将输出一些参数细节
+  --update       自动从github更新程序
+  -v, --version  版本号
+  -h, --help     英文帮助
+  -hc, --helpCN  中文帮助
 ```  
   
   
@@ -148,5 +148,5 @@ def poc(input_str):
 联系作者
 ----
 * mail:i@cdxy.me  
-* 博客:[http://www.cdxy.me](http://www.cdxy.me)  
+
   
