@@ -1,4 +1,4 @@
-# POC-T: **P**entest **O**ver **C**oncurrent **T**oolkit 
+# POC-T: *P*entest *O*ver *C*oncurrent *T*oolkit 
 [![Python 2.6|2.7](https://img.shields.io/badge/python-2.6|2.7-yellow.svg)](https://www.python.org/) [![License](https://img.shields.io/badge/license-GPLv2-red.svg)](https://raw.githubusercontent.com/Xyntax/POC-T/master/docs/LICENSE.txt)  
 
 > 跨平台模块化并发框架，可用于采集/爬虫/爆破/批量PoC等任何需要并发的地方。
@@ -134,8 +134,9 @@ def poc(input_str):
   
 |工具|说明|
 |:---|:---|
-|urlparser.py |URL处理工具，可对采集到的杂乱URL进行格式化/自动生成等|
-|useragent.py |User-Agent处理工具, 支持随机化UA以绕过防御规则|
+|urlparser.py | URL处理工具，可对采集到的杂乱URL进行格式化/自动生成等|
+|useragent.py | User-Agent处理工具, 支持随机化UA以绕过防御规则|
+|extracts.py  | 正则提取工具，从采集到的杂乱文本中筛选IP地址|
 
 相关链接
 ----
