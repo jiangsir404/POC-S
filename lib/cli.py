@@ -38,20 +38,20 @@ def main():
             winowsColorInit()
         banner()
 
-        if conf['DEBUG']:
+        if conf.DEBUG:
             showDebugData()
 
         loadModule()
         loadPayloads()
 
-        if conf['ENGINE'] is 't':
+        if conf.ENGINE is 't':
             from lib.controller.threads import ThreadsEngine
             ThreadsEngine().run()
-        elif conf['ENGINE'] is 'c':
+        elif conf.ENGINE is 'c':
             from lib.controller.coroutine import CoroutineEngine
             CoroutineEngine().run()
 
-        if conf['OPEN_BROWSER']:
+        if conf.OPEN_BROWSER:
             openBrowser()
 
         systemQuit(EXIT_STATUS.SYSETM_EXIT)

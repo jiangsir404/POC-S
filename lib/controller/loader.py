@@ -49,7 +49,7 @@ def loadPayloads():
         single_target_mode()
 
     else:
-        raise ToolkitValueException('conf[\'MODULE_MODE\'] value ERROR.')
+        raise ToolkitValueException('conf.MODULE_MODE value ERROR.')
     logger.log(CUSTOM_LOGGING.SUCCESS, 'Total: %s' % str(th.queue.qsize()))
     debugPause()
 

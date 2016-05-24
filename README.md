@@ -1,7 +1,7 @@
-# POC-T: *P*entest *O*ver *C*oncurrent *T*oolkit 
+# POC-T: *Pentest Over Concurrent Toolkit* 
 [![Python 2.6|2.7](https://img.shields.io/badge/python-2.6|2.7-yellow.svg)](https://www.python.org/) [![License](https://img.shields.io/badge/license-GPLv2-red.svg)](https://raw.githubusercontent.com/Xyntax/POC-T/master/docs/LICENSE.txt)  
 
-> 跨平台模块化并发框架，可用于采集/爬虫/爆破/批量PoC等任何需要并发的地方。
+> 跨平台模块化并发框架，可用于采集/爬虫/爆破/批量PoC等需要并发的地方。
 
 * 支持两种并发模式*(多线程/单线程异步)*和多种输入方式
 * 极简式模块编写

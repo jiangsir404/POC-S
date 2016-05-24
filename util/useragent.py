@@ -31,19 +31,19 @@ def _init_UAlist(path):
     logger.log(CUSTOM_LOGGING.SYSINFO, infoMsg)
 
     # TODO 此处 conf.RANDOM_UA 在其他地方暂时没有用到
-    conf["RANDOM_UA"] = True
-    th["UA_LIST"] = getFileItems(path)
+    conf.RANDOM_UA = True
+    th.UA_LIST = getFileItems(path)
 
-    successMsg = "Total: %d" % len(th["UA_LIST"])
+    successMsg = "Total: %d" % len(th.UA_LIST)
     logger.log(CUSTOM_LOGGING.SUCCESS, successMsg)
     debugPause()
 
 
-def get_random_agent(path=paths['UA_LIST_PATH']):
+def get_random_agent(path=paths.UA_LIST_PATH):
     if not th.has_key("UA_LIST"):
         _init_UAlist(path)
     try:
-        return random.sample(th["UA_LIST"], 1)[0]
+        return random.sample(th.UA_LIST, 1)[0]
     except IOError, e:
         warnMsg = "unable to read HTTP User-Agent header "
         warnMsg += "file '%s'" % path
@@ -81,5 +81,3 @@ def msn_bot():
 
 def yahoo_bot():
     return 'Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)'
-
-
