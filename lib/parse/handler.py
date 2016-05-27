@@ -36,7 +36,7 @@ def _checkUpdate(args):
 
 def _checkShow(args):
     if args.show:
-        module_name_list = glob.glob(r'./module/*.py')
+        module_name_list = glob.glob(os.path.join(paths.MODULES_PATH, '*.py'))
         infoMsg = 'Module Name (total:%s)\n' % str(len(module_name_list) - 1)
         for each in module_name_list:
             _str = os.path.splitext(os.path.split(each)[1])[0]
@@ -58,7 +58,7 @@ def _initModule(args):
     if not args.m:
         msg = 'Use -m to select a module name. Example: -m spider'
         sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
-    if args.m and not os.path.isfile("./module/" + args.m + ".py"):
+    if args.m and not os.path.isfile(os.path.join(paths.MODULES_PATH, args.m + ".py")):
         msg = 'module not exist. Use --show to view all available module names.'
         sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
     conf.MODULE_NAME = args.m

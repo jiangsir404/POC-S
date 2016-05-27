@@ -5,7 +5,7 @@ __author__ = 'xy'
 import Queue
 import sys
 import imp
-from lib.core.data import th, conf, logger
+from lib.core.data import th, conf, logger, paths
 from lib.core.enums import CUSTOM_LOGGING, EXIT_STATUS
 from lib.core.common import debugPause, systemQuit
 from lib.core.settings import ESSENTIAL_MODULE_METHODS
@@ -18,7 +18,7 @@ def loadModule():
     infoMsg = 'Loading custom module: %s.py' % _name
     logger.log(CUSTOM_LOGGING.SUCCESS, infoMsg)
 
-    fp, pathname, description = imp.find_module(_name, ['module'])
+    fp, pathname, description = imp.find_module(_name, [paths.MODULES_PATH])
     try:
         th.module_obj = imp.load_module("_", fp, pathname, description)
         for each in ESSENTIAL_MODULE_METHODS:
