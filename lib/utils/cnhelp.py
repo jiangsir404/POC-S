@@ -1,8 +1,8 @@
 # !/usr/bin/env python
 #  -*- coding: utf-8 -*-
+# from __future__ import unicode_literals
 
-
-"""
+u"""
 本文档为程序中文使用说明，您也可以使用 -h 查看英文版使用说明
 powered by cdxy <mail:i@cdxy.me>
 

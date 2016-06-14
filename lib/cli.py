@@ -7,12 +7,13 @@ from lib.parse.cmdline import cmdLineParser
 from lib.parse.handler import initOptions
 from lib.controller.loader import loadModule, loadPayloads
 from lib.core.common import setPaths, showDebugData, banner, systemQuit, openBrowser
-from lib.core.data import paths, conf, logger,cmdLineOptions
+from lib.core.data import paths, conf, logger, cmdLineOptions
 from lib.core.enums import EXIT_STATUS
 from lib.core.settings import IS_WIN
 from lib.core.exception import ToolkitUserQuitException
 from lib.core.exception import ToolkitMissingPrivileges
 from lib.core.exception import ToolkitSystemException
+from lib.controller.engine import run
 from thirdparty.colorama.initialise import init as winowsColorInit
 
 
@@ -44,12 +45,7 @@ def main():
         loadModule()
         loadPayloads()
 
-        if conf.ENGINE is 't':
-            from lib.controller.threads import ThreadsEngine
-            ThreadsEngine().run()
-        elif conf.ENGINE is 'c':
-            from lib.controller.coroutine import CoroutineEngine
-            CoroutineEngine().run()
+        run()
 
         if conf.OPEN_BROWSER:
             openBrowser()

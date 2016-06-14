@@ -18,3 +18,9 @@ class EXIT_STATUS:
     SYSETM_EXIT = 0
     ERROR_EXIT = 1
     USER_QUIT = 2
+
+
+class POC_RESULT_STATUS:
+    FAIL = 0
+    SUCCESS = 1
+    RETRAY = 2

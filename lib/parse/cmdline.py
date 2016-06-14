@@ -67,7 +67,7 @@ def cmdLineParser():
     optimization.add_argument('-h', '--help', action='help',
                               help='show this help message and exit')
     optimization.add_argument('-hc', '--helpCN', default=False, action='store_true',
-                              help='打印中文帮助(show help message in Chinese)')
+                              help=u'打印中文帮助(show help message in Chinese)')
 
     if len(sys.argv) == 1:
         sys.argv.append('-h')

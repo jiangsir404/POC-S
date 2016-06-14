@@ -41,6 +41,7 @@ th
     queue
     THREADS_NUM
     UA_LIST
+    MODULE_NAME
 
 """
 
