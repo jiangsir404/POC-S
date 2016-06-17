@@ -100,21 +100,21 @@ def scan():
 
 
 def resultHandler(status, payload):
-    msg = payload
     if status is False or POC_RESULT_STATUS.FAIL:
         return
     elif status is POC_RESULT_STATUS.RETRAY:
         th.scan_count -= 1
         th.queue.put(payload)
         return
-    elif status is True or POC_RESULT_STATUS.SUCCESS:
+    elif status is True or status is POC_RESULT_STATUS.SUCCESS:
         msg = payload
     else:
         # TODO handle this exception
         try:
             msg = str(status)
         except Exception, e:
-            print e
+            printMessage(e)
+            return
     th.found_count += 1
     if th.s_flag:
         printMessage(msg)
