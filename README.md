@@ -14,32 +14,34 @@
 
 ## 它能做什么？  
 这个小巧的并发框架可以满足许多日常需求.  
-用户可参考以下已集成的脚本来编写自己的功能模块.    
+用户可参考以下已集成的脚本(`./module/`)来编写自己的功能模块.    
 
 #### 漏洞验证 
 |模块|说明|
 |:---|:---|
-|`./module/sqli-poc-example.py`| SQL注入PoC示例(方正翔宇某系统)|  
-|`./module/jboss-poc.py`       | jboss漏洞PoC(jexboss去后门版)|  
-|`./module/struts2-s2032.py`   | Struts2 S2-032 远程命令执行|  
-|`./module/zonetransfer-poc.py`| DNS域传送漏洞PoC|
+|`sqli-poc-example.py`| SQL注入PoC示例|  
+|`jboss-poc.py`       | jboss漏洞PoC(jexboss去后门版)|  
+|`struts2-s2032.py`   | Struts2 S2-032 远程命令执行|  
+|`zonetransfer-poc.py`| DNS域传送漏洞PoC|
   
 #### 爆破&扫描 
 |模块|说明|
 |:---|:---|
-|`./module/zabbix-weakpass.py`  |zabbix弱口令扫描|  
-|`./module/brute-example.py`    |密码爆破示例(51idc某站)|
+|`zabbix-weakpass.py`  |zabbix弱口令扫描|  
+|`brute-example.py`    |密码爆破示例(51idc某站)|
   
 #### 爬虫&采集
 |模块|说明|
 |:---|:---|
-|`./module/spider-example.py`   |爬虫示例(B站用户签名档爬虫)|  
-|`./module/collector-example.py`|页面采集示例|  
+|`spider-example.py`   |爬虫示例(B站用户签名档爬虫)|  
+|`collector-example.py`|页面采集示例|  
+
   
 #### 其他 
 |模块|说明|
 |:---|:---|
-|`./module/vote-example.py`     |给基友开发的刷票脚本|  
+|`vote-example.py`     |给基友开发的刷票脚本|  
+|`bingc.py`|基于Bing搜索引擎的IP反查域名|  
 |`others`|等你开脑洞|  
   
   
