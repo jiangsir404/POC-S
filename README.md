@@ -41,7 +41,7 @@
 |模块|说明|
 |:---|:---|
 |`vote-example.py`     |给基友开发的刷票脚本|  
-|`bingc.py`|基于Bing搜索引擎的IP反查域名|  
+|`bingc.py`|基于Bing搜索引擎的C段/旁站扫描(支持API)|  
 |`others`|等你开脑洞|  
   
   
