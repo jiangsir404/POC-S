@@ -49,5 +49,5 @@ def runZoomeyeApi(args):
 
 
 def setApi():
-    # TODO 判断使用哪家的api
+    # TODO 判断使用哪家的API
     return runZoomeyeApi(conf)

@@ -7,7 +7,7 @@
 * 极简式模块编写
 * 无交互运行，方便部署自动化
 * 实用工具/PoC更新中
-* 支持`Zoomeye api`
+* 支持`ZoomEye API`
 
 *(欢迎提交代码和改进建议)*
   
@@ -42,7 +42,7 @@
 |模块|说明|
 |:---|:---|
 |`vote-example.py`     |给基友开发的刷票脚本|  
-|`bingc.py`|基于Bing搜索引擎的C段/旁站扫描(支持Bing-api)|  
+|`bingc.py`|基于Bing搜索引擎的C段/旁站扫描(支持Bing-API)|  
 |`others`|等你开脑洞|  
   
   
@@ -122,18 +122,18 @@ def poc(input_str):
 
 第三方搜索引擎接口
 ---------
-本工具拟支持主流空间搜索引擎的API，如Zoomeye/Shodan/Censys等(目前已支持Zoomeye)．
+本工具拟支持主流空间搜索引擎的API，如ZoomEye/Shodan/Censys等(目前已支持ZoomEye)．
 从搜索引擎中直接获取目标，并结合本地插件进行扫描．
 
-以下命令表示使用Zoomeye接口，搜索全网中开启8080号端口的服务，并使用`test.py`插件进行验证．
+以下命令表示使用ZoomEye接口，搜索全网中开启8080号端口的服务，并使用`test.py`插件进行验证．
 默认爬10页搜索结果，搜索结果将存入本地`/data/zoomeye`文件夹下．
 
 `python POC-T.py -T -m test --api --dork "port:8080" --max-page 10`
 
-如第一次使用接口，需按提示输入Zoomeye的帐号和密码．
-Zoomeye现已开放注册，普通用户每月可以通过api下载5000页的搜索结果．
+如第一次使用接口，需按提示输入ZoomEye的帐号和密码．
+ZoomEye现已开放注册，普通用户每月可以通过API下载5000页的搜索结果．
 
-[Zoomeye-api官方文档](https://www.zoomeye.org/api/doc)
+[ZoomEye-API官方文档](https://www.zoomeye.org/api/doc)
 
 相关链接
 ----
