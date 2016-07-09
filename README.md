@@ -7,6 +7,7 @@
 * 极简式模块编写
 * 无交互运行，方便部署自动化
 * 实用工具/PoC更新中
+* 支持`Zoomeye api`
 
 *(欢迎提交代码和改进建议)*
   
@@ -41,7 +42,7 @@
 |模块|说明|
 |:---|:---|
 |`vote-example.py`     |给基友开发的刷票脚本|  
-|`bingc.py`|基于Bing搜索引擎的C段/旁站扫描(支持API)|  
+|`bingc.py`|基于Bing搜索引擎的C段/旁站扫描(支持Bing-api)|  
 |`others`|等你开脑洞|  
   
   
@@ -66,6 +67,7 @@
 | lib      | 项目代码 |
 | docs     | 文档及版权声明 |
 | thirdparty | 第三方库 |
+| api      | 搜索引擎接口 |
 
   
 ## 模块编写
@@ -105,7 +107,7 @@ def poc(input_str):
 
 #### 查看及使用模块
 * `python POC-T.py --show` 查看全部模块名称
-* 在命令行中使用 `-m poctest` 参数即可完成`poctest`模块的加载 (注意名称末尾不需要写`.py`)  
+* 在命令行中使用 `-m poctest` 参数即可完成`poctest`插件的加载 (注意名称末尾不需要写`.py`)  
   
 工具目录 
 ----
@@ -117,6 +119,21 @@ def poc(input_str):
 |urlparser.py | URL处理工具，可对采集到的杂乱URL进行格式化/自动生成等|
 |useragent.py | User-Agent处理工具, 支持随机化UA以绕过防御规则|
 |extracts.py  | 正则提取工具，从采集到的杂乱文本中筛选IP地址|
+
+第三方搜索引擎接口
+---------
+本工具拟支持主流空间搜索引擎的API，如Zoomeye/Shodan/Censys等(目前已支持Zoomeye)．
+从搜索引擎中直接获取目标，并结合本地插件进行扫描．
+
+以下命令表示使用Zoomeye接口，搜索全网中开启8080号端口的服务，并使用`test.py`插件进行验证．
+默认爬10页搜索结果，搜索结果将存入本地`/data/zoomeye`文件夹下．
+
+`python POC-T.py -T -m test --api --dork "port:8080" --max-page 10`
+
+如第一次使用接口，需按提示输入Zoomeye的帐号和密码．
+Zoomeye现已开放注册，普通用户每月可以通过api下载5000页的搜索结果．
+
+[Zoomeye-api官方文档](https://www.zoomeye.org/api/doc)
 
 相关链接
 ----

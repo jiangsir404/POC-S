@@ -5,11 +5,13 @@ __author__ = 'xy'
 import Queue
 import sys
 import imp
+import os
 from lib.core.data import th, conf, logger, paths
 from lib.core.enums import CUSTOM_LOGGING, EXIT_STATUS
 from lib.core.common import debugPause, systemQuit
 from lib.core.settings import ESSENTIAL_MODULE_METHODS
 from lib.core.exception import ToolkitValueException
+from lib.controller.api import setApi
 from thirdparty.IPy import IPy
 
 
@@ -47,6 +49,8 @@ def loadPayloads():
         net_mode()
     elif conf.MODULE_MODE is 'target':
         single_target_mode()
+    elif conf.MODULE_MODE is 'api':
+        api_mode()
 
     else:
         raise ToolkitValueException('conf.MODULE_MODE value ERROR.')
@@ -55,11 +59,10 @@ def loadPayloads():
 
 
 def file_mode():
-    with open(conf.INPUT_FILE_PATH) as f:
-        for line in f:
-            sub = line.strip()
-            if sub:
-                th.queue.put(sub)
+    for line in open(conf.INPUT_FILE_PATH):
+        sub = line.strip()
+        if sub:
+            th.queue.put(sub)
 
 
 def int_mode():
@@ -80,3 +83,15 @@ def net_mode():
 
 def single_target_mode():
     th.queue.put(str(conf.SINGLE_TARGET_STR))
+
+
+def api_mode():
+    conf.ZOOMEYE_OUTPUT_PATH = os.path.join(paths.DATA_PATH, 'zoomeye')
+    if not os.path.exists(conf.ZOOMEYE_OUTPUT_PATH):
+        os.mkdir(conf.ZOOMEYE_OUTPUT_PATH)
+
+    file = setApi()
+    for line in open(file):
+        sub = line.strip()
+        if sub:
+            th.queue.put(sub)

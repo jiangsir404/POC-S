@@ -15,6 +15,7 @@ powered by cdxy <mail:i@cdxy.me>
   python POC-T.py -T -m test -f ./dic/1-100.txt
   python POC-T.py -C -m test -i 1-100
   python POC-T.py -C -m spider -n 10.0.0.0/24
+  python POC-T.py -T -m test --api --dork "port:21" --max-page 5
 
 引擎(必需项):
   -T             多线程模式
@@ -29,6 +30,7 @@ powered by cdxy <mail:i@cdxy.me>
   -f FILE        从文件加载目标列表(常用于扫描或批量漏洞验证) (e.g. ./data/wooyun_domain)
   -i START-END   给定起始数字和结束数字，自动生成payload(常用于有数字规则的遍历，爬虫等) (e.g. 1-100)
   -n IP/MASK     从IP和子网掩码加载目标(用于扫描网段) (e.g. 127.0.0.0/24)
+  --api          从搜索引擎中获取目标(Zoomeye/Shodan/Censys)
 
 可选项:
   -o FILE        输出文件路径，默认保存在./output/目录下
@@ -42,4 +44,11 @@ powered by cdxy <mail:i@cdxy.me>
   -v, --version  版本号
   -h, --help     英文帮助
   -hc, --helpCN  中文帮助
+
+Zoomeye api:
+  --dork DORK           Zoomeye 搜索关键字
+  --max-page MAX_PAGE   最大爬取页数(每页10条数据)
+  --search-type SEARCH_TYPE
+                        选取搜索模式:web/host，默认为二者均是
+
 """

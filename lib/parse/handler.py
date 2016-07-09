@@ -75,8 +75,10 @@ def _initTargetMode(args):
         target_mode_flag += 4
     if args.n:
         target_mode_flag += 8
-    if target_mode_flag not in (1, 2, 4, 8):
-        msg = 'To load targets, please choose one from [-s|-i|-f|-n].'
+    if args.api:
+        target_mode_flag += 16
+    if target_mode_flag not in (1, 2, 4, 8, 16):
+        msg = 'To load targets, please choose one from [-s|-i|-f|-n|--api].'
         sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
 
     if args.f:
@@ -117,6 +119,11 @@ def _initTargetMode(args):
         conf.SINGLE_TARGET_STR = args.s
         th.THREADS_NUM = conf.THREADS_NUM = 1
         conf.INPUT_FILE_PATH = None
+    if args.api:
+        conf.MODULE_MODE = 'api'
+        conf.dork = args.dork
+        conf.max_page = args.max_page
+        conf.search_type = args.search_type
 
 
 def _initOutput(args):

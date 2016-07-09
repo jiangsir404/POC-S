@@ -9,13 +9,14 @@ from lib.core.settings import VERSION
 
 def cmdLineParser():
     parser = argparse.ArgumentParser(description='powered by cdxy <mail:i@cdxy.me> ',
-                                     usage='\n  python POC-T.py [-T|-C] [-m NAME] [-s|-f|-i|-n VALUE] [options]'
+                                     usage='\n  python POC-T.py [-T|-C] [-m NAME] [-s|-f|-i|-n|--api VALUE] [options]'
                                            '\n  python POC-T.py [-h|-v|--show|--update]'
                                            '\n\nexample:\n'
                                            '  python POC-T.py -T -m jboss-poc -s http://www.cdxy.me\n'
                                            '  python POC-T.py -T -m test -f ./dic/1-100.txt\n'
                                            '  python POC-T.py -C -m test -i 1-100\n'
-                                           '  python POC-T.py -C -m spider -n 10.0.0.0/24',
+                                           '  python POC-T.py -C -m spider -n 10.0.0.0/24\n'
+                                           '  python POC-T.py -T -m test --api --dork "port:21" --max-page 5',
                                      add_help=False)
 
     engine = parser.add_argument_group('engine')
@@ -43,6 +44,8 @@ def cmdLineParser():
                         help='generate targets from int(start) to int(end) (e.g. 1-100)')
     target.add_argument('-n', metavar='IP/MASK', type=str, default='',
                         help='load target IPs from IP/MASK. (e.g. 127.0.0.0/24)')
+    target.add_argument('--api', default=False, action='store_true',
+                        help='get targets from Zoomeye/Shodan/Censys api.')
 
     optimization = parser.add_argument_group('optimization')
 
@@ -68,6 +71,14 @@ def cmdLineParser():
                               help='show this help message and exit')
     optimization.add_argument('-hc', '--helpCN', default=False, action='store_true',
                               help=u'打印中文帮助(show help message in Chinese)')
+
+    ZoomeyeApi = parser.add_argument_group('Zoomeye api')
+    ZoomeyeApi.add_argument("--dork", dest="dork", action="store", default=None,
+                   help="Zoomeye dork used for search.")
+    ZoomeyeApi.add_argument("--max-page", dest="max_page", type=int, default=1,
+                   help="Max page used in ZoomEye API(10 targets/Page).")
+    ZoomeyeApi.add_argument("--search-type", dest="search_type", action="store", default='web,host',
+                   help="search type used in ZoomEye API, web or host")
 
     if len(sys.argv) == 1:
         sys.argv.append('-h')

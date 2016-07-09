@@ -44,6 +44,9 @@ def setPaths():
         msg += 'Please use \'--update\' to get the complete program from github.com.'
         raise ToolkitMissingPrivileges(msg)
 
+    # store password or token
+    paths.RC_PATH = os.path.join(os.path.expanduser('~'), ".rc")
+
 
 def checkFile(filename):
     """
@@ -285,6 +288,7 @@ def openBrowser():
     except Exception, e:
         errMsg = '\n[ERROR] Fail to open file with web browser: %s' % path
         raise ToolkitSystemException(errMsg)
+
 
 def checkSystemEncoding():
     """
