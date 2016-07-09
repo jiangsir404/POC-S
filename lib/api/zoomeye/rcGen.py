@@ -8,7 +8,7 @@ See the file 'docs/COPYING' for copying permission
 import os
 
 
-# TODO 这里不改成统一的path调用？
+# TODO 这里改成统一的path调用？
 def initial():
     currentUserHomePath = os.path.expanduser('~')
     _ = """[zoomeye]\nusername = Your ZoomEye Username\npassword = Your ZoomEye Password\n\n[token]\nseebug = Your Seebug Token"""

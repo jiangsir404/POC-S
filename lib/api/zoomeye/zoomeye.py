@@ -71,7 +71,7 @@ class Zoomeye(object):
 
     def _handle_web_service_error(self, message, status, uri):
         if message == "unauthorized":
-            errMsg = "AuthenticationError, please check your Zoomeye Token"
+            errMsg = "AuthenticationError, please check your ZoomEye Token"
             logger.log(CUSTOM_LOGGING.ERROR, errMsg)
         else:
             logger.log(CUSTOM_LOGGING.ERROR, message)
