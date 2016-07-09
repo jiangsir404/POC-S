@@ -468,7 +468,7 @@ def iterate_path(ori_str):
     iterate_path_to_list('http://cdxy.me:80/cdsa/cda/aaa.jsp?id=2#')
 
     Return:
-    ['http://cdxy.me:80/path1/path2/index.jsp?id=2#',
+    ['http://cdxy.me:80/cdsa/cda/aaa.jsp?id=2#',
      'http://cdxy.me:80/'
      'http://cdxy.me:80/cdsa',
      'http://cdxy.me:80/cdsa/cda',

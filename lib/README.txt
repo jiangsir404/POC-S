@@ -15,7 +15,11 @@ https://github.com/Xyntax/POC-T/blob/master/README.md
 
 
 cli.py                      主函数
+
+api
+    zoomeye                 ZoomEye接口
 controller
+    api.py                  处理第三方接口
     engine.py               多线程&协程引擎
     loader.py               加载插件和目标
 core

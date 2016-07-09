@@ -1,51 +1,25 @@
 # POC-T: *Pentest Over Concurrent Toolkit* 
 [![Python 2.6|2.7](https://img.shields.io/badge/python-2.6|2.7-yellow.svg)](https://www.python.org/) [![License](https://img.shields.io/badge/license-GPLv2-red.svg)](https://raw.githubusercontent.com/Xyntax/POC-T/master/docs/LICENSE.txt)  
 
-> 跨平台模块化并发框架，可用于采集/爬虫/爆破/批量PoC等需要并发的地方。
-
-* 支持两种并发模式*(多线程/单线程异步)*和多种输入方式
-* 极简式模块编写
-* 无交互运行，方便部署自动化
-* 实用工具/PoC更新中
-* 支持`ZoomEye API`
-
-*(欢迎提交代码和改进建议)*
+> 模块化并发框架，可处理渗透测试中 **采集/爬虫/爆破/批量PoC** 等需要并发的任务。
   
+* 两种并发模式、五种信息输入格式  
+* 极简式插件编写，无需参考文档  
+* 实用扩展工具，让插件更加精细优雅  
+* 支持第三方搜索引擎API(目前已完成ZoomEye)  
+* 其他人性化功能参数  
+* 跨平台，免安装  
+  
+*(欢迎提交代码和改进建议)*
+   
 ![banner.png](https://github.com/Xyntax/POC-T/blob/master/docs/banner.png) 
 
-## 它能做什么？  
+## 不止于PoC 
 这个小巧的并发框架可以满足许多日常需求.  
-用户可参考以下已集成的脚本(`./module/`)来编写自己的功能模块.    
+用户可参考以下已经集成的脚本，打开脑洞，自行编写更多实用插件.      
 
-#### 漏洞验证 
-|模块|说明|
-|:---|:---|
-|`sqli-poc-example.py`| SQL注入PoC示例|  
-|`jboss-poc.py`       | jboss漏洞PoC(jexboss去后门版)|  
-|`struts2-s2032.py`   | Struts2 S2-032 远程命令执行|  
-|`zonetransfer-poc.py`| DNS域传送漏洞PoC|
-  
-#### 爆破&扫描 
-|模块|说明|
-|:---|:---|
-|`zabbix-weakpass.py`  |zabbix弱口令扫描|  
-|`brute-example.py`    |密码爆破示例(51idc某站)|
-  
-#### 爬虫&采集
-|模块|说明|
-|:---|:---|
-|`spider-example.py`   |爬虫示例(B站用户签名档爬虫)|  
-|`collector-example.py`|页面采集示例|  
+* [查看已集成插件](https://github.com/Xyntax/POC-T/blob/master/docs/module.md)
 
-  
-#### 其他 
-|模块|说明|
-|:---|:---|
-|`vote-example.py`     |给基友开发的刷票脚本|  
-|`bingc.py`|基于Bing搜索引擎的C段/旁站扫描(支持Bing-API)|  
-|`others`|等你开脑洞|  
-  
-  
 ## 快速开始 
 * `pip install -r requirement.txt` 
 * `python POC-T.py`  
@@ -109,8 +83,8 @@ def poc(input_str):
 * `python POC-T.py --show` 查看全部模块名称
 * 在命令行中使用 `-m poctest` 参数即可完成`poctest`插件的加载 (注意名称末尾不需要写`.py`)  
   
-工具目录 
-----
+插件扩展工具 
+------
 `util`文件夹中收集了具有通用性的工具组件．用于简化代码，提高PoC准确性，赋予脚本更多功能.
 编写模块时，可以使用`from util.xxx import xxx()`直接调用，具体功能请查看原文件注释.  
   
