@@ -6,7 +6,7 @@
 * 两种并发模式、五种信息输入格式  
 * 极简式插件编写，无需参考文档  
 * 实用扩展工具，让插件更加精细优雅  
-* 支持第三方搜索引擎API(目前已完成ZoomEye)  
+* 支持第三方搜索引擎API(已完成ZoomEye/Shodan)  
 * 其他人性化功能参数  
 * 跨平台，免安装  
   
@@ -117,7 +117,7 @@ ZoomEye现已开放注册，普通用户每月可以通过API下载5000页的搜
   
 `python POC-T.py -T -m solr-unauth --api --query "solr country:cn" --limit 10 --offset 0`  
   
-如第一次使用接口，需按提示输入Shodan的API-KEY([https://account.shodan.io/](https://account.shodan.io/))
+如第一次使用接口，需按提示输入Shodan的API-KEY([https://account.shodan.io/](https://account.shodan.io/))  
 Shodan-API接口使用限制及详细功能，可参考官方文档.
 
 * [Shodan-API官方文档](https://developer.shodan.io/api/requirements)
