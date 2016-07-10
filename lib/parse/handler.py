@@ -29,7 +29,6 @@ def initOptions(args):
 def _checkUpdate(args):
     # conflict with args.update(),so we use args['update'] here
     if args['update']:
-        raw_input('update?')
         conf.UPDATE = args['update']
         update()
 
