@@ -1,25 +1,18 @@
 # !/usr/bin/env python
 #  -*- coding: utf-8 -*-
-__author__ = 'xy'
-
-import requests
+# author = i@cdxy.me
+# project = https://github.com/Xyntax/POC-T
 
 """
 测试用例
 """
 
-
-def info():
-    return "info"
+import random
+import time
 
 
 def poc(str):
-    url = 'http://www.baidu.com'
-    c = requests.get(url).content
-    return True if c else False
-
-
-def exp():
-    return "exp"
-
-
+    time.sleep(3)
+    if random.randint(1, 10) > 5:
+        return True
+    return False

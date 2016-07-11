@@ -1,24 +1,19 @@
 # !/usr/bin/env python
-#  -*- coding: utf-8 -*-
-__author__ = 'xy'
+# -*- coding: utf-8 -*-
+# author = i@cdxy.me
+# project = https://github.com/Xyntax/POC-T
+
+"""
+采集示例
+简单页面采集-下载IP对应的html页面
+"""
+
 import sys
 
 try:
     import pycurl
 except ImportError, e:
     sys.exit(e)
-"""
-采集示例
-简单页面采集-下载IP对应的html页面
-"""
-
-
-def info():
-    pass
-
-
-def exp():
-    pass
 
 
 def poc(str):

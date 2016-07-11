@@ -1,19 +1,21 @@
-# coding:utf-8
+# !/usr/bin/env python
+# -*- coding: utf-8 -*-
+# author = i@cdxy.me
+# project = https://github.com/Xyntax/POC-T
+
+"""
+zabbix 默认口令检测，支持两种zabbix版本
+
+默认口令:
+  Admin/zabbix
+
+shodan关键字:
+  Set-Cookie: zbx_sessionid country:cn
+
+"""
 
 import requests
 from bs4 import BeautifulSoup
-
-"""
-zabbix 默认口令检测
-支持两种zabbix版本
-
-Admin/zabbix
-
-目标发现：shodan
-Set-Cookie: zbx_sessionid country:cn
-
-cdxy 16.04.20
-"""
 
 
 def _get_static_post_attr(page_content):
@@ -26,14 +28,6 @@ def _get_static_post_attr(page_content):
         if 'value' in each.attrs and 'name' in each.attrs:
             _dict[each['name']] = each['value']
     return _dict
-
-
-def info():
-    pass
-
-
-def exp():
-    pass
 
 
 def poc(url):
@@ -68,10 +62,3 @@ def poc(url):
     except Exception, e:
         # print e
         return False
-
-
-if __name__ == '__main__':
-    url1 = 'http://54.222.167.52/'  # True
-    url2 = 'http://180.235.64.209:8080/'  # True
-    unsuccess_url = 'http://101.198.161.9'  # False
-    print poc('http://106.2.60.133/')

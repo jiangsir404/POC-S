@@ -1,6 +1,7 @@
-# coding:utf8
-__author__ = 'xy'
-import requests
+# !/usr/bin/env python
+# -*- coding: utf-8 -*-
+# author = i@cdxy.me
+# project = https://github.com/Xyntax/POC-T
 
 """
 爆破脚本示例
@@ -8,7 +9,11 @@ import requests
 POST方式提交表单
 用户名 => list1
 密码   => 外部传入
+
 """
+
+import requests
+
 list1 = [
     'admin',
     'zhangwei',

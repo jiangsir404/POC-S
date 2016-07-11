@@ -1,13 +1,10 @@
 # !/usr/bin/env python
-#  -*- coding: utf-8 -*-
-__author__ = 'xy'
-import os
-import re
-import subprocess
-import time
-import sys
+# -*- coding: utf-8 -*-
+# author = i@cdxy.me
+# project = https://github.com/Xyntax/POC-T
 
-info_str = """readme.txt
+"""
+DNS Zone Transfer PoC
 
 只能运行在linux环境下
 系统需具备两个命令:nslookup,dig(kali里面已有)
@@ -23,16 +20,13 @@ info_str = """readme.txt
 list index out of range
 couldn't get address for 'xxx.xxx.xxx.': not found
 
-cdxy May 6 Fri, 2016
 """
 
-
-def info():
-    print info_str
-
-
-def exp():
-    pass
+import os
+import re
+import subprocess
+import time
+import sys
 
 
 def poc(domain):
@@ -58,8 +52,3 @@ def poc(domain):
     except Exception, e:
         print e
         return False
-
-
-if __name__ == '__main__':
-    info()
-    poc('cosmopolitan.com')

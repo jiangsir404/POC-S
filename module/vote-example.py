@@ -1,14 +1,10 @@
-# coding:utf-8
-__author__ = 'xy'
-
-import requests
-
-base_url = "http://www.kankanews.com/z/dhj13th/index.shtml"
-post_url = "http://www.kankanews.com/phpapp/polling.php"
+# !/usr/bin/env python
+# -*- coding: utf-8 -*-
+# author = i@cdxy.me
+# project = https://github.com/Xyntax/POC-T
 
 """
 上海大学生戏剧节-刷票脚本
-
 
 POST /phpapp/polling.php HTTP/1.1
 Host: www.kankanews.com
@@ -27,13 +23,10 @@ classid=9401&f_6339_c_8969_b_2_%5B%5D=844622
 
 """
 
+import requests
 
-def info():
-    pass
-
-
-def exp():
-    pass
+base_url = "http://www.kankanews.com/z/dhj13th/index.shtml"
+post_url = "http://www.kankanews.com/phpapp/polling.php"
 
 
 def poc():
@@ -53,8 +46,3 @@ def poc():
     if 'success' in r.content:
         return True
     return False
-
-
-if __name__ == "__main__":
-    for i in range(0, 20):
-        print poc()

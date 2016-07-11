@@ -1,19 +1,13 @@
-# coding:utf-8
-__author__ = 'xy'
+# !/usr/bin/env python
+# -*- coding: utf-8 -*-
+# author = i@cdxy.me
+# project = https://github.com/Xyntax/POC-T
+
+"""
+SQL注入插件示例：方正翔宇某系统SQL注入
+"""
 
 import requests
-
-"""
-方正翔宇SQL注入
-"""
-
-
-def info():
-    pass
-
-
-def exp():
-    pass
 
 
 def poc(base_url):
@@ -21,5 +15,4 @@ def poc(base_url):
     r = requests.get(url, timeout=10, verify=False)
     if r.elapsed.microseconds > 5000:
         return True
-
     return False
