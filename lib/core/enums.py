@@ -24,3 +24,8 @@ class POC_RESULT_STATUS:
     FAIL = 0
     SUCCESS = 1
     RETRAY = 2
+
+
+class API_MODE_STATUS:
+    ZOOMEYE = 0
+    SHODAN = 1

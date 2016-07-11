@@ -7,7 +7,7 @@ import sys
 import imp
 import os
 from lib.core.data import th, conf, logger, paths
-from lib.core.enums import CUSTOM_LOGGING, EXIT_STATUS
+from lib.core.enums import CUSTOM_LOGGING, EXIT_STATUS, API_MODE_STATUS
 from lib.core.common import debugPause, systemQuit
 from lib.core.settings import ESSENTIAL_MODULE_METHODS
 from lib.core.exception import ToolkitValueException
@@ -86,9 +86,15 @@ def single_target_mode():
 
 
 def api_mode():
-    conf.ZOOMEYE_OUTPUT_PATH = os.path.join(paths.DATA_PATH, 'zoomeye')
-    if not os.path.exists(conf.ZOOMEYE_OUTPUT_PATH):
-        os.mkdir(conf.ZOOMEYE_OUTPUT_PATH)
+    if conf.API_MODE is API_MODE_STATUS.ZOOMEYE:
+        conf.ZOOMEYE_OUTPUT_PATH = os.path.join(paths.DATA_PATH, 'zoomeye')
+        if not os.path.exists(conf.ZOOMEYE_OUTPUT_PATH):
+            os.mkdir(conf.ZOOMEYE_OUTPUT_PATH)
+
+    elif conf.API_MODE is API_MODE_STATUS.SHODAN:
+        conf.SHODAN_OUTPUT_PATH = os.path.join(paths.DATA_PATH, 'shodan')
+        if not os.path.exists(conf.SHODAN_OUTPUT_PATH):
+            os.mkdir(conf.SHODAN_OUTPUT_PATH)
 
     file = setApi()
     for line in open(file):

@@ -6,10 +6,13 @@ import time
 from lib.api.zoomeye.x import ZoomEye
 from lib.core.data import conf, paths, logger
 from lib.core.log import CUSTOM_LOGGING
+from lib.core.enums import API_MODE_STATUS
+from lib.api.shodan.query import advancedQuery
 
 
-def runZoomeyeApi(args):
-    if args['dork']:
+# TODO Pocsuite源码部分的函数，待优化
+def runZoomeyeApi():
+    if conf['dork']:
         z = ZoomEye(paths.RC_PATH)
         if z.newToken():
             logger.log(CUSTOM_LOGGING.SUCCESS, 'ZoomEye API authorization success.')
@@ -32,15 +35,15 @@ def runZoomeyeApi(args):
         )
 
         tmpIpFile = os.path.join(conf.ZOOMEYE_OUTPUT_PATH, '%s_%s.txt' % (
-        args['dork'].replace(':', '-').replace(' ', '-').strip(), time.strftime('%Y_%m_%d_%H_%M_%S')))
+            conf['dork'].replace(':', '-').replace(' ', '-').strip(), time.strftime('%Y_%m_%d_%H_%M_%S')))
         with open(tmpIpFile, 'w') as fp:
-            search_types = args.get('search_type', 'web')
+            search_types = conf.get('search_type', 'web')
             if 'host' not in search_types and 'web' not in search_types:
                 search_types = 'web'
-            for page in range(args.get('max_page', 1)):
+            for page in range(conf.get('max_page', 1)):
                 for search_type in search_types.split(','):
                     if search_type in ['web', 'host']:
-                        for ip in z.search(args['dork'], page, search_type):
+                        for ip in z.search(conf['dork'], page, search_type):
                             if type(ip) == list:
                                 fp.write('%s\n' % ip[0])
                             else:
@@ -48,6 +51,19 @@ def runZoomeyeApi(args):
         return tmpIpFile
 
 
+def runShodanApi():
+    logger.log(CUSTOM_LOGGING.SYSINFO, 'Retriving targets from Shodan...')
+    anslist = advancedQuery(query=conf.shodan_query, offset=conf.shodan_offset, limit=conf.shodan_limit)
+    tmpIpFile = os.path.join(conf.SHODAN_OUTPUT_PATH, '%s_%s.txt' % (
+        conf.shodan_query.replace(':', '-').replace(' ', '-').strip(), time.strftime('%Y_%m_%d_%H_%M_%S')))
+    with open(tmpIpFile, 'w') as fp:
+        for each in anslist:
+            fp.write(each + '\n')
+    return tmpIpFile
+
+
 def setApi():
-    # TODO 判断使用哪家的API
-    return runZoomeyeApi(conf)
+    if conf.API_MODE is API_MODE_STATUS.ZOOMEYE:
+        return runZoomeyeApi()
+    elif conf.API_MODE is API_MODE_STATUS.SHODAN:
+        return runShodanApi()

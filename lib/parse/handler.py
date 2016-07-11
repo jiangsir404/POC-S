@@ -10,6 +10,7 @@ from lib.core.data import conf, paths, th, logger
 from lib.core.enums import CUSTOM_LOGGING
 import lib.utils.cnhelp as cnhelp
 from lib.utils.update import update
+from lib.core.enums import API_MODE_STATUS
 
 
 def initOptions(args):
@@ -119,10 +120,9 @@ def _initTargetMode(args):
         th.THREADS_NUM = conf.THREADS_NUM = 1
         conf.INPUT_FILE_PATH = None
     if args.api:
+        # TODO move module to enums
         conf.MODULE_MODE = 'api'
-        conf.dork = args.dork
-        conf.max_page = args.max_page
-        conf.search_type = args.search_type
+        _checkAPI(args)
 
 
 def _initOutput(args):
@@ -154,3 +154,24 @@ def _checkCNhelp(args):
     if args.helpCN:
         print cnhelp.__doc__
         sys.exit(0)
+
+
+def _checkAPI(args):
+    api_mode_flag = 0
+    if args.dork or args.max_page != 1 or args.search_type != 'web,host':
+        api_mode_flag += 1
+    if args.shodan_query or args.shodan_limit != 100 or args.shodan_offset != 0:
+        api_mode_flag += 2
+    if api_mode_flag not in (1, 2):
+        msg = 'You can only use args from ZoonEye-API *or* Shodan-API.'
+        sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
+    if args.dork:
+        conf.API_MODE = API_MODE_STATUS.ZOOMEYE
+        conf.dork = args.dork
+        conf.max_page = args.max_page
+        conf.search_type = args.search_type
+    elif args.shodan_query:
+        conf.API_MODE = API_MODE_STATUS.SHODAN
+        conf.shodan_query = args.shodan_query
+        conf.shodan_limit = args.shodan_limit
+        conf.shodan_offset = args.shodan_offset

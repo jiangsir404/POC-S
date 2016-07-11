@@ -96,18 +96,31 @@ def poc(input_str):
 
 第三方搜索引擎接口
 ---------
-本工具拟支持主流空间搜索引擎的API，如ZoomEye/Shodan/Censys等(目前已支持ZoomEye)．
+
+本工具拟支持主流空间搜索引擎的API，如ZoomEye/Shodan/Censys等(目前已支持ZoomEye/Shodan)．
 从搜索引擎中直接获取目标，并结合本地插件进行扫描．
 
-以下命令表示使用ZoomEye接口，搜索全网中开启8080号端口的服务，并使用`test.py`插件进行验证．
-默认爬10页搜索结果，搜索结果将存入本地`/data/zoomeye`文件夹下．
+#### ZoomEye
+以下命令表示使用ZoomEye接口，搜索全网中开启`8080`号端口的服务，并使用`test.py`插件进行验证．  
+设置爬取10页搜索结果，搜索结果将存入本地`/data/zoomeye`文件夹下．  
 
-`python POC-T.py -T -m test --api --dork "port:8080" --max-page 10`
+`python POC-T.py -T -m test --api --dork "port:8080" --max-page 10`  
+  
+如第一次使用接口，需按提示输入ZoomEye的帐号和密码．  
+ZoomEye现已开放注册，普通用户每月可以通过API下载5000页的搜索结果．  
 
-如第一次使用接口，需按提示输入ZoomEye的帐号和密码．
-ZoomEye现已开放注册，普通用户每月可以通过API下载5000页的搜索结果．
+* [ZoomEye-API官方文档](https://www.zoomeye.org/api/doc)
 
-[ZoomEye-API官方文档](https://www.zoomeye.org/api/doc)
+#### Shodan
+以下命令表示使用Shodan接口，搜索全网中关键字为`solr`，国家为`cn`的服务，并使用`solr-unauth`插件进行验证．  
+设置从第0条记录为起点，爬取10条记录，搜索结果将存入本地`/data/shodan`文件夹下．  
+  
+`python POC-T.py -T -m solr-unauth --api --query "solr country:cn" --limit 10 --offset 0`  
+  
+如第一次使用接口，需按提示输入Shodan的API-KEY([https://account.shodan.io/](https://account.shodan.io/))
+Shodan-API接口使用限制及详细功能，可参考官方文档.
+
+* [Shodan-API官方文档](https://developer.shodan.io/api/requirements)
 
 相关链接
 ----

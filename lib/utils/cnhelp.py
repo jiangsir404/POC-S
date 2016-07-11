@@ -1,6 +1,5 @@
 # !/usr/bin/env python
 #  -*- coding: utf-8 -*-
-# from __future__ import unicode_literals
 
 u"""
 本文档为程序中文使用说明，您也可以使用 -h 查看英文版使用说明
@@ -16,6 +15,7 @@ powered by cdxy <mail:i@cdxy.me>
   python POC-T.py -C -m test -i 1-100
   python POC-T.py -C -m spider -n 10.0.0.0/24
   python POC-T.py -T -m test --api --dork "port:21" --max-page 5
+  python POC-T.py -T -m test --api --query "solr country:cn" --limit 10 --offset 0
 
 引擎(必需项):
   -T             多线程模式
@@ -46,9 +46,13 @@ powered by cdxy <mail:i@cdxy.me>
   -hc, --helpCN  中文帮助
 
 ZoomEye API:
-  --dork DORK           ZoomEye 搜索关键字
-  --max-page MAX_PAGE   最大爬取页数(每页10条数据)
-  --search-type SEARCH_TYPE
-                        选取搜索模式:web/host，默认为二者均是
+  --dork STRING       ZoomEye 搜索关键字
+  --max-page PAGE     (可选) 最大爬取页数(每页20条数据/默认获取一页)
+  --search-type TYPE  (可选) 选取搜索模式:web/host，默认为二者均是
+
+Shodan API:
+  --query STRING      Shodan 搜索关键字
+  --limit LIMIT       (可选) 最大爬取记录数(默认获取100条)
+  --offset OFFSET     (可选) 设置从第几条记录开始爬取
 
 """

@@ -16,7 +16,8 @@ def cmdLineParser():
                                            '  python POC-T.py -T -m test -f ./dic/1-100.txt\n'
                                            '  python POC-T.py -C -m test -i 1-100\n'
                                            '  python POC-T.py -C -m spider -n 10.0.0.0/24\n'
-                                           '  python POC-T.py -T -m test --api --dork "port:21" --max-page 5',
+                                           '  python POC-T.py -T -m test --api --dork "port:21" --max-page 5\n'
+                                           '  python POC-T.py -T -m test --api --query "solr country:cn" --limit 10 --offset 0',
                                      add_help=False)
 
     engine = parser.add_argument_group('engine')
@@ -73,12 +74,20 @@ def cmdLineParser():
                               help=u'打印中文帮助(show help message in Chinese)')
 
     ZoomeyeApi = parser.add_argument_group('ZoomEye API')
-    ZoomeyeApi.add_argument("--dork", dest="dork", action="store", default=None,
-                   help="ZoomEye dork used for search.")
-    ZoomeyeApi.add_argument("--max-page", dest="max_page", type=int, default=1,
-                   help="Max page used in ZoomEye API(10 targets/Page).")
-    ZoomeyeApi.add_argument("--search-type", dest="search_type", action="store", default='web,host',
-                   help="search type used in ZoomEye API, web or host")
+    ZoomeyeApi.add_argument("--dork", metavar='STRING', dest="dork", action="store", default=None,
+                            help="ZoomEye dork used for search.")
+    ZoomeyeApi.add_argument("--max-page", metavar='PAGE', dest="max_page", type=int, default=1,
+                            help="(optional) Max page used in ZoomEye API (20 targets/Page).")
+    ZoomeyeApi.add_argument("--search-type", metavar='TYPE', dest="search_type", action="store", default='web,host',
+                            help="(optional) search type used in ZoomEye API, web or host")
+
+    ShodanAPI = parser.add_argument_group('Shodan API')
+    ShodanAPI.add_argument("--query", metavar='STRING', dest="shodan_query", action="store", default=None,
+                           help="Search query; identical syntax to the website")
+    ShodanAPI.add_argument("--limit", metavar='LIMIT', dest="shodan_limit", type=int, default=100,
+                           help="(optional) Number of results to return (default:100)")
+    ShodanAPI.add_argument("--offset", metavar='OFFSET', dest="shodan_offset", type=int, default=0,
+                           help="(optional) Search offset to begin getting results from")
 
     if len(sys.argv) == 1:
         sys.argv.append('-h')

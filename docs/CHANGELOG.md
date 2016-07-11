@@ -41,5 +41,6 @@
 
 1.7
 ---
-* 2016.07.08 - 添加`--api`，支持ZoomEye API
-* 2016.07.09 - 优化ZoomEye API，添加`solr-unauth-poc`
+* 2016.07.08 - 添加`--api`，支持`ZoomEye-API`
+* 2016.07.09 - 优化`ZoomEye-API`，添加`solr-unauth-poc`
+* 2016.07.10 - 添加`Shodan-API`
