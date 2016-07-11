@@ -7,7 +7,7 @@ import sys
 import imp
 import os
 from lib.core.data import th, conf, logger, paths
-from lib.core.enums import CUSTOM_LOGGING, EXIT_STATUS, API_MODE_STATUS
+from lib.core.enums import CUSTOM_LOGGING, EXIT_STATUS, API_MODE_STATUS, TARGET_MODE_STATUS
 from lib.core.common import debugPause, systemQuit
 from lib.core.settings import ESSENTIAL_MODULE_METHODS
 from lib.core.exception import ToolkitValueException
@@ -41,19 +41,19 @@ def loadPayloads():
     infoMsg = 'Loading payloads...'
     logger.log(CUSTOM_LOGGING.SUCCESS, infoMsg)
     th.queue = Queue.Queue()
-    if conf.MODULE_MODE is 'i':
+    if conf.TARGET_MODE is TARGET_MODE_STATUS.RANGE:
         int_mode()
-    elif conf.MODULE_MODE is 'f':
+    elif conf.TARGET_MODE is TARGET_MODE_STATUS.FILE:
         file_mode()
-    elif conf.MODULE_MODE is 'n':
+    elif conf.TARGET_MODE is TARGET_MODE_STATUS.IPMASK:
         net_mode()
-    elif conf.MODULE_MODE is 'target':
+    elif conf.TARGET_MODE is TARGET_MODE_STATUS.SINGLE:
         single_target_mode()
-    elif conf.MODULE_MODE is 'api':
+    elif conf.TARGET_MODE is TARGET_MODE_STATUS.API:
         api_mode()
 
     else:
-        raise ToolkitValueException('conf.MODULE_MODE value ERROR.')
+        raise ToolkitValueException('conf.TARGET_MODE value ERROR.')
     logger.log(CUSTOM_LOGGING.SUCCESS, 'Total: %s' % str(th.queue.qsize()))
     debugPause()
 

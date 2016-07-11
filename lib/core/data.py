@@ -19,7 +19,7 @@ paths
 conf
     MODULE_NAME        **
     MODULE_FILE_PATH   **.py
-    MODULE_MODE        f / i / n
+    TARGET_MODE        f / i / n
     INPUT_FILE_PATH    path
     SCREEN_OUTPUT      T / F
     FILE_OUTPUT        T / F

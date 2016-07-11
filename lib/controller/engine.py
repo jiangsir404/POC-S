@@ -17,11 +17,11 @@ import time
 from lib.core.common import dataToStdout
 from lib.utils.consle import getTerminalSize
 from lib.utils.versioncheck import PYVERSION
-from lib.core.enums import CUSTOM_LOGGING, POC_RESULT_STATUS
+from lib.core.enums import CUSTOM_LOGGING, POC_RESULT_STATUS, ENGINE_MODE_STATUS
 
 
 def initEngine():
-    th.thread_mode = True if conf.ENGINE is 't' else False
+    th.thread_mode = True if conf.ENGINE is ENGINE_MODE_STATUS.THREAD else False
     th.module_name = conf.MODULE_NAME
     # th.module_obj
     th.f_flag = conf.FILE_OUTPUT
@@ -126,7 +126,7 @@ def resultHandler(status, payload):
 
 def run():
     initEngine()
-    if conf.ENGINE is 't':
+    if conf.ENGINE is ENGINE_MODE_STATUS.THREAD:
         for i in range(th.threads_num):
             t = threading.Thread(target=scan, name=str(i))
             setThreadDaemon(t)
@@ -138,7 +138,7 @@ def run():
             else:
                 break
 
-    elif conf.ENGINE is 'c':
+    elif conf.ENGINE is ENGINE_MODE_STATUS.GEVENT:
         while th.queue.qsize() > 0 and th.is_continue:
             gevent.joinall([gevent.spawn(scan) for i in xrange(0, th.threads_num) if
                             th.queue.qsize() > 0])

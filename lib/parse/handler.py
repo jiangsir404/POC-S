@@ -7,7 +7,7 @@ import glob
 import time
 import sys
 from lib.core.data import conf, paths, th, logger
-from lib.core.enums import CUSTOM_LOGGING
+from lib.core.enums import CUSTOM_LOGGING, TARGET_MODE_STATUS, ENGINE_MODE_STATUS
 import lib.utils.cnhelp as cnhelp
 from lib.utils.update import update
 from lib.core.enums import API_MODE_STATUS
@@ -50,7 +50,7 @@ def _initEngine(args):
         msg = 'Use -T to set Multi-Threaded mode or -C to set Coroutine mode.'
         sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
     else:
-        conf.ENGINE = 't' if args.T else 'c'
+        conf.ENGINE = ENGINE_MODE_STATUS.THREAD if args.T else ENGINE_MODE_STATUS.GEVENT
         th.THREADS_NUM = conf.THREADS_NUM = args.t
 
 
@@ -85,7 +85,7 @@ def _initTargetMode(args):
         if not os.path.isfile(args.f):
             msg = 'TargetFile not found: %s' % args.f
             sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
-        conf.MODULE_MODE = 'f'
+        conf.TARGET_MODE = TARGET_MODE_STATUS.FILE
         conf.INPUT_FILE_PATH = args.f
 
     if args.i:
@@ -107,21 +107,20 @@ def _initTargetMode(args):
                 sys.exit(logger.log(CUSTOM_LOGGING.ERROR, help_str))
         except Exception, e:
             sys.exit(logger.log(CUSTOM_LOGGING.ERROR, help_str))
-        conf.MODULE_MODE = 'i'
+        conf.TARGET_MODE = TARGET_MODE_STATUS.RANGE
         conf.I_NUM2 = args.i
         conf.INPUT_FILE_PATH = None
     if args.n:
-        conf.MODULE_MODE = 'n'
+        conf.TARGET_MODE = TARGET_MODE_STATUS.IPMASK
         conf.NETWORK_STR = args.n
         conf.INPUT_FILE_PATH = None
     if args.s:
-        conf.MODULE_MODE = 'target'
+        conf.TARGET_MODE = TARGET_MODE_STATUS.SINGLE
         conf.SINGLE_TARGET_STR = args.s
         th.THREADS_NUM = conf.THREADS_NUM = 1
         conf.INPUT_FILE_PATH = None
     if args.api:
-        # TODO move module to enums
-        conf.MODULE_MODE = 'api'
+        conf.TARGET_MODE = TARGET_MODE_STATUS.API
         _checkAPI(args)
 
 

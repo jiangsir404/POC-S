@@ -13,7 +13,7 @@ from lib.core.exception import *
 from lib.core.log import CUSTOM_LOGGING, LOGGER_HANDLER
 from lib.core.settings import BANNER, UNICODE_ENCODING, NULL, INVALID_UNICODE_CHAR_FORMAT
 from lib.core.convert import stdoutencode
-from lib.core.enums import EXIT_STATUS
+from lib.core.enums import EXIT_STATUS,ENGINE_MODE_STATUS
 from thirdparty.termcolor.termcolor import colored
 from thirdparty.odict.odict import OrderedDict
 
@@ -96,7 +96,7 @@ def dataToStdout(data, bold=False):
     Writes text to the stdout (console) stream
     """
     if conf.SCREEN_OUTPUT:
-        if conf.ENGINE is 't':
+        if conf.ENGINE is ENGINE_MODE_STATUS.THREAD:
             logging._acquireLock()
 
         if isinstance(data, unicode):
@@ -111,7 +111,7 @@ def dataToStdout(data, bold=False):
         except IOError:
             pass
 
-        if conf.ENGINE is 't':
+        if conf.ENGINE is ENGINE_MODE_STATUS.THREAD:
             logging._releaseLock()
     return
 

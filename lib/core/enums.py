@@ -27,5 +27,18 @@ class POC_RESULT_STATUS:
 
 
 class API_MODE_STATUS:
-    ZOOMEYE = 0
-    SHODAN = 1
+    ZOOMEYE = 9
+    SHODAN = 8
+
+
+class TARGET_MODE_STATUS:
+    FILE = 9
+    SINGLE = 8
+    IPMASK = 7
+    RANGE = 6
+    API = 5
+
+
+class ENGINE_MODE_STATUS:
+    THREAD = 9
+    GEVENT = 8
