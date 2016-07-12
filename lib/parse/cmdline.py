@@ -77,9 +77,9 @@ def cmdLineParser():
     ZoomeyeApi.add_argument("--dork", metavar='STRING', dest="dork", action="store", default=None,
                             help="ZoomEye dork used for search.")
     ZoomeyeApi.add_argument("--max-page", metavar='PAGE', dest="max_page", type=int, default=1,
-                            help="(optional) Max page used in ZoomEye API (20 targets/Page).")
-    ZoomeyeApi.add_argument("--search-type", metavar='TYPE', dest="search_type", action="store", default='web,host',
-                            help="(optional) search type used in ZoomEye API, web or host")
+                            help="(optional) Max page used in ZoomEye API (10 targets/Page, default:1).")
+    ZoomeyeApi.add_argument("--search-type", metavar='TYPE', dest="search_type", action="store", default='host',
+                            help="(optional) search type used in ZoomEye API, web or host (default:host)")
 
     ShodanAPI = parser.add_argument_group('Shodan API')
     ShodanAPI.add_argument("--query", metavar='STRING', dest="shodan_query", action="store", default=None,
@@ -87,7 +87,7 @@ def cmdLineParser():
     ShodanAPI.add_argument("--limit", metavar='LIMIT', dest="shodan_limit", type=int, default=100,
                            help="(optional) Number of results to return (default:100)")
     ShodanAPI.add_argument("--offset", metavar='OFFSET', dest="shodan_offset", type=int, default=0,
-                           help="(optional) Search offset to begin getting results from")
+                           help="(optional) Search offset to begin getting results from (default:0)")
 
     if len(sys.argv) == 1:
         sys.argv.append('-h')

@@ -10,7 +10,7 @@ def _initial():
     api_path = os.path.join(os.path.expanduser('~'), '.shodan-api-key')
     if not os.path.isfile(api_path):
         with open(api_path, 'w') as fp:
-            fp.write(raw_input('[-] First time using Shodan-api, please input your API-KEY > '))
+            fp.write(raw_input('[-] First time using Shodan-API, please input your API-KEY > '))
     API_KEY = open(api_path).read().strip()
     return shodan.Shodan(API_KEY)
 

@@ -157,7 +157,7 @@ def _checkCNhelp(args):
 
 def _checkAPI(args):
     api_mode_flag = 0
-    if args.dork or args.max_page != 1 or args.search_type != 'web,host':
+    if args.dork or args.max_page != 1 or args.search_type != 'host':
         api_mode_flag += 1
     if args.shodan_query or args.shodan_limit != 100 or args.shodan_offset != 0:
         api_mode_flag += 2
@@ -165,11 +165,40 @@ def _checkAPI(args):
         msg = 'You can only use args from ZoonEye-API *or* Shodan-API.'
         sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
     if args.dork:
+        try:
+            if int(args.max_page) <= 0:
+                msg = 'Invalid value in [--max-page], show usage with [-h].'
+                logger.error(msg)
+        except Exception:
+            msg = 'Invalid value in [--max-page], show usage with [-h].'
+            logger.error(msg)
+
+        if args.search_type not in ['web', 'host']:
+            msg = 'Invalid value in [--search-type], show usage with [-h].'
+            logger.error(msg)
+
         conf.API_MODE = API_MODE_STATUS.ZOOMEYE
-        conf.dork = args.dork
-        conf.max_page = args.max_page
-        conf.search_type = args.search_type
+        conf.zoomeye_dork = args.dork
+        conf.zoomeye_max_page = args.max_page
+        conf.zoomeye_search_type = args.search_type
+
     elif args.shodan_query:
+        try:
+            if int(args.shodan_limit) <= 0:
+                msg = 'Invalid value in [--limit], show usage with [-h].'
+                logger.error(msg)
+        except Exception:
+            msg = 'Invalid value in [--limit], show usage with [-h].'
+            logger.error(msg)
+
+        try:
+            if int(args.shodan_limit) <= 0:
+                msg = 'Invalid value in [--offset], show usage with [-h].'
+                logger.error(msg)
+        except Exception:
+            msg = 'Invalid value in [--offset], show usage with [-h].'
+            logger.error(msg)
+
         conf.API_MODE = API_MODE_STATUS.SHODAN
         conf.shodan_query = args.shodan_query
         conf.shodan_limit = args.shodan_limit

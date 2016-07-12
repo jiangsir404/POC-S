@@ -13,7 +13,7 @@ from lib.core.exception import *
 from lib.core.log import CUSTOM_LOGGING, LOGGER_HANDLER
 from lib.core.settings import BANNER, UNICODE_ENCODING, NULL, INVALID_UNICODE_CHAR_FORMAT
 from lib.core.convert import stdoutencode
-from lib.core.enums import EXIT_STATUS,ENGINE_MODE_STATUS
+from lib.core.enums import EXIT_STATUS, ENGINE_MODE_STATUS
 from thirdparty.termcolor.termcolor import colored
 from thirdparty.odict.odict import OrderedDict
 
@@ -43,9 +43,6 @@ def setPaths():
         msg = 'Some files in ./data are missing, it may cause an issue.\n'
         msg += 'Please use \'--update\' to get the complete program from github.com.'
         raise ToolkitMissingPrivileges(msg)
-
-    # store password or token
-    paths.RC_PATH = os.path.join(os.path.expanduser('~'), ".rc")
 
 
 def checkFile(filename):

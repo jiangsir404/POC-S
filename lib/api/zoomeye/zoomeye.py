@@ -1,84 +1,125 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+Copyright (c) 2014-2016 pocsuite developers (https://seebug.org)
+See the file 'docs/COPYING' for copying permission
+"""
+
 import requests
-from lib.core.data import logger
-from lib.core.enums import CUSTOM_LOGGING
+import getpass
 
 
-class Zoomeye(object):
-    def __init__(self, token, host="api.zoomeye.org"):
-        self._base_uri = "http://%s" % host
-        self._headers = {"Authorization": "JWT %s" % token, "Content-Type": "application/json"}
+class ZoomEye(object):
+    def __init__(self, username=None, password=None):
+        self.username = username
+        self.password = password
 
-    def _response_for(self, path):
-        uri = "/".join([self._base_uri, path])
-        response = requests.get(uri, headers=self._headers)
-        if response.status_code == 200:
-            body = self._handle_success(response, uri)
-            return body
-        else:
-            self._handle_error(response, uri)
+        self.token = ''
+        self.zoomeye_login_api = "https://api.zoomeye.org/user/login"
+        self.zoomeye_dork_api = "https://api.zoomeye.org/{}/search"
 
-    def _handle_success(self, response, uri):
-        try:
-            return response.json()
-        except ValueError as ex:
-            logger.log(CUSTOM_LOGGING.ERROR, ex)
+    def login(self):
+        """Please access https://www.zoomeye.org/api/doc#login
+        """
+        self.username = raw_input('ZoomEye Username: ')
+        self.password = getpass.getpass(prompt='ZoomEye Password: ')
+        data = '{{"username": "{}", "password": "{}"}}'.format(self.username,
+                                                               self.password)
+        resp = requests.post(self.zoomeye_login_api, data=data)
+        if resp and resp.status_code == 200 and 'access_token' in resp.json():
+            self.token = resp.json().get('access_token')
+        return self.token
 
-    def _handle_error(self, response, uri):
-        status = response.status_code
+    def dork_search(self, dork, page=0, resource='web', facet=['ip']):
+        """Search records with ZoomEye dorks.
 
-        if 400 <= status < 500:
-            self._handle_4xx_status(response, status, uri)
-        elif 500 <= status < 600:
-            self._handle_5xx_status(status, uri)
-        else:
-            self._handle_non_200_status(status, uri)
+        param: dork
+               ex: country:cn
+               access https://www.zoomeye.org/search/dorks for more details.
+        param: page
+               total page(s) number
+        param: resource
+               set a search resource type, ex: [web, host]
+        param: facet
+               ex: [app, device]
+               A comma-separated list of properties to get summary information
+        """
+        result = []
+        if isinstance(facet, (tuple, list)):
+            facet = ','.join(facet)
 
-    def _handle_non_200_status(self, status, uri):
-        errMsg = "Received a very surprising HTTP status %i for %s" % (status, uri)
-        logger.log(CUSTOM_LOGGING.ERROR, errMsg)
+        zoomeye_api = self.zoomeye_dork_api.format(resource)
+        headers = {'Authorization': 'JWT %s' % self.token}
+        params = {'query': dork, 'page': page + 1, 'facet': facet}
+        resp = requests.get(zoomeye_api, params=params, headers=headers)
+        if resp and resp.status_code == 200 and 'matches' in resp.json():
+            matches = resp.json().get('matches')
+            # total = resp.json().get('total')  # all matches items num
+            result = matches
 
-    def _handle_5xx_status(self, status, uri):
-        errMsg = "Received a server error %i for %s" % (status, uri)
-        logger.log(CUSTOM_LOGGING.ERROR, errMsg)
+            # Every match item incudes the following information:
+            # geoinfo
+            # description
+            # check_time
+            # title
+            # ip
+            # site
+            # system
+            # headers
+            # keywords
+            # server
+            # domains
 
-    def _handle_4xx_status(self, response, status, uri):
-        if not response.content:
-            errMsg = "Received a %i error for %s with no body." % (status, uri)
-            logger.log(CUSTOM_LOGGING.ERROR, errMsg)
-        elif response.headers["Content-Type"].find("json") == -1:
-            errMsg = "Received a %i for %s with the following body: %s" % (status, uri, response.content)
-            logger.log(CUSTOM_LOGGING.ERROR, errMsg)
+        return result
 
-        try:
-            body = response.json()
-        except ValueError:
-            errMsg = "Received a %i error for %s but it did not include the expected JSON body" % (status, uri)
-            logger.log(CUSTOM_LOGGING.ERROR, errMsg)
-        else:
-            if "error" in body:
-                self._handle_web_service_error(body.get("error"), status, uri)
-            else:
-                errMsg = "Response contains JSON but it does not specify code or error keys"
-                logger.log(CUSTOM_LOGGING.ERROR, errMsg)
+    def resources_info(self):
+        """Resource info shows us available search times.
 
-    def _handle_web_service_error(self, message, status, uri):
-        if message == "unauthorized":
-            errMsg = "AuthenticationError, please check your ZoomEye Token"
-            logger.log(CUSTOM_LOGGING.ERROR, errMsg)
-        else:
-            logger.log(CUSTOM_LOGGING.ERROR, message)
+        host-search: total number of available host records to search
+        web-search: total number of available web records to search
+        """
+        data = None
+        zoomeye_api = "https://api.zoomeye.org/resources-info"
+        headers = {'Authorization': 'JWT %s' % self.token}
+        resp = requests.get(zoomeye_api, headers=headers)
+        if resp and resp.status_code == 200 and 'plan' in resp.json():
+            data = resp.json()
 
-    def resource_info(self):
-        return self._response_for("resources-info")
+        return data
 
-    def search(self, keyword, page=1, searchtype="web"):
-        path = '%s/search?query="%s"&page=%s&fact=app,os' % (searchtype, keyword, page)
-        return self._response_for(path)
+    def setToken(self, token):
+        """set Token from exist token string"""
+        self.token = token.strip()
 
 
-if __name__ == "__main__":
-    z = Zoomeye("RSjz3c")
-    print z.search("port:80")
+def show_site_ip(data):
+    if data:
+        for i in data:
+            print(i.get('site'), i.get('ip'))
+
+
+def show_ip_port(data):
+    if data:
+        for i in data:
+            print(i.get('ip'), i.get('portinfo').get('port'))
+
+
+def zoomeye_api_test():
+    zoomeye = ZoomEye()
+    zoomeye.username = raw_input('ZoomEye Username: ')
+    zoomeye.password = getpass.getpass(prompt='ZoomEye Password: ')
+    zoomeye.login()
+    print(zoomeye.resources_info())
+
+    data = zoomeye.dork_search('solr')
+    show_site_ip(data)
+
+    data = zoomeye.dork_search('country:cn')
+    show_site_ip(data)
+
+    data = zoomeye.dork_search('solr country:cn')
+    show_site_ip(data)
+
+    data = zoomeye.dork_search('country:cn', resource='host', page=10)
+    show_ip_port(data)
