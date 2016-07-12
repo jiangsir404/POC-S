@@ -1,4 +1,8 @@
-# coding:utf8
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# author = i@cdxy.me
+# project = https://github.com/Xyntax/POC-T
+
 # Copied from python builtin package [urlparse.py]
 # Add 2 function by cdxy:
 #     get_domain(url)

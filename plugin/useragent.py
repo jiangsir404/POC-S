@@ -1,10 +1,7 @@
-# !/usr/bin/env python
-#  -*- coding: utf-8 -*-
-__author__ = 'xy'
-import random
-from lib.core.data import conf, th, paths, logger
-from lib.core.log import CUSTOM_LOGGING
-from lib.core.common import getFileItems, debugPause
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# author = i@cdxy.me
+# project = https://github.com/Xyntax/POC-T
 
 """
 Functions to get user-agent string
@@ -23,6 +20,11 @@ tips:
 init_UAlist(),get_random_agent()
 these 2 methods should be called after [path-init-method] in lib.core.common
 """
+
+import random
+from lib.core.data import conf, th, paths, logger
+from lib.core.log import CUSTOM_LOGGING
+from lib.core.common import getFileItems, debugPause
 
 
 def _init_UAlist(path):

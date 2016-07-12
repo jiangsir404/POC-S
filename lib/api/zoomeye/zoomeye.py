@@ -1,10 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-"""
-Copyright (c) 2014-2016 pocsuite developers (https://seebug.org)
-See the file 'docs/COPYING' for copying permission
-"""
+# author = i@cdxy.me
+# project = https://github.com/Xyntax/POC-T
 
 import requests
 import getpass

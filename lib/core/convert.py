@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-__author__ = 'xy'
+# author = i@cdxy.me
+# project = https://github.com/Xyntax/POC-T
 
 import sys
 from lib.core.settings import IS_WIN, UNICODE_ENCODING

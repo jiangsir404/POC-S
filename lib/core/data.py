@@ -1,11 +1,11 @@
-# !/usr/bin/env python
-#  -*- coding: utf-8 -*-
-__author__ = 'xy'
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# author = i@cdxy.me
+# project = https://github.com/Xyntax/POC-T
 
 from lib.core.log import LOGGER
 from lib.core.datatype import AttribDict
-# object to share within function and classes command
-# line options and settings
+
 """
 paths
     ROOT_PATH

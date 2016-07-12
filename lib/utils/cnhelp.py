@@ -1,5 +1,7 @@
-# !/usr/bin/env python
-#  -*- coding: utf-8 -*-
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# author = i@cdxy.me
+# project = https://github.com/Xyntax/POC-T
 
 u"""
 本文档为程序中文使用说明，您也可以使用 -h 查看英文版使用说明

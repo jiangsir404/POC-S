@@ -1,5 +1,7 @@
 #!/usr/bin/env python
-__author__ = 'xy'
+# -*- coding: utf-8 -*-
+# author = i@cdxy.me
+# project = https://github.com/Xyntax/POC-T
 
 import logging
 import sys

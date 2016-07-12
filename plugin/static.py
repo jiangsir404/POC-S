@@ -1,5 +1,7 @@
-# !/usr/bin/env python
-#  -*- coding: utf-8 -*-
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# author = i@cdxy.me
+# project = https://github.com/Xyntax/POC-T
 
 NMAP_PORTS_1000 = \
     ['1', '3', '4', '6', '7', '9', '13', '17', '19', '20', '21', '22', '23', '24', '25', '26', '30', '32', '33',

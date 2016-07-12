@@ -1,29 +1,30 @@
-# !/usr/bin/env python
-#  -*- coding: utf-8 -*-
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# author = i@cdxy.me
+# project = https://github.com/Xyntax/POC-T
+
+"""
+Functions to extract IP from content string
+edit by cdxy [i@cdxy.me]
+May 23 Mon, 2016
+
+parameters：
+  content
+  remove_duplicate  (default:true)
+  remove_private    (default:False)
+
+usage:
+ from lib.util.extracts import *
+ ip_list = getIP(content)
+
+private address：
+ 10.0.0.0 - 10.255.255.255
+ 172.16.0.0 - 172.31.255.255
+ 192.168.0.0 - 192.168.255.255
+ 127.0.0.0 - 127.255.255.255
+"""
+
 import re
-
-"""
----function getIP():---
-
-    Functions to extract IP from content string
-    edit by cdxy [i@cdxy.me]
-    May 23 Mon, 2016
-
-    parameters：
-      content
-      remove_duplicate  (default:true)
-      remove_private    (default:False)
-
-    usage:
-     from lib.util.extracts import *
-     ip_list = getIP(content)
-
-    private address：
-     10.0.0.0 - 10.255.255.255
-     172.16.0.0 - 172.31.255.255
-     192.168.0.0 - 192.168.255.255
-     127.0.0.0 - 127.255.255.255
-"""
 
 
 def getIP(content, remove_duplicate=True, remove_private=False):
