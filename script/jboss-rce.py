@@ -363,14 +363,6 @@ def auto_exploit(url, exploit_type):
         # shell_http(url, exploit_type)
 
 
-def info():
-    pass
-
-
-def exp():
-    pass
-
-
 def poc(url):
     """
     Test if a GET to a URL is successful

@@ -26,8 +26,8 @@ Apache Solr 未授权访问PoC
 """
 
 import requests
-from util.useragent import firefox
-from util.urlparser import iterate_path
+from plugin.useragent import firefox
+from plugin.urlparser import iterate_path
 
 
 def poc(target):

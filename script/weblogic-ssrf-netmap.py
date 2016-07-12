@@ -18,7 +18,7 @@ Usage:
 """
 
 import requests
-from util.static import NMAP_PORTS_1000 as ports
+from plugin.static import NMAP_PORTS_1000 as ports
 
 
 def poc(ip_str):

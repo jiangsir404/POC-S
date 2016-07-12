@@ -36,7 +36,7 @@ def _checkUpdate(args):
 
 def _checkShow(args):
     if args.show:
-        module_name_list = glob.glob(os.path.join(paths.MODULES_PATH, '*.py'))
+        module_name_list = glob.glob(os.path.join(paths.SCRIPT_PATH, '*.py'))
         infoMsg = 'Module Name (total:%s)\n' % str(len(module_name_list) - 1)
         for each in module_name_list:
             _str = os.path.splitext(os.path.split(each)[1])[0]
@@ -51,18 +51,22 @@ def _initEngine(args):
         sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
     else:
         conf.ENGINE = ENGINE_MODE_STATUS.THREAD if args.T else ENGINE_MODE_STATUS.GEVENT
-        th.THREADS_NUM = conf.THREADS_NUM = args.t
+        if args.t > 0 and args.t < 101:
+            th.THREADS_NUM = conf.THREADS_NUM = args.t
+        else:
+            msg = 'Invalid input in [-t], range: 1 to 100'
+            sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
 
 
 def _initModule(args):
     if not args.m:
         msg = 'Use -m to select a module name. Example: -m spider'
         sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
-    if args.m and not os.path.isfile(os.path.join(paths.MODULES_PATH, args.m + ".py")):
+    if args.m and not os.path.isfile(os.path.join(paths.SCRIPT_PATH, args.m + ".py")):
         msg = 'module not exist. Use --show to view all available module names.'
         sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
     conf.MODULE_NAME = args.m
-    conf.MODULE_FILE_PATH = os.path.join(paths.MODULES_PATH, conf.MODULE_NAME + ".py")
+    conf.MODULE_FILE_PATH = os.path.join(paths.SCRIPT_PATH, conf.MODULE_NAME + ".py")
 
 
 def _initTargetMode(args):

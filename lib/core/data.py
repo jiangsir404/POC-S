@@ -10,7 +10,7 @@ from lib.core.datatype import AttribDict
 paths
     ROOT_PATH
     DATA_PATH
-    MODULES_PATH
+    SCRIPT_PATH
     OUTPUT_PATH
     UA_LIST_PATH
     WEAK_PASS
