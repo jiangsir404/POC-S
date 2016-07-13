@@ -5,7 +5,7 @@
 
 import os.path
 from lib.parse.cmdline import cmdLineParser
-from lib.parse.handler import initOptions
+from lib.core.option import initOptions
 from lib.controller.loader import loadModule, loadPayloads
 from lib.core.common import setPaths, showDebugData, banner, systemQuit, openBrowser
 from lib.core.data import paths, conf, logger, cmdLineOptions

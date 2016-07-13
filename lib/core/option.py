@@ -12,6 +12,7 @@ from lib.core.enums import CUSTOM_LOGGING, TARGET_MODE_STATUS, ENGINE_MODE_STATU
 import lib.utils.cnhelp as cnhelp
 from lib.utils.update import update
 from lib.core.enums import API_MODE_STATUS
+from lib.core.register import Register
 
 
 def initOptions(args):
@@ -47,16 +48,23 @@ def _checkShow(args):
 
 
 def _initEngine(args):
-    if (not args.T and not args.C) or (args.T and args.C):
-        msg = 'Use -T to set Multi-Threaded mode or -C to set Coroutine mode.'
-        sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
+    def __thread():
+        conf.ENGINE = ENGINE_MODE_STATUS.THREAD
+
+    def __gevent():
+        conf.ENGINE = ENGINE_MODE_STATUS.GEVENT
+
+    msg = 'Use -T to set Multi-Threaded mode or -C to set Coroutine mode.'
+    r = Register(mutex=True, mutex_errmsg=msg)
+    r.add(__thread, args.T)
+    r.add(__gevent, args.C)
+    r.run()
+
+    if args.t > 0 and args.t < 101:
+        th.THREADS_NUM = conf.THREADS_NUM = args.t
     else:
-        conf.ENGINE = ENGINE_MODE_STATUS.THREAD if args.T else ENGINE_MODE_STATUS.GEVENT
-        if args.t > 0 and args.t < 101:
-            th.THREADS_NUM = conf.THREADS_NUM = args.t
-        else:
-            msg = 'Invalid input in [-t], range: 1 to 100'
-            sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
+        msg = 'Invalid input in [-t], range: 1 to 100'
+        sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
 
 
 def _initModule(args):
@@ -71,29 +79,14 @@ def _initModule(args):
 
 
 def _initTargetMode(args):
-    target_mode_flag = 0
-    if args.s:
-        target_mode_flag += 1
-    if args.f:
-        target_mode_flag += 2
-    if args.i:
-        target_mode_flag += 4
-    if args.n:
-        target_mode_flag += 8
-    if args.api:
-        target_mode_flag += 16
-    if target_mode_flag not in (1, 2, 4, 8, 16):
-        msg = 'To load targets, please choose one from [-s|-i|-f|-n|--api].'
-        sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
-
-    if args.f:
+    def __file():
         if not os.path.isfile(args.f):
             msg = 'TargetFile not found: %s' % args.f
             sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
         conf.TARGET_MODE = TARGET_MODE_STATUS.FILE
         conf.INPUT_FILE_PATH = args.f
 
-    if args.i:
+    def __range():
         help_str = "invalid input in [-i], Example: python POC-T -m test -i 1-100."
         try:
             _int = args.i.strip().split('-')
@@ -115,18 +108,30 @@ def _initTargetMode(args):
         conf.TARGET_MODE = TARGET_MODE_STATUS.RANGE
         conf.I_NUM2 = args.i
         conf.INPUT_FILE_PATH = None
-    if args.n:
+
+    def __ipmask():
         conf.TARGET_MODE = TARGET_MODE_STATUS.IPMASK
         conf.NETWORK_STR = args.n
         conf.INPUT_FILE_PATH = None
-    if args.s:
+
+    def __single():
         conf.TARGET_MODE = TARGET_MODE_STATUS.SINGLE
         conf.SINGLE_TARGET_STR = args.s
         th.THREADS_NUM = conf.THREADS_NUM = 1
         conf.INPUT_FILE_PATH = None
-    if args.api:
+
+    def __api():
         conf.TARGET_MODE = TARGET_MODE_STATUS.API
         _checkAPI(args)
+
+    msg = 'To load targets, please choose one from [-s|-i|-f|-n|--api].'
+    r = Register(mutex=True, mutex_errmsg=msg)
+    r.add(__file, args.f)
+    r.add(__api, args.api)
+    r.add(__ipmask, args.n)
+    r.add(__range, args.i)
+    r.add(__single, args.s)
+    r.run()
 
 
 def _initOutput(args):

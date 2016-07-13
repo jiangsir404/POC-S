@@ -25,3 +25,19 @@ class ToolkitSystemException(ToolkitBaseException):
 
 class ToolkitValueException(ToolkitBaseException):
     pass
+
+
+class RegisterException(Exception):
+    pass
+
+
+class RegisterValueException(RegisterException):
+    pass
+
+
+class RegisterDataException(RegisterException):
+    pass
+
+
+class RegisterMutexException(RegisterException):
+    pass

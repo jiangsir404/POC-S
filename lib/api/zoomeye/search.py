@@ -4,11 +4,11 @@
 # project = https://github.com/Xyntax/POC-T
 
 import os
-import sys
 from lib.api.zoomeye.zoomeye import ZoomEye
 from lib.core.data import logger
 from lib.core.log import CUSTOM_LOGGING
 from lib.core.enums import EXIT_STATUS
+from lib.core.common import systemQuit
 
 
 def _initial():
@@ -25,24 +25,28 @@ def _initial():
         else:
             msg = 'Invalid ZoomEye username or password.'
             logger.log(CUSTOM_LOGGING.ERROR, msg)
-            sys.exit(EXIT_STATUS.ERROR_EXIT)
+            systemQuit(EXIT_STATUS.ERROR_EXIT)
 
     else:
         msg = 'Load ZoomEye access token from: ' + token_path
         logger.log(CUSTOM_LOGGING.SUCCESS, msg)
         z.setToken(open(token_path).read())
-
-    info = z.resources_info()['resources']
+    try:
+        info = z.resources_info()['resources']
+    except TypeError:
+        msg = 'Token invalid or expired, please re-run it to get a new token.'
+        logger.log(CUSTOM_LOGGING.WARNING, msg)
+        os.remove(token_path)
+        systemQuit(EXIT_STATUS.ERROR_EXIT)
 
     if info:
-        logger.log(CUSTOM_LOGGING.SUCCESS, msg)
         msg = 'Available ZoomEye search, web-search:{}, host-search:{}'.format(info['web-search'], info['host-search'])
         logger.log(CUSTOM_LOGGING.SYSINFO, msg)
     else:
         os.remove(token_path)
         msg = 'ZoomEye API authorization failed, Please re-run it and enter a new token.'
         logger.log(CUSTOM_LOGGING.ERROR, msg)
-        sys.exit(EXIT_STATUS.ERROR_EXIT)
+        systemQuit(EXIT_STATUS.ERROR_EXIT)
 
     return z
 
