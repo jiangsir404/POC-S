@@ -18,7 +18,7 @@ from thirdparty.IPy import IPy
 
 def loadModule():
     _name = conf.MODULE_NAME
-    infoMsg = 'Loading custom module: %s.py' % _name
+    infoMsg = 'Loading custom script: %s.py' % _name
     logger.log(CUSTOM_LOGGING.SUCCESS, infoMsg)
 
     fp, pathname, description = imp.find_module(_name, [paths.SCRIPT_PATH])
