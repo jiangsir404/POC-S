@@ -5,24 +5,11 @@
 
 """
 Apache Solr 未授权访问PoC
+  (iterate_path函数使用场景示例)
 
-(iterate_path函数使用教学)
-
-假设输入URL为
-  http://cdxy.cdxy.me/hi/hello/cat/a.html?pape=1#
-为增加精度，脚本将依次测试以下位置，得到一个结果就返回。
-  http://cdxy.cdxy.me/hi/hello/cat/a.html?pape=1#
-  http://cdxy.cdxy.me/hi/hello/cat/a.html?pape=1#/solr/
-  http://cdxy.cdxy.me/hi/hello/cat/a.html
-  http://cdxy.cdxy.me/hi/hello/cat/a.html/solr/
-  http://cdxy.cdxy.me/hi/hello/cat
-  http://cdxy.cdxy.me/hi/hello/cat/solr/
-  http://cdxy.cdxy.me/hi/hello
-  http://cdxy.cdxy.me/hi/hello/solr/
-  http://cdxy.cdxy.me/hi
-  http://cdxy.cdxy.me/hi/solr/
-  http://cdxy.cdxy.me
-  http://cdxy.cdxy.me/solr/
+Usage
+  python POC-T.py -T -m solr-unauth -f target.txt
+  python POC-T.py -T -m solr-unauth --api --query "solr country:cn"
 """
 
 import requests
@@ -45,4 +32,3 @@ def poc(target):
         except Exception:
             pass
     return False
-

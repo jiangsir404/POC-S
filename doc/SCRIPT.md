@@ -4,10 +4,12 @@
 ----
 |脚本|说明|
 |:---|:---|
-|`jboss-poc.py`       | jboss命令执行 (jexboss去后门版) |  
-|`struts2-s2032.py`   | Struts2 S2-032 命令执行 |  
+|`jboss-poc.py`       | JBoss 命令执行 (jexboss去后门版) |  
+|`struts2-s2032.py`   | Struts2 S2-032 命令执行 | 
+|`struts2-devmode.py` | Struts2 devMode 命令执行 |
 |`zonetransfer-poc.py`| DNS域传送漏洞 |
 |`solr-unauth.py`     | Apache Solr 未授权访问 |
+|`redis-unauth.py`    | Redis 未授权访问 |
   
 爆破&扫描 
 -----

@@ -27,6 +27,10 @@ class ToolkitValueException(ToolkitBaseException):
     pass
 
 
+class ToolkitPluginException(ToolkitBaseException):
+    pass
+
+
 class RegisterException(Exception):
     pass
 
