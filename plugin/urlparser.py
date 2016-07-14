@@ -4,7 +4,7 @@
 # project = https://github.com/Xyntax/POC-T
 
 # Copied from python builtin package [urlparse.py]
-# Add 2 function by cdxy:
+# Add 2 functions:
 #     get_domain(url)
 #     iterate_path(url)
 

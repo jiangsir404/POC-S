@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#  -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 # author = i@cdxy.me
 # project = https://github.com/Xyntax/POC-T
 
@@ -24,6 +24,11 @@ valid = """
 """
 
 invalid = """
+-m test
+-T --nF
+-T -s --api
+-T -s -f -n
+-T -s -f -n -i --api
 -T -C -m test -i 1-10
 -T -t -1 -m test -i 1-10
 -C -m test -i -1-10
@@ -52,39 +57,65 @@ jboss-rce www.cdxy.me
 solr-unauth http://36.110.167.60:8080
 """
 
+header = """
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# author = i@cdxy.me
+# project = https://github.com/Xyntax/POC-T
+"""
+
 import os
 
-os.chdir(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-base = 'python POC-T.py '
+def headerCheck(path):
+    parents = os.listdir(path)
+    for parent in parents:
+        if parent == 'thirdparty':
+            continue
+        child = os.path.join(path, parent)
+        if os.path.isdir(child):
+            headerCheck(child)
+        elif os.path.isfile(child):
+            if child.endswith('.py'):
+                a = ''.join(open(child).readlines()[:4]).replace('\n', '')
+                if a != header.replace('\n', ''):
+                    raise Exception('unformed header in: ' + child)
 
-print '\n\n==== Testing features ====\n\n'
-os.system('python3 POC-T.py')
-os.system('python POC-T.py')
-for each in valid.splitlines():
-    if len(each) > 1:
-        print '[*] ' + base + each.strip()
-        try:
-            os.system(base + each.strip())
-        except Exception, e:
-            print e
 
-print '\n\n==== Testing invalid args ====\n\n'
-for each in invalid.splitlines():
-    if len(each) > 1:
-        print '[*] ' + base + each.strip()
-        try:
-            os.system(base + each.strip())
-        except Exception, e:
-            print(e)
+if __name__ == '__main__':
+    root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    headerCheck(root_dir)
 
-print '\n\n==== Testing Scripts & Plugins ====\n\n'
-for each in scripts_with_plugin.splitlines():
-    if len(each) > 1:
-        _l = each.strip().split(' ')
-        command = 'python POC-T.py -T -t 1 -m %s -s %s --nF' % (str(_l[0]), str(_l[1]))
-        print '[*] ' + command
-        os.system(command)
+    os.chdir(root_dir)
+    base = 'python POC-T.py '
 
-if os.path.isfile('test_ans.txt'):
-    os.remove('test_ans.txt')
+    print '\n\n==== Testing features ====\n\n'
+    os.system('python3 POC-T.py')
+    os.system('python POC-T.py')
+    for each in valid.splitlines():
+        if len(each) > 1:
+            print '[*] ' + base + each.strip()
+            try:
+                os.system(base + each.strip())
+            except Exception, e:
+                print e
+
+    print '\n\n==== Testing invalid args ====\n\n'
+    for each in invalid.splitlines():
+        if len(each) > 1:
+            print '[*] ' + base + each.strip()
+            try:
+                os.system(base + each.strip())
+            except Exception, e:
+                print(e)
+
+    print '\n\n==== Testing Scripts & Plugins ====\n\n'
+    for each in scripts_with_plugin.splitlines():
+        if len(each) > 1:
+            _l = each.strip().split(' ')
+            command = 'python POC-T.py -T -t 1 -m %s -s %s --nF' % (str(_l[0]), str(_l[1]))
+            print '[*] ' + command
+            os.system(command)
+
+    if os.path.isfile('test_ans.txt'):
+        os.remove('test_ans.txt')
