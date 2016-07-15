@@ -95,10 +95,13 @@ def poc(input_str):
   
 |工具|说明|
 |:---|:---|
-|urlparser.py | URL处理工具，可对采集到的杂乱URL进行格式化/自动生成等|
-|useragent.py | User-Agent处理工具, 支持随机化UA以绕过防御规则|
-|extracts.py  | 正则提取工具，从采集到的杂乱文本中筛选IP地址|
-|static.py    | 存储静态资源，如常见端口号等 |
+|urlparser.py | URL处理工具,可对采集到的杂乱URL进行格式化/自动生成等|
+|useragent.py | User-Agent处理工具,支持随机化UA以绕过防御规则|
+|extracts.py  | 正则提取工具,从采集到的杂乱文本中筛选IP地址|
+|static.py    | 存储静态资源,如常见端口号等 |
+|util.py      | 常用函数,处理随机值/MD5/302跳转/格式转换等|
+|cloudeye.py  | cloudeye.me功能接口,在PoC中查询DNS和HTTP日志|
+
 
 第三方搜索引擎接口
 ---------
