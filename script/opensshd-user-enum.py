@@ -34,7 +34,6 @@ def getResponseTime(user, host):
     finally:
         endtime = time.clock()
     total = endtime - starttime
-    print host, total
     return total
 
 
