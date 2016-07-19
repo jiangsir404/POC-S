@@ -14,6 +14,7 @@
 |`activemq-weakpass.py`    | ActiveMQ 弱口令 |
 |`activemq-upload.py`    | ActiveMQ 文件上传 |
 |`redis-unauth.py`    | Redis 未授权访问 |
+|`opensshd-user-enum.py`| Opensshd 用户猜解 |
 
 爆破&扫描 
 -----
