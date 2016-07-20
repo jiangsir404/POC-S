@@ -103,3 +103,13 @@ def IP2domain(base):
             return False
     except Exception:
         return base
+
+
+def checkPortTcp(target, port):
+    sk = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sk.settimeout(10)
+    try:
+        sk.connect((target, port))
+        return True
+    except Exception:
+        return False
