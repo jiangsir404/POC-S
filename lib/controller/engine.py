@@ -26,7 +26,6 @@ from lib.core.enums import CUSTOM_LOGGING, POC_RESULT_STATUS, ENGINE_MODE_STATUS
 def initEngine():
     th.thread_mode = True if conf.ENGINE is ENGINE_MODE_STATUS.THREAD else False
     th.module_name = conf.MODULE_NAME
-    # th.module_obj
     th.f_flag = conf.FILE_OUTPUT
     th.s_flag = conf.SCREEN_OUTPUT
     th.queue = th.queue
@@ -38,30 +37,9 @@ def initEngine():
     th.is_continue = True
     th.found_single = False
     th.start_time = time.time()
-    if th.thread_mode:
-        th.file_lock = threading.Lock()
-        th.load_lock = threading.Lock()
+    setThreadLock()
     msg = 'Set the number of concurrent: %d' % th.threads_num
     logger.log(CUSTOM_LOGGING.SUCCESS, msg)
-
-
-def printMessage(msg):
-    dataToStdout('\r' + msg + ' ' * (th.console_width - len(msg)) + '\n\r')
-
-
-def printProgress():
-    msg = '%s found | %s remaining | %s scanned in %.2f seconds' % (
-        th.found_count, th.queue.qsize(), th.scan_count, time.time() - th.start_time)
-    out = '\r' + ' ' * (th.console_width - len(msg)) + msg
-    dataToStdout(out)
-
-
-def output2file(msg):
-    if th.thread_mode: th.file_lock.acquire()
-    f = open(th.output, 'a')
-    f.write(msg + '\n')
-    f.close()
-    if th.thread_mode: th.file_lock.release()
 
 
 def singleMode():
@@ -69,16 +47,7 @@ def singleMode():
     th.found_single = True
 
 
-def setThreadDaemon(thread):
-    # Reference: http://stackoverflow.com/questions/190010/daemon-threads-explanation
-    if PYVERSION >= "2.6":
-        thread.daemon = True
-    else:
-        thread.setDaemon(True)
-
-
 def scan():
-    # print 111
     while 1:
         if th.thread_mode: th.load_lock.acquire()
         if th.queue.qsize() > 0 and th.is_continue:
@@ -94,37 +63,13 @@ def scan():
         except Exception, e:
             print e
             th.is_continue = False
-        th.scan_count += 1
+        changeScanCount(1)
         if th.s_flag:
             printProgress()
     if th.s_flag:
         printProgress()
-    th.thread_count -= 1
 
-
-def resultHandler(status, payload):
-    if status is False or POC_RESULT_STATUS.FAIL:
-        return
-    elif status is POC_RESULT_STATUS.RETRAY:
-        th.scan_count -= 1
-        th.queue.put(payload)
-        return
-    elif status is True or status is POC_RESULT_STATUS.SUCCESS:
-        msg = payload
-    else:
-        # TODO handle this exception
-        try:
-            msg = str(status)
-        except Exception, e:
-            printMessage(e)
-            return
-    th.found_count += 1
-    if th.s_flag:
-        printMessage(msg)
-    if th.f_flag:
-        output2file(msg)
-    if th.single_mode:
-        singleMode()
+    changeThreadCount(-1)
 
 
 def run():
@@ -150,3 +95,82 @@ def run():
         sys.stdout.write('\n')
         sys.stdout.flush()
         logger.log(CUSTOM_LOGGING.SYSINFO, msg)
+
+
+def resultHandler(status, payload):
+    if status is False or POC_RESULT_STATUS.FAIL:
+        return
+    elif status is POC_RESULT_STATUS.RETRAY:
+        changeScanCount(-1)
+        th.queue.put(payload)
+        return
+    elif status is True or status is POC_RESULT_STATUS.SUCCESS:
+        msg = payload
+    else:
+        # TODO handle this exception
+        try:
+            msg = str(status)
+        except Exception, e:
+            printMessage(e)
+            return
+    changeFoundCount(1)
+    if th.s_flag:
+        printMessage(msg)
+    if th.f_flag:
+        output2file(msg)
+    if th.single_mode:
+        singleMode()
+
+
+def setThreadLock():
+    if th.thread_mode:
+        th.found_count_lock = threading.Lock()
+        th.scan_count_lock = threading.Lock()
+        th.thread_count_lock = threading.Lock()
+        th.file_lock = threading.Lock()
+        th.load_lock = threading.Lock()
+
+
+def setThreadDaemon(thread):
+    # Reference: http://stackoverflow.com/questions/190010/daemon-threads-explanation
+    if PYVERSION >= "2.6":
+        thread.daemon = True
+    else:
+        thread.setDaemon(True)
+
+
+def changeFoundCount(num):
+    if th.thread_mode: th.found_count_lock.acquire()
+    th.found_count += num
+    if th.thread_mode: th.found_count_lock.release()
+
+
+def changeScanCount(num):
+    if th.thread_mode: th.scan_count_lock.acquire()
+    th.scan_count += num
+    if th.thread_mode: th.scan_count_lock.release()
+
+
+def changeThreadCount(num):
+    if th.thread_mode: th.thread_count_lock.acquire()
+    th.thread_count += num
+    if th.thread_mode: th.thread_count_lock.release()
+
+
+def printMessage(msg):
+    dataToStdout('\r' + msg + ' ' * (th.console_width - len(msg)) + '\n\r')
+
+
+def printProgress():
+    msg = '%s found | %s remaining | %s scanned in %.2f seconds' % (
+        th.found_count, th.queue.qsize(), th.scan_count, time.time() - th.start_time)
+    out = '\r' + ' ' * (th.console_width - len(msg)) + msg
+    dataToStdout(out)
+
+
+def output2file(msg):
+    if th.thread_mode: th.file_lock.acquire()
+    f = open(th.output, 'a')
+    f.write(msg + '\n')
+    f.close()
+    if th.thread_mode: th.file_lock.release()

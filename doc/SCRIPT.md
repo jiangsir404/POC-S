@@ -10,7 +10,10 @@
 |`zonetransfer-poc.py`| DNS域传送漏洞 |
 |`solr-unauth.py`     | Apache Solr 未授权访问 |
 |`redis-unauth.py`    | Redis 未授权访问 |
-|`zabbix-weakpass.py`  |zabbix 弱口令|
+|`redis-web-probe.py`| Redis利用之 webshell|
+|`redis-cron-getshell.py`| Redis利用之 cron.d|
+|`redis-sshkey-getshell.py`| Redis利用之 ssh-key|
+|`zabbix-weakpass.py`  | zabbix 弱口令|
 |`activemq-weakpass.py`    | ActiveMQ 弱口令 |
 |`activemq-upload.py`    | ActiveMQ 文件上传 |
 |`redis-unauth.py`    | Redis 未授权访问 |
