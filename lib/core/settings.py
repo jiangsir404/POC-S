@@ -8,11 +8,11 @@ import os
 import subprocess
 
 VERSION = '1.7.2'
-VERSION_STRING = "POC-T"
+PROJECT = "POC-T"
 AUTHOR = 'cdxy'
 MAIL = 'i@cdxy.me'
 PLATFORM = os.name
-
+LICENSE = 'GPLv2'
 IS_WIN = subprocess.mswindows
 
 # essential methods/functions in costum scripts/PoC (such as function poc())
@@ -41,5 +41,3 @@ BANNER = """\033[01;34m
 /_/                                  /_/
     \033[01;37m{\033[01;m Version %s by %s mail:%s \033[01;37m}\033[0m
 \n""" % (VERSION, AUTHOR, MAIL)
-
-# print BANNER

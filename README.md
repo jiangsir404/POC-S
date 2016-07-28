@@ -20,10 +20,15 @@
 
 * [查看已集成脚本](https://github.com/Xyntax/POC-T/blob/master/doc/SCRIPT.md)
 
-## 快速开始 
-* `pip install -r requirement.txt` 
-* `python POC-T.py`  
-
+## 快速开始   
+* 使用`pip`安装  
+`pip install POC-T`  
+  
+* 或者下载源码  
+`git clone https://github.com/Xyntax/POC-T`  
+`pip install -r requirement.txt`   
+`python POC-T.py`     
+  
 ## 使用说明 
 
 ![usage.png](https://github.com/Xyntax/POC-T/blob/master/doc/usage.png) 

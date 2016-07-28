@@ -28,7 +28,6 @@ def initEngine():
     th.module_name = conf.MODULE_NAME
     th.f_flag = conf.FILE_OUTPUT
     th.s_flag = conf.SCREEN_OUTPUT
-    th.queue = th.queue
     th.output = conf.OUTPUT_FILE_PATH
     th.thread_count = th.threads_num = th.THREADS_NUM
     th.single_mode = conf.SINGLE_MODE
