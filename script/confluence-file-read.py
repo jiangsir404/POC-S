@@ -21,7 +21,7 @@ from plugin.urlparser import iterate_path
 
 def poc(_inp):
     try:
-        if ':' not in _inp:
+        if '://' not in _inp:
             _inp = 'http://' + _inp
         for inp in iterate_path(_inp):
             payloads = ['/spaces/viewdefaultdecorator.action?decoratorName=']
