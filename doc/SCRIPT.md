@@ -20,6 +20,7 @@
 |`opensshd-user-enum.py`| Opensshd 用户猜解 |
 |`glassfish-traversal.py`| GlassFish 任意文件读取|
 |`confluence-file-read.py`| Atlassian Confluence 文件读取 |
+|`jetspeed-rest-unauth.py`|Apache Jetspeed REST API未授权访问|
 
 
 爆破&扫描 

@@ -42,11 +42,9 @@
 1.7
 ---
 * 2016.07.08 - 添加`--api`，支持`ZoomEye-API`
-* 2016.07.09 - 优化`ZoomEye-API`，添加`solr-unauth-poc`
 * 2016.07.10 - 添加`Shodan-API`
 * 2016.07.11 - 为enginet和target添加枚举类，统一插件代码风格
-* 2016.07.11 - 添加`WebLogic-ssrf-netmap`，整理目录
 * 2016.07.13 - `Register`处理互斥参数,功能测试脚本
-* 2016.07.15 - `CloudEye-API`
+* 2016.07.15 - 添加`CloudEye-API`
 * 2016.07.27 - 修复线程锁引发的bug
 * 2016.07.28 - 发布pypi,支持`pip install POC-T`
