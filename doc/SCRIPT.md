@@ -4,7 +4,7 @@
 ----
 |脚本|说明|
 |:---|:---|
-|`jboss-poc.py`       | JBoss 命令执行 (jexboss去后门版) |  
+|`jboss-rce.py`       | JBoss 命令执行 (jexboss去后门版) |  
 |`struts2-s2032.py`   | Struts2 S2-032 命令执行 | 
 |`struts2-devmode.py` | Struts2 devMode 命令执行 |
 |`zonetransfer-poc.py`| DNS域传送漏洞 |
@@ -21,7 +21,7 @@
 |`glassfish-traversal.py`| GlassFish 任意文件读取|
 |`confluence-file-read.py`| Atlassian Confluence 文件读取 |
 |`jetspeed-rest-unauth.py`|Apache Jetspeed REST API未授权访问|
-
+|`phpmyadmin-auth-rce.py` | phpMyAdmin 登入后命令执行|
 
 爆破&扫描 
 -----
