@@ -17,6 +17,7 @@ except ImportError, e:
     sys.exit(0)
 import threading
 import time
+import traceback
 from lib.core.common import dataToStdout
 from lib.utils.consle import getTerminalSize
 from lib.utils.versioncheck import PYVERSION
@@ -60,7 +61,8 @@ def scan():
             status = th.module_obj.poc(payload)
             resultHandler(status, payload)
         except Exception, e:
-            print e
+            logger.log(CUSTOM_LOGGING.ERROR, 'Errors found in current script.')
+            traceback.print_exc()
             th.is_continue = False
         changeScanCount(1)
         if th.s_flag:

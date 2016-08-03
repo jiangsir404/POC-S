@@ -13,7 +13,6 @@
 |`redis-web-probe.py`| Redis利用之 webshell|
 |`redis-cron-getshell.py`| Redis利用之 cron.d|
 |`redis-sshkey-getshell.py`| Redis利用之 ssh-key|
-|`zabbix-weakpass.py`  | zabbix 弱口令|
 |`activemq-weakpass.py`    | ActiveMQ 弱口令 |
 |`activemq-upload.py`    | ActiveMQ 文件上传 |
 |`memcached-unauth.py`    | Memcached 未授权访问 |
@@ -23,11 +22,14 @@
 |`jetspeed-rest-unauth.py`|Apache Jetspeed REST API未授权访问|
 |`phpmyadmin-auth-rce.py` | phpMyAdmin 登入后命令执行|
 
+
 爆破&扫描 
 -----
 |脚本|说明|
 |:---|:---|
-|`brute-example.py`    |密码爆破示例(51idc某站)|
+|`brute-example.py`    |表但爆破示例(51idc某站)|
+|`rsync-weakpass.py`   | rsync 弱口令爆破|
+|`zabbix-weakpass.py`  | zabbix 弱口令爆破|
 |`weblogic-ssrf-netmap`|利用SSRF漏洞扫描内网端口(nmap 1000 ports)|
   
 爬虫&采集
