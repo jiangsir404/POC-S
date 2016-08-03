@@ -27,7 +27,7 @@
 -----
 |脚本|说明|
 |:---|:---|
-|`brute-example.py`    |表但爆破示例(51idc某站)|
+|`brute-example.py`    | 表单爆破示例(51idc某站)|
 |`rsync-weakpass.py`   | rsync 弱口令爆破|
 |`zabbix-weakpass.py`  | zabbix 弱口令爆破|
 |`weblogic-ssrf-netmap`|利用SSRF漏洞扫描内网端口(nmap 1000 ports)|
