@@ -9,10 +9,10 @@ import time
 from string import ascii_lowercase
 
 # your API-key in "http://cloudeye.me/?a=list"
-key = '1e860ff056b33xxxxxxxxxxxxxxxxx'
+key = '1e860ff056xxxxxxxxxxxxxxxxxx'
 
-# your personal sub-domain, like: xxxxxx.dnslog.info
-uniq_domain = 'xxxxxx.dnslog.info'
+# your personal sub-domain, like: [user].dnslog.info
+uniq_domain = '[user]'
 
 
 class CloudEye:
@@ -49,14 +49,14 @@ class CloudEye:
 
 def queryDnsRecord(domain, delay=2):
     time.sleep(delay)
-    domain = domain.replace(uniq_domain, '').rstrip('.')
+    domain = domain.replace(uniq_domain + '.dnslog.info', '').rstrip('.')
     api_base = 'http://cloudeye.me/api/{key}/{domain}/DNSLog/'.format(key=key, domain=domain)
     return requests.post(api_base).content
 
 
 def queryHttpRecord(domain, delay=2):
     time.sleep(delay)
-    domain = domain.replace(uniq_domain, '').rstrip('.')
+    domain = domain.replace(uniq_domain + '.dnslog.info', '').rstrip('.')
     api_base = 'http://cloudeye.me/api/{key}/{domain}/ApacheLog/'.format(key=key, domain=domain)
     return requests.post(api_base).content
 
