@@ -7,7 +7,7 @@
 MetInfo 5.0.4 Sql injection PoC
 
 Dork
-  inurl:Powered by MetInfo 5.0.4
+  Powered by MetInfo 5.0.4
 
 Usage
   python POC-T.py -m metinfo-504-sqli --api --dork="Powered by MetInfo 5.0.4"
