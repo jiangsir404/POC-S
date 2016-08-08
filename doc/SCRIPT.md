@@ -24,6 +24,7 @@
 |`shiro-deserial-rce.py`  | Apache Shiro 反序列化命令执行|
 |`metinfo-504-sqli.py`| MetInfo 5.0.4 id参数SQL注入|
 |`joomla-videoflow-sqli.py`| Joomla videoflow组件SQL注入|
+|`navis-webaccess-sqli.py`| Navis WebAccess SQL注入|
 
 爆破&扫描 
 -----
