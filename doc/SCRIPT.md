@@ -26,6 +26,7 @@
 |`joomla-videoflow-sqli.py`| Joomla videoflow组件SQL注入|
 |`navis-webaccess-sqli.py`| Navis WebAccess SQL注入|
 |`wp-forcedownload.py`| WordPress forcedownload 任意文件下载|
+|`samsoftech-admin-bypass.py`| SAM Softech后台登录绕过|
 
 爆破&扫描 
 -----

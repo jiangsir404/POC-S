@@ -35,5 +35,3 @@ def poc(url):
         except Exception:
             pass
     return False
-
-# print poc('http://sgtaccess.portsamerica.com/')
