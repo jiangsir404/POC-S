@@ -25,6 +25,7 @@
 |`metinfo-504-sqli.py`| MetInfo 5.0.4 id参数SQL注入|
 |`joomla-videoflow-sqli.py`| Joomla videoflow组件SQL注入|
 |`navis-webaccess-sqli.py`| Navis WebAccess SQL注入|
+|`wp-forcedownload.py`| WordPress forcedownload 任意文件下载|
 
 爆破&扫描 
 -----
