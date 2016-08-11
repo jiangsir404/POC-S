@@ -28,7 +28,7 @@
 |`wp-forcedownload.py`| WordPress forcedownload 任意文件下载|
 |`samsoftech-admin-bypass.py`| SAM Softech后台登录绕过|
 |`vbulletin-ssrf.py`| vBulletin SSRF |
-
+|`wp-ypo-filedownload.py`| WordPress ypo theme 任意文件下载|
 爆破&扫描 
 -----
 |脚本|说明|
