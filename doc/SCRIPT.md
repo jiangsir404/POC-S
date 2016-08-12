@@ -29,6 +29,8 @@
 |`samsoftech-admin-bypass.py`| SAM Softech后台登录绕过|
 |`vbulletin-ssrf.py`| vBulletin SSRF |
 |`wp-ypo-filedownload.py`| WordPress ypo theme 任意文件下载|
+|`joomla-registrationpro-sqli.py`| Joomla registrationpro组件SQL注入|
+
 爆破&扫描 
 -----
 |脚本|说明|
