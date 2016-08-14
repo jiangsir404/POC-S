@@ -401,6 +401,3 @@ def poc(url):
     else:
         return False
 
-
-if __name__ == '__main__':
-    print poc('41.33.220.203')

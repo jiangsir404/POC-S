@@ -1,5 +1,5 @@
 # POC-T: *Pentest Over Concurrent Toolkit* 
-[![Python 2.6|2.7](https://img.shields.io/badge/python-2.6|2.7-yellow.svg)](https://www.python.org/) [![License](https://img.shields.io/badge/license-GPLv2-red.svg)](https://raw.githubusercontent.com/Xyntax/POC-T/master/doc/LICENSE.txt)  
+[![Python 2.7](https://img.shields.io/badge/python-2.7-yellow.svg)](https://www.python.org/) [![License](https://img.shields.io/badge/license-GPLv2-red.svg)](https://raw.githubusercontent.com/Xyntax/POC-T/master/doc/LICENSE.txt)  
 
 > 模块化并发框架，可处理渗透测试中 **采集/爬虫/爆破/批量PoC** 等需要并发的任务。
   
