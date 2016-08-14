@@ -24,6 +24,12 @@
 |`shiro-deserial-rce.py`  | Apache Shiro 反序列化命令执行|
 |`metinfo-504-sqli.py`| MetInfo 5.0.4 id参数SQL注入|
 |`joomla-videoflow-sqli.py`| Joomla videoflow组件SQL注入|
+|`navis-webaccess-sqli.py`| Navis WebAccess SQL注入|
+|`wp-forcedownload.py`| WordPress forcedownload 任意文件下载|
+|`samsoftech-admin-bypass.py`| SAM Softech后台登录绕过|
+|`vbulletin-ssrf.py`| vBulletin SSRF |
+|`wp-ypo-filedownload.py`| WordPress ypo theme 任意文件下载|
+|`joomla-registrationpro-sqli.py`| Joomla registrationpro组件SQL注入|
 
 爆破&扫描 
 -----
