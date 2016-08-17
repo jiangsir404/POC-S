@@ -66,7 +66,7 @@ if __name__ == '__main__':
     a = c.getRandomDomain('cdxy')
     try:
         requests.get('http://' + a, timeout=1)
-    except:
+    except Exception:
         pass
     print c.verifyDNS(delay=0)
     print c.verifyHTTP(delay=0)

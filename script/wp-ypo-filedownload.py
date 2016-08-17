@@ -25,6 +25,6 @@ def poc(url):
         if "define('DB_PASSWORD'" in r and '@package WordPress' in r:
             return target
     except Exception, e:
-        print e
+        # print e
         pass
     return False

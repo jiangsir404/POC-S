@@ -49,11 +49,7 @@ def poc(url):
         s = requests.get(poc_url,
                          headers={'User-Agent': 'Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0'},
                          timeout=10)
-        if s.status_code == 200 and jsp_file in s.content and 'method:' not in s.content:
-            # print s.content
-            return True
-        else:
-            return False
+        return bool(s.status_code == 200 and jsp_file in s.content and 'method:' not in s.content)
     except Exception, e:
         # print e
         return False

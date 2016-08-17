@@ -57,8 +57,8 @@ def poc(url):
             for each in blacklist:
                 if each in r.content:
                     return False
-            else:
-                return True
+            return True
+        return False
     except Exception, e:
         # print e
         return False
