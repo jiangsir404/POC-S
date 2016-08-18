@@ -65,7 +65,7 @@ class ColorizingStreamHandler(logging.StreamHandler):
             raise
         except IOError:
             pass
-        except:
+        except Exception:
             self.handleError(record)
 
     if os.name != 'nt':

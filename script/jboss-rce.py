@@ -388,7 +388,7 @@ def poc(url):
                 exploit_type = str(i)
             else:
                 pass
-        except:
+        except Exception:
             paths[i] = 505
 
     if step1:

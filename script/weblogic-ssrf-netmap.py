@@ -20,12 +20,13 @@ Usage:
 import requests
 from plugin.static import NMAP_PORTS_1000 as ports
 
+base_uri = 'https://xxx.xxx.com'
 
 def poc(ip_str):
     ans = []
     flag = False
     for port in ports:
-        exp_url = "https://cyb.sinosig.com/uddiexplorer/SearchPublicRegistries.jsp?operator=http://%s:%s&rdoSearch=name&txtSearchname=sdf&txtSearchkey=&txtSearchfor=&selfor=Business+location&btnSubmit=Search" % (
+        exp_url = base_uri.rstrip('/') + "/uddiexplorer/SearchPublicRegistries.jsp?operator=http://%s:%s&rdoSearch=name&txtSearchname=sdf&txtSearchkey=&txtSearchfor=&selfor=Business+location&btnSubmit=Search" % (
             ip_str, port)
         try:
             # 根据情况设置timeout
@@ -43,7 +44,6 @@ def poc(ip_str):
                 elif 'but could not connect' in c:
                     # 主机存在但端口未开放
                     flag = True
-                    pass
         except Exception, e:
             # print e
             pass
@@ -51,6 +51,3 @@ def poc(ip_str):
         return ip_str + ':' + str('/'.join(ans))
     return False
 
-
-if __name__ == '__main__':
-    poc('139.129.132.156')

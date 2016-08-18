@@ -56,7 +56,7 @@ if __name__ == '__main__':
 
     try:
         c = sys.argv[1]
-    except:
+    except Exception:
         c = raw_input('content > ')
     finally:
         print getIP(c)

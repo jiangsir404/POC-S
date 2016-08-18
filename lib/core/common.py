@@ -60,7 +60,7 @@ def checkFile(filename):
         try:
             with open(filename, "rb"):
                 pass
-        except:
+        except IOError:
             valid = False
 
     if not valid:
@@ -197,7 +197,7 @@ def getUnicode(value, encoding=None, noneToNull=False):
             except UnicodeDecodeError, ex:
                 try:
                     return unicode(value, UNICODE_ENCODING)
-                except:
+                except Exception:
                     value = value[:ex.start] + "".join(
                         INVALID_UNICODE_CHAR_FORMAT % ord(_) for _ in value[ex.start:ex.end]) + value[ex.end:]
     else:
