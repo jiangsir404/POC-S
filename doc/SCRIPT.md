@@ -30,6 +30,7 @@
 |`vbulletin-ssrf.py`| vBulletin SSRF |
 |`wp-ypo-filedownload.py`| WordPress ypo theme 任意文件下载|
 |`joomla-registrationpro-sqli.py`| Joomla registrationpro组件SQL注入|
+|`zabbix-jsrpc-sqli.py`  | zabbix jsrpc SQL注入|
 
 爆破&扫描 
 -----

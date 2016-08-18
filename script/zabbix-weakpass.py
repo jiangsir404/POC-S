@@ -31,6 +31,8 @@ def _get_static_post_attr(page_content):
 
 
 def poc(url):
+    if '://' not in url:
+	    url = 'http://' + url
     h1 = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101 Firefox/45.0',
     }

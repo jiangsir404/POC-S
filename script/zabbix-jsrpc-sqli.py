@@ -31,6 +31,8 @@ def poc(url):
         try:
             r = requests.get(target_url, timeout=10)
             if 'ed733b8d10be225eceba344d533586' in r.content:
+                return '[mysql]'+ each
+            if 'Error in query [' in r.content or 'SQL error [' in r.content:
                 return each
         except Exception, e:
             pass

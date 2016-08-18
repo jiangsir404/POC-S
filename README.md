@@ -5,10 +5,8 @@
   
 * 两种并发模式、五种信息输入格式  
 * 极简式脚本编写，无需参考文档  
-* 脚本扩展工具，结果更加精准  
+* 脚本扩展工具，简化重复工作  
 * 支持第三方搜索引擎API(已完成ZoomEye/Shodan)  
-* 其他人性化功能参数  
-* 跨平台，免安装  
   
 *(欢迎提交代码和改进建议)*
    
@@ -21,10 +19,7 @@
 * [查看已集成脚本](https://github.com/Xyntax/POC-T/blob/master/doc/SCRIPT.md)
 
 ## 快速开始   
-* 使用`pip`安装  
-`pip install POC-T`  
-  
-* 或者下载源码  
+
 `git clone https://github.com/Xyntax/POC-T`  
 `pip install -r requirement.txt`   
 `python POC-T.py`     
