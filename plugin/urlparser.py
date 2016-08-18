@@ -480,19 +480,24 @@ def iterate_path(ori_str):
 
     """
     parser = urlparse(ori_str)
-    _ans_list = [ori_str]
-    _ans_list.append(get_domain(ori_str))
     _path_list = parser.path.replace('//', '/').strip('/').split('/')
+    _ans_list = set()
+    _ans_list.add(ori_str)
 
+    if not _path_list[0]:
+        return _ans_list
+
+    _ans_list.add(get_domain(ori_str))
     s = ''
     for each in _path_list:
         s += '/' + each
-        _ans_list.append(urljoin(ori_str, s))
+        _ans_list.add(urljoin(ori_str, s))
     return _ans_list
 
 
 if __name__ == '__main__':
-    url = 'http://sss.cdxy.me:80/path1//path.2/index.php?id=1#'
+    url = 'http://cdxy.me:80/cdsa/cda/aaa.jsp?id=2#'
     print urlparse(url)
     print get_domain(url)
-    print iterate_path(url)
+    for each in  iterate_path(url):
+        print each
