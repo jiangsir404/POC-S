@@ -31,6 +31,8 @@
 |`wp-ypo-filedownload.py`| WordPress ypo theme 任意文件下载|
 |`joomla-registrationpro-sqli.py`| Joomla registrationpro组件SQL注入|
 |`zabbix-jsrpc-sqli.py`  | zabbix jsrpc SQL注入|
+|`siemens-camera-getpwd.py`| SIEMENS IP-Camrea 密码泄露|
+
 
 爆破&扫描 
 -----
