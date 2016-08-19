@@ -65,7 +65,6 @@ def poc(i):
             s.get(url=url)
             r = s.post(url=url, data=d)
             if not len(r.content) == 1809:
-                print each, i
                 return True
         return False
     except Exception, e:

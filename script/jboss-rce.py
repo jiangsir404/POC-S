@@ -36,10 +36,9 @@ try:
     from urllib3.util.timeout import Timeout
 except ImportError:
     ver = version_info[0] if version_info[0] >= 3 else ""
-    print("\n * Package urllib3 not installed. Please install the package urllib3 before continue.\n"
-          "" + "   Example: \n"
-               "   # apt-get install python%s-pip ; easy_install%s urllib3\n" % (ver, ver))
-    exit(0)
+    raise ("\n * Package urllib3 not installed. Please install the package urllib3 before continue.\n"
+           + "   Example: \n"
+           + "   # apt-get install python%s-pip ; easy_install%s urllib3\n" % (ver, ver))
 
 from urllib3 import disable_warnings, PoolManager
 from urllib3.util.timeout import Timeout
@@ -400,4 +399,3 @@ def poc(url):
         return step2
     else:
         return False
-

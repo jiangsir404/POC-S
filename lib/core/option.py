@@ -39,7 +39,7 @@ def _checkUpdate(args):
 def _checkShow(args):
     if args.show:
         module_name_list = glob.glob(os.path.join(paths.SCRIPT_PATH, '*.py'))
-        infoMsg = 'Module Name (total:%s)\n' % str(len(module_name_list) - 1)
+        infoMsg = 'Script Name (total:%s)\n' % str(len(module_name_list) - 1)
         for each in module_name_list:
             _str = os.path.splitext(os.path.split(each)[1])[0]
             if _str not in ['__init__']:
@@ -60,7 +60,7 @@ def _initEngine(args):
     r.add(__gevent, args.C)
     r.run()
 
-    if args.t > 0 and args.t < 101:
+    if 0 < args.t < 101:
         th.THREADS_NUM = conf.THREADS_NUM = args.t
     else:
         msg = 'Invalid input in [-t], range: 1 to 100'
@@ -68,14 +68,41 @@ def _initEngine(args):
 
 
 def _initModule(args):
-    if not args.m:
-        msg = 'Use -m to select a module name. Example: -m spider'
+    input_path = args.m
+
+    # handle input: nothing
+    if not input_path:
+        msg = 'Use -m to load script. Example: [-m spider] or [-m ./script/spider.py]'
         sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
-    if args.m and not os.path.isfile(os.path.join(paths.SCRIPT_PATH, args.m + ".py")):
-        msg = 'module not exist. Use --show to view all available module names.'
-        sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
-    conf.MODULE_NAME = args.m
-    conf.MODULE_FILE_PATH = os.path.join(paths.SCRIPT_PATH, conf.MODULE_NAME + ".py")
+
+    # handle input: "-m ./script/spider.py"
+    if os.path.split(input_path)[0]:
+        if os.path.exists(input_path):
+            if os.path.isfile(input_path):
+                if input_path.endswith('.py'):
+                    conf.MODULE_NAME = os.path.split(input_path)[-1]
+                    conf.MODULE_FILE_PATH = os.path.abspath(input_path)
+                else:
+                    msg = '[%s] not a Python file. Example: [-m spider] or [-m ./script/spider.py]' % input_path
+                    sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
+            else:
+                msg = '[%s] not a file. Example: [-m spider] or [-m ./script/spider.py]' % input_path
+                sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
+        else:
+            msg = '[%s] not found. Example: [-m spider] or [-m ./script/spider.py]' % input_path
+            sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
+
+    # handle input: "-m spider"  "-m spider.py"
+    else:
+        if not input_path.endswith('.py'):
+            input_path += '.py'
+        _path = os.path.abspath(os.path.join(paths.SCRIPT_PATH, input_path))
+        if os.path.isfile(_path):
+            conf.MODULE_NAME = input_path
+            conf.MODULE_FILE_PATH = os.path.abspath(_path)
+        else:
+            msg = 'Script [%s] not exist. Use [--show] to view all available script in ./script/' % input_path
+            sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
 
 
 def _initTargetMode(args):

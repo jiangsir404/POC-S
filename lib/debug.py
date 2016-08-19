@@ -20,7 +20,8 @@ valid = """
 -T -m test -f ./data/wooyun_domain --single -o test_ans.txt
 -C -m bingc -t 9 -n 139.129.132.0/28 --nF --debug
 -T -m solr-unauth --api --dork "solr country:cn" --max-page 2 --search-type host
--T -m bingc --api --query "solr country:cn" --offset 10 --limit 5
+-T -m bingc.py --api --query "solr country:cn" --offset 10 --limit 5
+
 """
 
 invalid = """
@@ -48,6 +49,8 @@ invalid = """
 -T -m test -i 1-10 --api --query "country:cn" --limit 0
 -T -m test -i 1-10 --api --query "country:cn" --limit -1
 -T -m test -i 1-10 --api --query "country:cn" --limit afefea
+-T -m ./test
+-T -m /
 """
 
 scripts_with_plugin = """

@@ -11,7 +11,7 @@ try:
 
     monkey.patch_all()
     import gevent
-# TODO use monkey patch in module/*.py
+# TODO use monkey patch in script/*.py
 except ImportError, e:
     logger.error(str(e) + '\nPlease run command: pip install -r requirements.txt\n')
     sys.exit(0)

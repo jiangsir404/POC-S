@@ -18,16 +18,15 @@ from thirdparty.IPy import IPy
 
 def loadModule():
     _name = conf.MODULE_NAME
-    infoMsg = 'Loading custom script: %s.py' % _name
+    infoMsg = 'Loading custom script: %s' % _name
     logger.log(CUSTOM_LOGGING.SUCCESS, infoMsg)
 
-    fp, pathname, description = imp.find_module(_name, [paths.SCRIPT_PATH])
+    fp, pathname, description = imp.find_module(os.path.splitext(_name)[0], [paths.SCRIPT_PATH])
     try:
         th.module_obj = imp.load_module("_", fp, pathname, description)
         for each in ESSENTIAL_MODULE_METHODS:
             if not hasattr(th.module_obj, each):
-                errorMsg = "Can't find essential method:'%s()' in current script:'module/%s.py'\n%s" \
-                           % (each, _name, 'Please modify your script/PoC.')
+                errorMsg = "Can't find essential method:'%s()' in current script，Please modify your script/PoC."
                 logger.log(CUSTOM_LOGGING.ERROR, errorMsg)
                 systemQuit(EXIT_STATUS.ERROR_EXIT)
     except ImportError, e:

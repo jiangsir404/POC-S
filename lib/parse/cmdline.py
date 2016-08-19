@@ -15,8 +15,8 @@ def cmdLineParser():
                                            '\n\nexample:\n'
                                            '  python POC-T.py -T -m jboss-poc -s http://www.cdxy.me\n'
                                            '  python POC-T.py -T -m test -f ./dic/1-100.txt\n'
-                                           '  python POC-T.py -C -m test -i 1-100\n'
-                                           '  python POC-T.py -C -m spider -n 10.0.0.0/24\n'
+                                           '  python POC-T.py -C -m spider -i 1-100\n'
+                                           '  python POC-T.py -C -m ./script/spider.py -n 10.0.0.0/24\n'
                                            '  python POC-T.py -T -m test --api --dork "port:21" --max-page 5\n'
                                            '  python POC-T.py -T -m test --api --query "solr country:cn" --limit 10 --offset 0',
                                      add_help=False)
@@ -31,23 +31,23 @@ def cmdLineParser():
     engine.add_argument('-t', metavar='NUM', type=int, default=10,
                         help='num of threads/concurrent, 10 by default')
 
-    module = parser.add_argument_group('module')
+    script = parser.add_argument_group('script')
 
-    module.add_argument('-m', metavar='NAME', type=str, default='',
-                        help='select Module/POC name in ./module/ (without ".py")')
+    script.add_argument('-m', metavar='NAME', type=str, default='',
+                        help='load script by name (-m jboss-rce) or path (-m ./script/jboss.py)')
 
     target = parser.add_argument_group('target mode')
 
     target.add_argument('-s', metavar='TARGET', type=str, default='',
                         help="scan a single target (e.g. www.wooyun.org)")
     target.add_argument('-f', metavar='FILE', type=str, default='',
-                        help='load targets from TargetFile (e.g. ./data/wooyun_domain)')
+                        help='load targets from targetFile (e.g. ./data/wooyun_domain)')
     target.add_argument('-i', metavar='START-END', type=str, default='',
                         help='generate targets from int(start) to int(end) (e.g. 1-100)')
     target.add_argument('-n', metavar='IP/MASK', type=str, default='',
                         help='load target IPs from IP/MASK. (e.g. 127.0.0.0/24)')
     target.add_argument('--api', default=False, action='store_true',
-                        help='get targets from ZoomEye/Shodan/Censys API.')
+                        help='get targets with ZoomEye/Shodan/Censys API.')
 
     optimization = parser.add_argument_group('optimization')
 
@@ -60,7 +60,7 @@ def cmdLineParser():
     optimization.add_argument('--nS', default=True, action='store_false',
                               help='disable screen output')
     optimization.add_argument('--show', default=False, action='store_true',
-                              help='show available module/POC names and exit')
+                              help='show available script names in ./script/ and exit')
     optimization.add_argument('--browser', default=False, action='store_true',
                               help='Open notepad or web browser to view report after task finished.')
     optimization.add_argument('--debug', default=False, action='store_true',
