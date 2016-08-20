@@ -60,7 +60,7 @@ def scan():
             # POC在执行时报错如果不被处理，线程框架会停止并退出
             status = th.module_obj.poc(payload)
             resultHandler(status, payload)
-        except Exception, e:
+        except Exception:
             logger.log(CUSTOM_LOGGING.ERROR, 'Errors found in current script.')
             traceback.print_exc()
             th.is_continue = False

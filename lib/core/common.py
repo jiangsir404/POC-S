@@ -283,7 +283,7 @@ def openBrowser():
     path = conf.OUTPUT_FILE_PATH
     try:
         webbrowser.open_new_tab(path)
-    except Exception, e:
+    except Exception:
         errMsg = '\n[ERROR] Fail to open file with web browser: %s' % path
         raise ToolkitSystemException(errMsg)
 
