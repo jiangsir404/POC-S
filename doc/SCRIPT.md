@@ -31,7 +31,8 @@
 |`wp-ypo-filedownload.py`| WordPress ypo theme 任意文件下载|
 |`samsoftech-admin-bypass.py`| SAM Softech后台登录绕过|
 |`joomla-registrationpro-sqli.py`| Joomla registrationpro组件SQL注入|
-|`zabbix-jsrpc-sqli.py`  | zabbix jsrpc SQL注入|
+|`zabbix-jsrpc-sqli.py`  | Zabbix jsrpc.php SQL注入检测|
+|`zabbix-jsrpc-mysql-exp.py`| Zabbix jsrpc.php MySQL注入利用 (作者:B0t0w1)|  
 |`siemens-camera-getpwd.py`| SIEMENS IP-Camrea 密码泄露|
 
 

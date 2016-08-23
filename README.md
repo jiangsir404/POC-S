@@ -7,8 +7,6 @@
 * 极简式脚本编写，无需参考文档  
 * 脚本扩展工具，简化重复工作  
 * 支持第三方搜索引擎API(已完成ZoomEye/Shodan)  
-  
-*(欢迎提交代码和改进建议)*
    
 ![banner.png](https://github.com/Xyntax/POC-T/blob/master/doc/banner.png) 
 
@@ -29,12 +27,12 @@
 ![usage.png](https://github.com/Xyntax/POC-T/blob/master/doc/usage.png) 
 
 ## 结构  
-以下含@的目录表示用户可控区域，用户可根据需要*增加/修改/调用*其中的内容
+以下含@的目录表示用户可控区域，用户可根据需要*增加|修改|调用*其中的内容
 
 | 目录 | 说明 |
 | :-----  |:-----|
 | `POC-T.py` | 程序入口 |
-| script     | @自定义脚本库 |
+| script     | @脚本库 |
 | plugin       | @工具库 |
 | data       | @资源库 |
 | output     | 默认输出位置 |
@@ -55,7 +53,7 @@
 #### 添加接口函数
 * 在代码中添加函数 **poc()**
 * 添加逻辑使验证成功(漏洞存在)时`return True`,验证失败时`return False`
-* (程序运行时，每个子线程调用该文件的poc()方法，并将队列中的取出的字符串传入该方法)  
+* (程序运行时，每个子线程调用该文件的`poc()`方法，并将队列中的取出的字符串传入该方法)  
 
 ```
 def poc(input_str):
@@ -63,11 +61,11 @@ def poc(input_str):
 ```  
 
 #### 查看及使用脚本
-* `python POC-T.py --show` 查看全部脚本名称
-* 在命令行中使用 `-m poctest` 参数即可完成`poctest`脚本的加载 (注意名称末尾不需要写`.py`)  
+* `python POC-T.py --show` 查看`./script`文件夹下全部脚本名称
+* 在命令行中使用 `-m poctest` 可加载`script`文件夹下的`poctest.py`脚本，或者 `-m /home/xy/xxx/poctest.py`加载任意路径的脚本
   
 #### (可选)结果判断
-针对一些复杂的需求，poc()函数可以使用多种返回值来控制验证状态和输出。  
+针对一些复杂的需求，`poc()`函数可以使用多种返回值来控制验证状态和输出。  
 以下模拟一个简单的密码爆破脚本代码  
   
 ```
@@ -76,7 +74,7 @@ def poc(input_str):
     try:
         c = requests.get(url).content
     except ConnectionError:
-        return 2     # 把input_str重新加入任务列表重新验证(本次验证作废)
+        return 2     # 把input_str再次加入任务队列重新验证(本次验证作废)
     if 'success' in c:
         return True  # 验证成功，屏幕结果输出为123456
         return 1     # 同上
@@ -106,8 +104,8 @@ def poc(input_str):
 第三方搜索引擎接口
 ---------
 
-本工具拟支持主流空间搜索引擎的API，如ZoomEye/Shodan/Censys等(目前已支持ZoomEye/Shodan)．
-从搜索引擎中直接获取目标，并结合本地脚本进行扫描．
+本工具拟支持主流空间搜索引擎的API，如ZoomEye/Shodan/Censys等(目前已支持ZoomEye/Shodan)。  
+从搜索引擎中直接获取目标，并结合本地脚本进行扫描。
 
 #### ZoomEye
 以下命令表示使用ZoomEye接口，搜索全网中开启`8080`号端口的服务，并使用`test.py`脚本进行验证．  
