@@ -1,40 +1,44 @@
 # 已集成脚本
 
+> 免责声明：请在合法范围内使用本程序。任何人因使用本程序造成的意外损失或恶意攻击，项目开发者对此概不负责，亦不承担任何法律责任。
+
+> legal disclaimer: Usage of POC-T for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program.
+
 漏洞验证 
 ----
 |脚本|说明|
 |:---|:---|
+|`activemq-upload.py`    | ActiveMQ 文件上传 |
+|`activemq-weakpass.py`    | ActiveMQ 弱口令 |
+|`confluence-traversal.py`| Atlassian Confluence 文件读取 |
+|`glassfish-traversal.py`| GlassFish 任意文件读取|
 |`jboss-rce.py`       | JBoss 命令执行 (jexboss去后门版) |  
-|`struts2-s2032.py`   | Struts2 S2-032 命令执行 | 
-|`struts2-devmode.py` | Struts2 devMode 命令执行 |
-|`zonetransfer-poc.py`| DNS域传送漏洞 |
-|`solr-unauth.py`     | Apache Solr 未授权访问 |
+|`jetspeed-rest-unauth.py`| Apache Jetspeed REST API未授权访问|
+|`joomla-registrationpro-sqli.py`| Joomla registrationpro组件SQL注入|
+|`joomla-videoflow-sqli.py`| Joomla videoflow组件SQL注入|
+|`memcached-unauth.py`    | Memcached 未授权访问 |
+|`metinfo-504-sqli.py`| MetInfo 5.0.4 id参数SQL注入|
+|`navis-webaccess-sqli.py`| Navis WebAccess SQL注入|
+|`opensshd-user-enum.py`| Opensshd 用户猜解 |
+|`phpmyadmin-auth-rce.py` | phpMyAdmin 登入后命令执行|
 |`redis-unauth.py`    | Redis 未授权访问 |
-|`redis-web-probe.py`| Redis利用之 webshell|
 |`redis-cron-getshell.py`| Redis利用之 cron.d|
 |`redis-sshkey-getshell.py`| Redis利用之 ssh-key|
-|`activemq-weakpass.py`    | ActiveMQ 弱口令 |
-|`activemq-upload.py`    | ActiveMQ 文件上传 |
-|`memcached-unauth.py`    | Memcached 未授权访问 |
-|`opensshd-user-enum.py`| Opensshd 用户猜解 |
-|`glassfish-traversal.py`| GlassFish 任意文件读取|
-|`confluence-file-read.py`| Atlassian Confluence 文件读取 |
-|`jetspeed-rest-unauth.py`| Apache Jetspeed REST API未授权访问|
-|`phpmyadmin-auth-rce.py` | phpMyAdmin 登入后命令执行|
+|`redis-web-probe.py`| Redis利用之 webshell|
+|`resindoc-traversal.py`| resin-doc 文件读取/SSRF|
+|`samsoftech-admin-bypass.py`| SAM Softech后台登录绕过|
 |`shiro-deserial-rce.py`  | Apache Shiro 反序列化命令执行|
-|`metinfo-504-sqli.py`| MetInfo 5.0.4 id参数SQL注入|
-|`joomla-videoflow-sqli.py`| Joomla videoflow组件SQL注入|
-|`navis-webaccess-sqli.py`| Navis WebAccess SQL注入|
+|`siemens-camera-getpwd.py`| SIEMENS IP-Camrea 密码泄露|
+|`solr-unauth.py`     | Apache Solr 未授权访问 |
+|`struts2-devmode.py` | Struts2 devMode 命令执行 |
+|`struts2-s2032.py`   | Struts2 S2-032 命令执行 | 
 |`vbulletin-ssrf.py`| vBulletin SSRF |
 |`wp-4.4-ssrf.py`| WordPress 4.4 SSRF |
 |`wp-forcedownload.py`| WordPress forcedownload 任意文件下载|
 |`wp-ypo-filedownload.py`| WordPress ypo theme 任意文件下载|
-|`samsoftech-admin-bypass.py`| SAM Softech后台登录绕过|
-|`joomla-registrationpro-sqli.py`| Joomla registrationpro组件SQL注入|
+|`zabbix-jsrpc-mysql-exp.py`| Zabbix jsrpc.php MySQL注入利用 (作者:B0t0w1)|
 |`zabbix-jsrpc-sqli.py`  | Zabbix jsrpc.php SQL注入检测|
-|`zabbix-jsrpc-mysql-exp.py`| Zabbix jsrpc.php MySQL注入利用 (作者:B0t0w1)|  
-|`siemens-camera-getpwd.py`| SIEMENS IP-Camrea 密码泄露|
-
+|`zonetransfer.py`| DNS域传送漏洞 |
 
 爆破&扫描 
 -----
