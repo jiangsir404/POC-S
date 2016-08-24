@@ -34,6 +34,7 @@
 |`struts2-s2032.py`   | Struts2 S2-032 命令执行 | 
 |`vbulletin-ssrf.py`| vBulletin SSRF |
 |`wp-4.4-ssrf.py`| WordPress 4.4 SSRF |
+|`wp-bonkersbeat-filedownload.py`| WordPress bonkersbeat theme 任意文件下载|
 |`wp-forcedownload.py`| WordPress forcedownload 任意文件下载|
 |`wp-ypo-filedownload.py`| WordPress ypo theme 任意文件下载|
 |`zabbix-jsrpc-mysql-exp.py`| Zabbix jsrpc.php MySQL注入利用 (作者:B0t0w1)|
