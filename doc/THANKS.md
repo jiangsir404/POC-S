@@ -6,3 +6,5 @@
  for suggesting features to `script/struts2-devmode.py`
 * [B0t0w1](1137321491@qq.com)
  for providing script `zabbix-jsrpc-mysql-exp.py` 
+* [liuchengsn](liuchengsn@163.com)
+ for reporting a bug on cli-args processing

@@ -205,14 +205,14 @@ def _checkAPI(args):
         try:
             if int(args.max_page) <= 0:
                 msg = 'Invalid value in [--max-page], show usage with [-h].'
-                logger.error(msg)
+                sys.exit(logger.error(msg))
         except Exception:
             msg = 'Invalid value in [--max-page], show usage with [-h].'
-            logger.error(msg)
+            sys.exit(logger.error(msg))
 
         if args.search_type not in ['web', 'host']:
             msg = 'Invalid value in [--search-type], show usage with [-h].'
-            logger.error(msg)
+            sys.exit(logger.error(msg))
 
         conf.API_MODE = API_MODE_STATUS.ZOOMEYE
         conf.zoomeye_dork = args.dork
@@ -223,18 +223,18 @@ def _checkAPI(args):
         try:
             if int(args.shodan_limit) <= 0:
                 msg = 'Invalid value in [--limit], show usage with [-h].'
-                logger.error(msg)
+                sys.exit(logger.error(msg))
         except Exception:
             msg = 'Invalid value in [--limit], show usage with [-h].'
-            logger.error(msg)
+            sys.exit(logger.error(msg))
 
         try:
-            if int(args.shodan_limit) <= 0:
+            if int(args.shodan_offset) <= 0:
                 msg = 'Invalid value in [--offset], show usage with [-h].'
-                logger.error(msg)
+                sys.exit(logger.error(msg))
         except Exception:
             msg = 'Invalid value in [--offset], show usage with [-h].'
-            logger.error(msg)
+            sys.exit(logger.error(msg))
 
         conf.API_MODE = API_MODE_STATUS.SHODAN
         conf.shodan_query = args.shodan_query
