@@ -30,6 +30,8 @@ def runZoomEyeApi():
         conf.zoomeye_dork.replace(':', '-').replace(' ', '-').strip(), time.strftime('%Y_%m_%d_%H_%M_%S')))
     with open(tmpIpFile, 'w') as fp:
         for each in anslist:
+            if isinstance(each, list):
+                each = each[0]
             fp.write(each + '\n')
     return tmpIpFile
 
