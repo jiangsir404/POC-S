@@ -240,3 +240,6 @@ def _checkAPI(args):
         conf.shodan_query = args.shodan_query
         conf.shodan_limit = args.shodan_limit
         conf.shodan_offset = args.shodan_offset
+    else:
+        msg = 'Input query string with [--dork] or [--query].'
+        sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
