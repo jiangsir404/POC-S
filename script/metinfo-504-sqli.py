@@ -10,7 +10,7 @@ Dork
   Powered by MetInfo 5.0.4
 
 Usage
-  python POC-T.py -T -m metinfo-504-sqli -f ./data/metinfo.txt -t 50
+  python POC-T.py -s metinfo-504-sqli -iF ./data/metinfo.txt -t 50
 
 Result
   25 found | 0 remaining | 607 scanned in 107.51 seconds

@@ -6,7 +6,7 @@
 """
 Apache Shiro 反序列化 远程命令执行
 
-python POC-T.py -T -m shiro-deserial-rce -s 127.0.0.1:8080
+python POC-T.py -s shiro-deserial-rce -iS 127.0.0.1:8080
 
 """
 

@@ -8,8 +8,8 @@ Struts S2-devmode RCE PoC
   (redirectURL函数使用场景示例)
 
 Usage:
-  python POC-T.py -T -m struts2-devmode -f [file]
-  python POC-T.py -T -m struts2-devmode --api --dork "index.action"
+  python POC-T.py -s struts2-devmode -iF url.txt
+  python POC-T.py -s struts2-devmode -aZ "index.action"
 
 """
 

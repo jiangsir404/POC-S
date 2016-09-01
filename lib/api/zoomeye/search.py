@@ -4,50 +4,21 @@
 # project = https://github.com/Xyntax/POC-T
 
 import os
+import sys
 from lib.api.zoomeye.zoomeye import ZoomEye
 from lib.core.data import logger
-from lib.core.log import CUSTOM_LOGGING
-from lib.core.enums import EXIT_STATUS
-from lib.core.common import systemQuit
 
 
 def _initial():
     z = ZoomEye()
-    token_path = os.path.join(os.path.expanduser('~'), '.zoomeye-token')
-    if not os.path.isfile(token_path):
-        msg = 'ZoomEye API authorization failed, Please input ZoomEye Email and Password.'
-        logger.log(CUSTOM_LOGGING.SUCCESS, msg)
-        token = z.login()
-        if token:
-            open(token_path, 'w').write(token)
-            msg = 'Save ZoomEye access token to: ' + token_path
-            logger.log(CUSTOM_LOGGING.SUCCESS, msg)
-        else:
-            msg = 'Invalid ZoomEye username or password.'
-            logger.log(CUSTOM_LOGGING.ERROR, msg)
-            systemQuit(EXIT_STATUS.ERROR_EXIT)
-
-    else:
-        msg = 'Load ZoomEye access token from: ' + token_path
-        logger.log(CUSTOM_LOGGING.SUCCESS, msg)
-        z.setToken(open(token_path).read())
-    try:
-        info = z.resources_info()['resources']
-    except TypeError:
-        msg = 'Token invalid or expired, please re-run it to get a new token.'
-        logger.log(CUSTOM_LOGGING.WARNING, msg)
-        os.remove(token_path)
-        systemQuit(EXIT_STATUS.ERROR_EXIT)
-
+    z.auto_login()
+    info = z.resources_info()['resources']
     if info:
-        msg = 'Available ZoomEye search, web-search:{}, host-search:{}'.format(info['web-search'], info['host-search'])
-        logger.log(CUSTOM_LOGGING.SYSINFO, msg)
+        msg = 'Available ZoomEye search: (web:%s,host:%s)' % (info['web-search'], info['host-search'])
+        logger.info(msg)
     else:
-        os.remove(token_path)
         msg = 'ZoomEye API authorization failed, Please re-run it and enter a new token.'
-        logger.log(CUSTOM_LOGGING.ERROR, msg)
-        systemQuit(EXIT_STATUS.ERROR_EXIT)
-
+        sys.exit(logger.error(msg))
     return z
 
 

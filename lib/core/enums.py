@@ -27,9 +27,10 @@ class POC_RESULT_STATUS:
     RETRAY = 2
 
 
-class API_MODE_STATUS:
-    ZOOMEYE = 9
-    SHODAN = 8
+class API_MODE_NAME:
+    ZOOMEYE = 'ZoomEye'
+    SHODAN = 'Shodan'
+    GOOGLE = 'Google'
 
 
 class TARGET_MODE_STATUS:
@@ -43,3 +44,10 @@ class TARGET_MODE_STATUS:
 class ENGINE_MODE_STATUS:
     THREAD = 9
     GEVENT = 8
+
+
+class PROXY_TYPE:  # keep same with SocksiPy(import socks)
+    PROXY_TYPE_SOCKS4 = SOCKS4 = 1
+    PROXY_TYPE_SOCKS5 = SOCKS5 = 2
+    PROXY_TYPE_HTTP = HTTP = 3
+    PROXY_TYPE_HTTP_NO_TUNNEL = 4

@@ -9,7 +9,7 @@ zabbix 默认口令检测，支持两种zabbix版本
 默认口令:
   Admin/zabbix
 
-shodan关键字:
+Dork(Shodan):
   Set-Cookie: zbx_sessionid country:cn
 
 """

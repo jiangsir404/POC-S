@@ -36,7 +36,7 @@ def poc(domain):
             time.sleep(10000)
             return False
         if '-C' in sys.argv:
-            print '[Error] This script only for muti-threading mode, please quit with [Ctrl-C] and use [-T] in your command.'
+            print '[Error] This script only for muti-threading mode, please quit with [Ctrl-C] and use [-eT] in your command.'
             time.sleep(10000)
             return False
         domain = domain.split('.')[-2].strip(' ') + '.' + domain.split('.')[-1].strip(' ')

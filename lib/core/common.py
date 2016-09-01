@@ -11,7 +11,7 @@ import logging
 import webbrowser
 from lib.core.data import *
 from lib.core.exception import *
-from lib.core.log import CUSTOM_LOGGING, LOGGER_HANDLER
+from lib.core.log import LOGGER_HANDLER
 from lib.core.settings import BANNER, UNICODE_ENCODING, NULL, INVALID_UNICODE_CHAR_FORMAT
 from lib.core.convert import stdoutencode
 from lib.core.enums import EXIT_STATUS, ENGINE_MODE_STATUS
@@ -27,6 +27,7 @@ def setPaths():
     paths.DATA_PATH = os.path.join(ROOT_PATH, "data")
     paths.SCRIPT_PATH = os.path.join(ROOT_PATH, "script")
     paths.OUTPUT_PATH = os.path.join(ROOT_PATH, "output")
+    paths.CONFIG_PATH = os.path.join(ROOT_PATH, "toolkit.conf")
     if not os.path.exists(paths.SCRIPT_PATH):
         os.mkdir(paths.SCRIPT_PATH)
     if not os.path.exists(paths.OUTPUT_PATH):
@@ -38,10 +39,10 @@ def setPaths():
     paths.LARGE_WEAK_PASS = os.path.join(paths.DATA_PATH, "pass1000.txt")
     paths.UA_LIST_PATH = os.path.join(paths.DATA_PATH, "user-agents.txt")
 
-    if os.path.isfile(paths.WEAK_PASS) and os.path.isfile(paths.LARGE_WEAK_PASS) and os.path.isfile(paths.UA_LIST_PATH):
+    if os.path.isfile(paths.CONFIG_PATH) and os.path.isfile(paths.WEAK_PASS) and os.path.isfile(paths.LARGE_WEAK_PASS) and os.path.isfile(paths.UA_LIST_PATH):
         pass
     else:
-        msg = 'Some files in ./data are missing, it may cause an issue.\n'
+        msg = 'Some files missing, it may cause an issue.\n'
         msg += 'Please use \'--update\' to get the complete program from github.com.'
         raise ToolkitMissingPrivileges(msg)
 
@@ -65,18 +66,6 @@ def checkFile(filename):
 
     if not valid:
         raise ToolkitSystemException("unable to read file '%s'" % filename)
-
-
-def debugPause():
-    if conf.DEBUG:
-        raw_input('[Debug] Press <Enter> to continue.')
-
-
-def showDebugData():
-    logger.log(CUSTOM_LOGGING.SYSINFO, '----conf----\n%s' % conf)
-    logger.log(CUSTOM_LOGGING.SYSINFO, '----paths----\n%s' % paths)
-    logger.log(CUSTOM_LOGGING.SYSINFO, '----th----\n%s' % th)
-    debugPause()
 
 
 def banner():

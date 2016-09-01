@@ -10,85 +10,79 @@ from lib.core.settings import VERSION
 
 def cmdLineParser():
     parser = argparse.ArgumentParser(description='powered by cdxy <mail:i@cdxy.me> ',
-                                     usage='\n  python POC-T.py [-T|-C] [-m NAME] [-s|-f|-i|-n|--api VALUE] [options]'
-                                           '\n  python POC-T.py [-h|-v|--show|--update]'
-                                           '\n\nexample:\n'
-                                           '  python POC-T.py -T -m jboss-poc -s http://www.cdxy.me\n'
-                                           '  python POC-T.py -T -m test -f ./dic/1-100.txt\n'
-                                           '  python POC-T.py -C -m spider -i 1-100\n'
-                                           '  python POC-T.py -C -m ./script/spider.py -n 10.0.0.0/24\n'
-                                           '  python POC-T.py -T -m test --api --dork "port:21" --max-page 5\n'
-                                           '  python POC-T.py -T -m test --api --query "solr country:cn" --limit 10 --offset 0',
+                                     usage='python POC-T.py -s bingc -aZ "port:8080" -oF',  # TODO add usage here
                                      add_help=False)
 
-    engine = parser.add_argument_group('engine')
-    engine.add_argument('-T', default=False, action='store_true',
-                        help='load Multi-Threaded engine')
+    engine = parser.add_argument_group('ENGINE')
+    engine.add_argument('-eT', dest="engine_thread", default=False, action='store_true',
+                        help='Multi-Threaded engine (default choice)')
 
-    engine.add_argument('-C', default=False, action='store_true',
-                        help='load Coroutine engine (single-threaded with asynchronous)')
+    engine.add_argument('-eG', dest="engine_gevent", default=False, action='store_true',
+                        help='Gevent engine (single-threaded with asynchronous)')
 
-    engine.add_argument('-t', metavar='NUM', type=int, default=10,
+    engine.add_argument('-t', metavar='NUM', dest="thread_num", type=int, default=10,
                         help='num of threads/concurrent, 10 by default')
 
-    script = parser.add_argument_group('script')
+    script = parser.add_argument_group('SCRIPT')
 
-    script.add_argument('-m', metavar='NAME', type=str, default='',
-                        help='load script by name (-m jboss-rce) or path (-m ./script/jboss.py)')
+    script.add_argument('-s', metavar='NAME', dest="script_name", type=str, default='',
+                        help='load script by name (-s jboss-rce) or path (-s ./script/jboss.py)')
 
-    target = parser.add_argument_group('target mode')
+    target = parser.add_argument_group('TARGET')
 
-    target.add_argument('-s', metavar='TARGET', type=str, default='',
+    target.add_argument('-iS', metavar='TARGET', dest="target_single", type=str, default='',
                         help="scan a single target (e.g. www.wooyun.org)")
-    target.add_argument('-f', metavar='FILE', type=str, default='',
+    target.add_argument('-iF', metavar='FILE', dest="target_file", type=str, default='',
                         help='load targets from targetFile (e.g. ./data/wooyun_domain)')
-    target.add_argument('-i', metavar='START-END', type=str, default='',
-                        help='generate targets from int(start) to int(end) (e.g. 1-100)')
-    target.add_argument('-n', metavar='IP/MASK', type=str, default='',
-                        help='load target IPs from IP/MASK. (e.g. 127.0.0.0/24)')
-    target.add_argument('--api', default=False, action='store_true',
-                        help='get targets with ZoomEye/Shodan/Censys API.')
+    target.add_argument('-iA', metavar='START-END', dest="target_array", type=str, default='',
+                        help='generate array from int(start) to int(end) (e.g. 1-100)')
+    target.add_argument('-iN', metavar='IP/MASK', dest="target_network", type=str, default='',
+                        help='generate IP from IP/MASK. (e.g. 127.0.0.0/24)')
 
-    optimization = parser.add_argument_group('optimization')
+    api = parser.add_argument_group('API')
+    api.add_argument('-aZ', '--zoomeye', metavar='DORK', dest="zoomeye_dork", type=str, default='',
+                     help='ZoomEye dork (e.g. "zabbix port:8080")')
+    api.add_argument('-aS', '--shodan', metavar='DORK', dest="shodan_dork", type=str, default='',
+                     help='Shodan dork.')
+    api.add_argument('-aG', '--google', metavar='DORK', dest="google_dork", type=str, default='',
+                     help='Google dork (e.g. "inurl:admin.php")')
+    api.add_argument('--limit', metavar='NUM', dest="api_limit", type=int, default=10,
+                     help='Maximum results, 10 by default.')
+    api.add_argument('--search-type', metavar='TYPE', dest="search_type", action="store", default='host',
+                     help="[ZoomEye] search type used in ZoomEye API, web or host (default:host)")
+    api.add_argument('--offset', metavar='OFFSET', dest="shodan_offset", type=int, default=0,
+                     help="[Shodan] search offset to begin getting results from (default:0)")
+    api.add_argument('--gproxy', metavar='PROXY', dest="google_proxy", action="store", default=None,
+                     help="[Google] Use proxy for Google (e.g. \"sock5 127.0.0.1 7070\" or \"http 127.0.0.1 1894\"")
 
-    optimization.add_argument('-o', metavar='FILE', type=str, default='',
-                              help='output file path&name. default in ./output/')
-    optimization.add_argument('--single', default=False, action='store_true',
-                              help='exit after finding the first victim/password.')
-    optimization.add_argument('--nF', default=True, action='store_false',
-                              help='disable file output')
-    optimization.add_argument('--nS', default=True, action='store_false',
-                              help='disable screen output')
-    optimization.add_argument('--show', default=False, action='store_true',
-                              help='show available script names in ./script/ and exit')
-    optimization.add_argument('--browser', default=False, action='store_true',
-                              help='Open notepad or web browser to view report after task finished.')
-    optimization.add_argument('--debug', default=False, action='store_true',
-                              help='show more details while running')
-    optimization.add_argument('--update', default=False, action='store_true',
-                              help='update POC-T from github')
-    optimization.add_argument('-v', '--version', action='version', version=VERSION,
-                              help="show program's version number and exit")
-    optimization.add_argument('-h', '--help', action='help',
-                              help='show this help message and exit')
-    optimization.add_argument('-hc', '--helpCN', default=False, action='store_true',
-                              help=u'打印中文帮助(show help message in Chinese)')
+    output = parser.add_argument_group('OUTPUT')
 
-    ZoomeyeApi = parser.add_argument_group('ZoomEye API')
-    ZoomeyeApi.add_argument("--dork", metavar='STRING', dest="dork", action="store", default=None,
-                            help="ZoomEye dork used for search.")
-    ZoomeyeApi.add_argument("--max-page", metavar='PAGE', dest="max_page", type=int, default=1,
-                            help="(optional) Max page used in ZoomEye API (10 targets/Page, default:1).")
-    ZoomeyeApi.add_argument("--search-type", metavar='TYPE', dest="search_type", action="store", default='host',
-                            help="(optional) search type used in ZoomEye API, web or host (default:host)")
+    output.add_argument('-o', metavar='FILE', dest="output_path", type=str, default='',
+                        help='output file path&name. default in ./output/')
+    output.add_argument('-oF', '--no-file', dest="output_file_status", default=True, action='store_false',
+                        help='disable file output')
+    output.add_argument('-oS', '--no-screen', dest="output_screen_status", default=True, action='store_false',
+                        help='disable screen output')
 
-    ShodanAPI = parser.add_argument_group('Shodan API')
-    ShodanAPI.add_argument("--query", metavar='STRING', dest="shodan_query", action="store", default=None,
-                           help="Search query; identical syntax to the website")
-    ShodanAPI.add_argument("--limit", metavar='LIMIT', dest="shodan_limit", type=int, default=100,
-                           help="(optional) Number of results to return (default:100)")
-    ShodanAPI.add_argument("--offset", metavar='OFFSET', dest="shodan_offset", type=int, default=0,
-                           help="(optional) Search offset to begin getting results from (default:0)")
+    misc = parser.add_argument_group('MISC')
+
+    misc.add_argument('--single', dest="single_mode", default=False, action='store_true',
+                      help='exit after finding the first victim/password.')
+    misc.add_argument('--show', dest="show_scripts", default=False, action='store_true',
+                      help='show available script names in ./script/ and exit')
+    misc.add_argument('--browser', dest="open_browser", default=False, action='store_true',
+                      help='Open notepad or web browser to view report after task finished.')
+
+    system = parser.add_argument_group('SYSTEM')
+
+    system.add_argument('-v', '--version', action='version', version=VERSION,
+                        help="show program's version number and exit")
+    system.add_argument('-h', '--help', action='help',
+                        help='show this help message and exit')
+    system.add_argument('--config', dest="sys_config", default=False, action='store_true',
+                        help='set system/API/ config')
+    system.add_argument('--update', dest="sys_update", default=False, action='store_true',
+                        help='update POC-T from github source')
 
     if len(sys.argv) == 1:
         sys.argv.append('-h')

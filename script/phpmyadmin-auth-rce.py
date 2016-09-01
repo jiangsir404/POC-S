@@ -12,6 +12,7 @@ Require:
  PHP         4.3.0 - 5.4.6
 
 Please modify the parameters below before use
+
 """
 
 import requests

@@ -6,8 +6,7 @@
 """
 Memcached未授权访问
 
-Usage
-  python POC-T.py -T -m memcached-unauth.py --api --dork "port:11211"
+dork"port:11211"
 
 Results like:
   197.xxx.0.xxx:11211 | version:1.4.13 | total_items:161028
@@ -18,6 +17,7 @@ Possible Vulns:
  version < 1.4.3  => 远程DoS CVE-2010-1152  exp: cat /dev/zero | nc -q1 127.0.0.1 11211
  version < 1.1.12/1.2.2  => 远程溢出 CVE-2009-2415
  versoin < 1.2.8  => stats maps信息泄露 CVE-2009-1255
+
 """
 
 import socket

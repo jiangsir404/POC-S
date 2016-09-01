@@ -8,8 +8,8 @@ Apache Solr 未授权访问PoC
   (iterate_path函数使用场景示例)
 
 Usage
-  python POC-T.py -T -m solr-unauth -f target.txt
-  python POC-T.py -T -m solr-unauth --api --query "solr country:cn"
+  python POC-T.py -s solr-unauth -iF target.txt
+  python POC-T.py -s solr-unauth -aZ "solr country:cn"
 """
 
 import requests

@@ -9,7 +9,7 @@ GlassFish directory traversal vulnerability PoC
 version <= 4.1.0
 
 Usage:
-  python POC-T.py -T -m glassfish-traversal --api --dork "GlassFish Server Open Source Edition 4.1"
+  python POC-T.py -s glassfish-traversal -aZ "GlassFish Server Open Source Edition 4.1"
 
 """
 

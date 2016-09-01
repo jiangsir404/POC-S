@@ -8,7 +8,7 @@ redis未授权访问PoC
   (host2IP函数使用场景示例)
 
 Usage
-  python POC-T.py -T -m redis-unauth.py --api --dork "port:6379 country:cn"
+  python POC-T.py -s redis-unauth.py -aZ "port:6379 country:cn"
 
 """
 

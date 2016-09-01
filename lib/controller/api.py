@@ -6,38 +6,32 @@
 import os
 import time
 from lib.core.data import conf, logger
-from lib.core.log import CUSTOM_LOGGING
-from lib.core.enums import API_MODE_STATUS
+from lib.core.exception import ToolkitValueException
+from lib.core.enums import API_MODE_NAME
 from lib.api.shodan.query import advancedQuery
 from lib.api.zoomeye.search import dorkSearch
+from lib.api.google.geturl import googleSearch
 
 
-def runShodanApi():
-    logger.log(CUSTOM_LOGGING.SYSINFO, 'Retriving targets from Shodan...')
-    anslist = advancedQuery(query=conf.shodan_query, offset=conf.shodan_offset, limit=conf.shodan_limit)
-    tmpIpFile = os.path.join(conf.SHODAN_OUTPUT_PATH, '%s_%s.txt' % (
-        conf.shodan_query.replace(':', '-').replace(' ', '-').strip(), time.strftime('%Y_%m_%d_%H_%M_%S')))
+def runApi():
+    output = conf.API_OUTPUT
+    dork = conf.API_DORK
+    limit = conf.API_LIMIT
+    logger.info('Activate %s API' % conf.API_MODE)
+    if conf.API_MODE is API_MODE_NAME.ZOOMEYE:
+        anslist = dorkSearch(query=dork, type=conf.ZOOMEYE_SEARCH_TYPE, page=conf.ZOOMEYE_MAX_PAGE)
+    elif conf.API_MODE is API_MODE_NAME.SHODAN:
+        anslist = advancedQuery(query=dork, offset=conf.SHODAN_OFFSET, limit=limit)
+    elif conf.API_MODE is API_MODE_NAME.GOOGLE:
+        googleSearch(query=dork, limit=limit)
+    else:
+        raise ToolkitValueException('Unknown API mode')
+
+    tmpIpFile = os.path.join(output, '%s_%s.txt' % (
+        dork.replace(':', '-').replace(' ', '-').strip(), time.strftime('%Y%m%d%H%M%S')))
     with open(tmpIpFile, 'w') as fp:
         for each in anslist:
-            fp.write(each + '\n')
-    return tmpIpFile
-
-
-def runZoomEyeApi():
-    logger.log(CUSTOM_LOGGING.SYSINFO, 'Enable ZoomEye API.')
-    anslist = dorkSearch(query=conf.zoomeye_dork, type=conf.zoomeye_search_type, page=conf.zoomeye_max_page)
-    tmpIpFile = os.path.join(conf.ZOOMEYE_OUTPUT_PATH, '%s_%s.txt' % (
-        conf.zoomeye_dork.replace(':', '-').replace(' ', '-').strip(), time.strftime('%Y_%m_%d_%H_%M_%S')))
-    with open(tmpIpFile, 'w') as fp:
-        for each in anslist:
-            if isinstance(each, list):
+            if isinstance(each, list):  # for ZoomEye web type
                 each = each[0]
             fp.write(each + '\n')
     return tmpIpFile
-
-
-def setApi():
-    if conf.API_MODE is API_MODE_STATUS.ZOOMEYE:
-        return runZoomEyeApi()
-    elif conf.API_MODE is API_MODE_STATUS.SHODAN:
-        return runShodanApi()

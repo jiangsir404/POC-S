@@ -19,9 +19,9 @@ import threading
 import time
 import traceback
 from lib.core.common import dataToStdout
-from lib.utils.consle import getTerminalSize
+from lib.utils.console import getTerminalSize
 from lib.utils.versioncheck import PYVERSION
-from lib.core.enums import CUSTOM_LOGGING, POC_RESULT_STATUS, ENGINE_MODE_STATUS
+from lib.core.enums import POC_RESULT_STATUS, ENGINE_MODE_STATUS
 
 
 def initEngine():
@@ -39,7 +39,7 @@ def initEngine():
     th.start_time = time.time()
     setThreadLock()
     msg = 'Set the number of concurrent: %d' % th.threads_num
-    logger.log(CUSTOM_LOGGING.SUCCESS, msg)
+    logger.success(msg)
 
 
 def singleMode():
@@ -61,7 +61,7 @@ def scan():
             status = th.module_obj.poc(payload)
             resultHandler(status, payload)
         except Exception:
-            logger.log(CUSTOM_LOGGING.ERROR, 'Errors found in current script.')
+            logger.error('Errors found in current script.')
             traceback.print_exc()
             th.is_continue = False
         changeScanCount(1)
@@ -95,7 +95,7 @@ def run():
         msg = "[single-mode] found!"
         sys.stdout.write('\n')
         sys.stdout.flush()
-        logger.log(CUSTOM_LOGGING.SYSINFO, msg)
+        logger.info(msg)
 
 
 def resultHandler(status, payload):

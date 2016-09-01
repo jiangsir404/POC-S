@@ -8,74 +8,86 @@ import glob
 import time
 import sys
 from lib.core.data import conf, paths, th, logger
-from lib.core.enums import CUSTOM_LOGGING, TARGET_MODE_STATUS, ENGINE_MODE_STATUS
-import lib.utils.cnhelp as cnhelp
+from lib.core.enums import TARGET_MODE_STATUS, ENGINE_MODE_STATUS
 from lib.utils.update import update
-from lib.core.enums import API_MODE_STATUS
+from lib.core.enums import API_MODE_NAME
 from lib.core.register import Register
+from lib.utils.config import setConfig
 
 
 def initOptions(args):
-    if '--debug' in sys.argv:  # cannot use dataToStdout before init
-        infoMsg = '---args---\n%s' % args
-        logger.log(CUSTOM_LOGGING.SYSINFO, infoMsg)
-    _checkCNhelp(args)
-    _checkUpdate(args)
-    _checkShow(args)
-    _initEngine(args)
-    _initModule(args)
-    _initTargetMode(args)
-    _initOutput(args)
-    _initSafeOptions(args)
+    checkUpdate(args)
+    checkShow(args)
+    checkConfig(args)
+    EngineRegister(args)
+    ScriptRegister(args)
+    TargetRegister(args)
+    ApiRegister(args)
+    Output(args)
+    Misc(args)
 
 
-def _checkUpdate(args):
-    # conflict with args.update(),so we use args['update'] here
-    if args['update']:
-        conf.UPDATE = args['update']
+def checkUpdate(args):
+    if args.sys_update:
+        # TODO remove
+        print 'update?'
+        raw_input('!!!')
         update()
 
 
-def _checkShow(args):
-    if args.show:
+def checkShow(args):
+    show_scripts = args.show_scripts
+    if show_scripts:
         module_name_list = glob.glob(os.path.join(paths.SCRIPT_PATH, '*.py'))
-        infoMsg = 'Script Name (total:%s)\n' % str(len(module_name_list) - 1)
+        msg = 'Script Name (total:%s)\n' % str(len(module_name_list) - 1)
         for each in module_name_list:
             _str = os.path.splitext(os.path.split(each)[1])[0]
             if _str not in ['__init__']:
-                infoMsg += '  %s\n' % _str
-        sys.exit(logger.log(CUSTOM_LOGGING.SYSINFO, infoMsg))
+                msg += '  %s\n' % _str
+        sys.exit(logger.info(msg))
 
 
-def _initEngine(args):
+def checkConfig(args):
+    sys_config = args.sys_config
+    if sys_config:
+        setConfig()
+
+
+def EngineRegister(args):
+    thread_status = args.engine_thread
+    gevent_status = args.engine_gevent
+    thread_num = args.thread_num
+
     def __thread():
         conf.ENGINE = ENGINE_MODE_STATUS.THREAD
 
     def __gevent():
         conf.ENGINE = ENGINE_MODE_STATUS.GEVENT
 
-    msg = 'Use -T to set Multi-Threaded mode or -C to set Coroutine mode.'
-    r = Register(mutex=True, mutex_errmsg=msg)
-    r.add(__thread, args.T)
-    r.add(__gevent, args.C)
+    conf.ENGINE = ENGINE_MODE_STATUS.THREAD  # default choice
+
+    msg = 'Use [-eT] to set Multi-Threaded mode or [-eG] to set Coroutine mode.'
+    r = Register(mutex=True, start=0, stop=1, mutex_errmsg=msg)
+    r.add(__thread, thread_status)
+    r.add(__gevent, gevent_status)
     r.run()
 
-    if 0 < args.t < 101:
-        th.THREADS_NUM = conf.THREADS_NUM = args.t
+    if 0 < thread_num < 101:
+        th.THREADS_NUM = conf.THREADS_NUM = thread_num
     else:
         msg = 'Invalid input in [-t], range: 1 to 100'
-        sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
+        sys.exit(logger.error(msg))
 
 
-def _initModule(args):
-    input_path = args.m
+def ScriptRegister(args):
+    input_path = args.script_name
 
     # handle input: nothing
     if not input_path:
-        msg = 'Use -m to load script. Example: [-m spider] or [-m ./script/spider.py]'
-        sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
+        msg = 'Use -s to load script. Example: [-s spider] or [-s ./script/spider.py]'
+        sys.exit(logger.error(msg))
 
-    # handle input: "-m ./script/spider.py"
+    # handle input: "-s ./script/spider.py"
     if os.path.split(input_path)[0]:
         if os.path.exists(input_path):
             if os.path.isfile(input_path):
@@ -83,16 +95,16 @@ def _initModule(args):
                     conf.MODULE_NAME = os.path.split(input_path)[-1]
                     conf.MODULE_FILE_PATH = os.path.abspath(input_path)
                 else:
-                    msg = '[%s] not a Python file. Example: [-m spider] or [-m ./script/spider.py]' % input_path
-                    sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
+                    msg = '[%s] not a Python file. Example: [-s spider] or [-s ./script/spider.py]' % input_path
+                    sys.exit(logger.error(msg))
             else:
-                msg = '[%s] not a file. Example: [-m spider] or [-m ./script/spider.py]' % input_path
-                sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
+                msg = '[%s] not a file. Example: [-s spider] or [-s ./script/spider.py]' % input_path
+                sys.exit(logger.error(msg))
         else:
-            msg = '[%s] not found. Example: [-m spider] or [-m ./script/spider.py]' % input_path
-            sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
+            msg = '[%s] not found. Example: [-s spider] or [-s ./script/spider.py]' % input_path
+            sys.exit(logger.error(msg))
 
-    # handle input: "-m spider"  "-m spider.py"
+    # handle input: "-s spider"  "-s spider.py"
     else:
         if not input_path.endswith('.py'):
             input_path += '.py'
@@ -102,77 +114,142 @@ def _initModule(args):
             conf.MODULE_FILE_PATH = os.path.abspath(_path)
         else:
             msg = 'Script [%s] not exist. Use [--show] to view all available script in ./script/' % input_path
-            sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
+            sys.exit(logger.error(msg))
 
 
-def _initTargetMode(args):
+def TargetRegister(args):
+    input_file = args.target_file
+    input_single = args.target_single
+    input_network = args.target_network
+    input_array = args.target_array
+    api_zoomeye = args.zoomeye_dork
+    api_shodan = args.shodan_dork
+    api_google = args.google_dork
+
     def __file():
-        if not os.path.isfile(args.f):
-            msg = 'TargetFile not found: %s' % args.f
-            sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
+        if not os.path.isfile(input_file):
+            msg = 'TargetFile not found: %s' % input_file
+            sys.exit(logger.error(msg))
         conf.TARGET_MODE = TARGET_MODE_STATUS.FILE
-        conf.INPUT_FILE_PATH = args.f
+        conf.INPUT_FILE_PATH = input_file
 
-    def __range():
-        help_str = "invalid input in [-i], Example: python POC-T -m test -i 1-100."
+    def __array():
+        help_str = "Invalid input in [-iA], Example: -iA 1-100"
         try:
-            _int = args.i.strip().split('-')
+            _int = input_array.strip().split('-')
             if int(_int[0]) < int(_int[1]):
                 if int(_int[1]) - int(_int[0]) > 1000000:
-                    warnMsg = 'Loading %d Payloads...\nMaybe its too much, continue? [y/N]' % (
+                    warnMsg = "Loading %d targets, Maybe it's too much, continue? [y/N]" % (
                         int(_int[1]) - int(_int[0]))
-                    logger.log(CUSTOM_LOGGING.WARNING, warnMsg)
+                    logger.warning(warnMsg)
                     a = raw_input()
                     if a in ('Y', 'y', 'yes'):
                         pass
                     else:
                         msg = 'User quit!'
-                        sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
+                        sys.exit(logger.error(msg))
             else:
-                sys.exit(logger.log(CUSTOM_LOGGING.ERROR, help_str))
-        except Exception, e:
-            sys.exit(logger.log(CUSTOM_LOGGING.ERROR, help_str))
+                sys.exit(logger.error(help_str))
+        except Exception:
+            sys.exit(logger.error(help_str))
         conf.TARGET_MODE = TARGET_MODE_STATUS.RANGE
-        conf.I_NUM2 = args.i
+        conf.I_NUM2 = input_array
         conf.INPUT_FILE_PATH = None
 
-    def __ipmask():
+    def __network():
         conf.TARGET_MODE = TARGET_MODE_STATUS.IPMASK
-        conf.NETWORK_STR = args.n
+        conf.NETWORK_STR = input_network
         conf.INPUT_FILE_PATH = None
 
     def __single():
         conf.TARGET_MODE = TARGET_MODE_STATUS.SINGLE
-        conf.SINGLE_TARGET_STR = args.s
+        conf.SINGLE_TARGET_STR = input_single
         th.THREADS_NUM = conf.THREADS_NUM = 1
         conf.INPUT_FILE_PATH = None
 
-    def __api():
+    def __zoomeye():
         conf.TARGET_MODE = TARGET_MODE_STATUS.API
-        _checkAPI(args)
+        conf.API_MODE = API_MODE_NAME.ZOOMEYE
+        conf.API_DORK = api_zoomeye
 
-    msg = 'To load targets, please choose one from [-s|-i|-f|-n|--api].'
+    def __shodan():
+        conf.TARGET_MODE = TARGET_MODE_STATUS.API
+        conf.API_MODE = API_MODE_NAME.SHODAN
+        conf.API_DORK = api_shodan
+
+    def __google():
+        conf.TARGET_MODE = TARGET_MODE_STATUS.API
+        conf.API_MODE = API_MODE_NAME.GOOGLE
+        conf.API_DORK = api_google
+
+    msg = 'Please load targets with [-iS|-iA|-iF|-iN] or use API with [-aZ|-aS|-aG]'
     r = Register(mutex=True, mutex_errmsg=msg)
-    r.add(__file, args.f)
-    r.add(__api, args.api)
-    r.add(__ipmask, args.n)
-    r.add(__range, args.i)
-    r.add(__single, args.s)
+    r.add(__file, input_file)
+    r.add(__network, input_network)
+    r.add(__array, input_array)
+    r.add(__single, input_single)
+    r.add(__zoomeye, api_zoomeye)
+    r.add(__shodan, api_shodan)
+    r.add(__google, api_google)
     r.run()
 
 
-def _initOutput(args):
-    if not args.nF and args.o:
-        msg = 'You cannot use [--nF] and [-o] together, please read the usage with [-h].'
-        sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
+def ApiRegister(args):
+    search_type = args.search_type
+    offset = args.shodan_offset
+    google_proxy = args.google_proxy
+    api_limit = args.api_limit
 
-    if not args.nF and args.browser:
-        msg = '[--browser] is based on file output, please remove [--nF] in your command and try again.'
-        sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
+    if not 'API_MODE' in conf:
+        return
 
-    conf.SCREEN_OUTPUT = args.nS
-    conf.FILE_OUTPUT = args.nF
-    conf.OUTPUT_FILE_PATH = os.path.abspath(args.o) if args.o else \
+    if not conf.API_DORK:
+        msg = 'Empty API dork, show usage with [-h]'
+        sys.exit(logger.error(msg))
+
+    # handle typeError in cmdline.py
+    if api_limit <= 0:
+        msg = 'Invalid value in [--limit], show usage with [-h]'
+        sys.exit(logger.error(msg))
+    else:
+        conf.API_LIMIT = api_limit
+
+    if conf.API_MODE is API_MODE_NAME.ZOOMEYE:
+        if search_type not in ['web', 'host']:
+            msg = 'Invalid value in [--search-type], show usage with [-h]'
+            sys.exit(logger.error(msg))
+        else:
+            conf.ZOOMEYE_SEARCH_TYPE = search_type
+            conf.ZOOMEYE_MAX_PAGE = int((conf.API_LIMIT + 10 - 1) / 10)  # TODO ZoomEye page config in outer space
+    elif conf.API_MODE is API_MODE_NAME.SHODAN:
+        if offset < 0:
+            msg = 'Invalid value in [--offset], show usage with [-h]'
+            sys.exit(logger.error(msg))
+        else:
+            conf.SHODAN_OFFSET = offset
+    elif conf.API_MODE is API_MODE_NAME.GOOGLE:
+        conf.GOOGLE_PROXY = google_proxy
+        # TODO Google
+        pass
+
+
+def Output(args):
+    output_file = args.output_path
+    file_status = args.output_file_status
+    screen_status = args.output_screen_status
+    browser = args.open_browser
+
+    if not file_status and output_file:
+        msg = 'Cannot use [-oF] and [-o] together, please read the usage with [-h].'
+        sys.exit(logger.error(msg))
+
+    if not file_status and browser:
+        msg = '[--browser] is based on file output, please remove [-oF] in your command and try again.'
+        sys.exit(logger.error(msg))
+
+    conf.SCREEN_OUTPUT = screen_status
+    conf.FILE_OUTPUT = file_status
+    conf.OUTPUT_FILE_PATH = os.path.abspath(output_file) if output_file else \
         os.path.abspath(
             os.path.join(
                 paths.OUTPUT_PATH, time.strftime(
@@ -180,66 +257,6 @@ def _initOutput(args):
                         time.time())) + conf.MODULE_NAME + '.txt'))
 
 
-def _initSafeOptions(args):
-    conf.SINGLE_MODE = args.single
-    conf.DEBUG = args.debug
-    conf.OPEN_BROWSER = args.browser
-
-
-def _checkCNhelp(args):
-    if args.helpCN:
-        print cnhelp.__doc__
-        sys.exit(0)
-
-
-def _checkAPI(args):
-    api_mode_flag = 0
-    if args.dork or args.max_page != 1 or args.search_type != 'host':
-        api_mode_flag += 1
-    if args.shodan_query or args.shodan_limit != 100 or args.shodan_offset != 0:
-        api_mode_flag += 2
-    if api_mode_flag not in (1, 2):
-        msg = 'You can only use args from ZoonEye-API *or* Shodan-API.'
-        sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
-    if args.dork:
-        try:
-            if int(args.max_page) <= 0:
-                msg = 'Invalid value in [--max-page], show usage with [-h].'
-                sys.exit(logger.error(msg))
-        except Exception:
-            msg = 'Invalid value in [--max-page], show usage with [-h].'
-            sys.exit(logger.error(msg))
-
-        if args.search_type not in ['web', 'host']:
-            msg = 'Invalid value in [--search-type], show usage with [-h].'
-            sys.exit(logger.error(msg))
-
-        conf.API_MODE = API_MODE_STATUS.ZOOMEYE
-        conf.zoomeye_dork = args.dork
-        conf.zoomeye_max_page = args.max_page
-        conf.zoomeye_search_type = args.search_type
-
-    elif args.shodan_query:
-        try:
-            if int(args.shodan_limit) <= 0:
-                msg = 'Invalid value in [--limit], show usage with [-h].'
-                sys.exit(logger.error(msg))
-        except Exception:
-            msg = 'Invalid value in [--limit], show usage with [-h].'
-            sys.exit(logger.error(msg))
-
-        try:
-            if int(args.shodan_offset) <= 0:
-                msg = 'Invalid value in [--offset], show usage with [-h].'
-                sys.exit(logger.error(msg))
-        except Exception:
-            msg = 'Invalid value in [--offset], show usage with [-h].'
-            sys.exit(logger.error(msg))
-
-        conf.API_MODE = API_MODE_STATUS.SHODAN
-        conf.shodan_query = args.shodan_query
-        conf.shodan_limit = args.shodan_limit
-        conf.shodan_offset = args.shodan_offset
-    else:
-        msg = 'Input query string with [--dork] or [--query].'
-        sys.exit(logger.log(CUSTOM_LOGGING.ERROR, msg))
+def Misc(args):
+    conf.SINGLE_MODE = args.single_mode
+    conf.OPEN_BROWSER = args.open_browser

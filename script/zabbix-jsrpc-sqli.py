@@ -11,7 +11,7 @@ zabbix的jsrpc的profileIdx2参数存在insert方式的SQL注入漏洞， 在开
 Dork
   zabbix country:cn
   
-version
+Version
   v2.2.x, 3.0.0-3.0.3
 
 """

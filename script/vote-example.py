@@ -38,9 +38,6 @@ def poc():
         'Referer': 'http://www.kankanews.com/z/dhj13th/index.shtml',
         'Cookie': '',
         'User-Agent': 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Win64; x64)',
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Accept-Encoding': 'gzip, deflate',
-        'Accept-Language': 'zh-CN,zh;q=0.8'
     }
     r = requests.post(post_url, timeout=10, data=d, headers=h)
     if 'success' in r.content:

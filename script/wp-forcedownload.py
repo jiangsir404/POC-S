@@ -4,10 +4,15 @@
 # project = https://github.com/Xyntax/POC-T
 
 """
-Exploit Title : Wordpress force download Arbitrary File Download
-Dork 1 : inurl:force-download.php?file=wp-content/uploads
-Dork 2 : inurl:wp-content/uploads inurl:force-download.php?file=
-Vendor Homepage : http://elouai.com/force-download.php
+Wordpress force download Arbitrary File Download
+
+Dork
+  inurl:force-download.php?file=wp-content/uploads
+  inurl:wp-content/uploads
+  inurl:force-download.php?file=
+
+Vendor Homepage
+  http://elouai.com/force-download.php
 
 """
 

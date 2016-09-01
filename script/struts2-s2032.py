@@ -7,7 +7,7 @@
 Struts S2-032 RCE PoC
 
 Usage:
-  python POC-T.py -T -m struts2-s2032 -f [file]
+  python POC-T.py -s struts2-s2032 -iF url.txt
 """
 
 import random

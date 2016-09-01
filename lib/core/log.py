@@ -47,3 +47,22 @@ else:
 LOGGER_HANDLER.setFormatter(FORMATTER)
 LOGGER.addHandler(LOGGER_HANDLER)
 LOGGER.setLevel(CUSTOM_LOGGING.WARNING)
+
+
+# TODO 为log level做判断，类似sqlmap的-v参数
+class MY_LOGGER:
+    @staticmethod
+    def success(msg):
+        return LOGGER.log(CUSTOM_LOGGING.SUCCESS, msg)
+
+    @staticmethod
+    def info(msg):
+        return LOGGER.log(CUSTOM_LOGGING.SYSINFO, msg)
+
+    @staticmethod
+    def warning(msg):
+        return LOGGER.log(CUSTOM_LOGGING.WARNING, msg)
+
+    @staticmethod
+    def error(msg):
+        return LOGGER.log(CUSTOM_LOGGING.ERROR, msg)

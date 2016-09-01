@@ -7,6 +7,7 @@
 redis getshell expliot (/var/spool/cron reverse shell)
 
 检查Redis未授权访问->检查是否存在web服务->检查exp必需的权限和功能->枚举绝对路径->输出结果供手工测试
+
 """
 
 import redis

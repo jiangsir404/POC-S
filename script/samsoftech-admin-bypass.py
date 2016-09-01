@@ -13,6 +13,7 @@ Dork
 Payload
   Username: ' or '1'='1' -- ' ~ ' or '1'='1'
   Password: ' or '1'='1' -- ' ~ ' or '1'='1'
+
 """
 
 import requests

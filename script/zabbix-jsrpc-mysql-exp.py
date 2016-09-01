@@ -7,7 +7,7 @@
 ZABBIX jsrpc.php SQL Inject Vulnerability (MySQL Exploit)
 
 Usage:
-  python POC-T.py -T -m zabbix-jsrpc-mysql-exp --api --dork="zabbix country:us"
+  python POC-T.py -s zabbix-jsrpc-mysql-exp -aZ "zabbix country:us"
 
 """
 

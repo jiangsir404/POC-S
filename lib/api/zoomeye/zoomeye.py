@@ -5,6 +5,9 @@
 
 import requests
 import getpass
+import sys
+from lib.core.data import logger, paths
+from lib.utils.config import ConfigFileParser
 
 
 class ZoomEye(object):
@@ -16,17 +19,45 @@ class ZoomEye(object):
         self.zoomeye_login_api = "https://api.zoomeye.org/user/login"
         self.zoomeye_dork_api = "https://api.zoomeye.org/{}/search"
 
-    def login(self):
-        """Please access https://www.zoomeye.org/api/doc#login
-        """
+    def auto_login(self):
+        msg = 'Trying to login with credentials in config file: %s.' % paths.CONFIG_PATH
+        logger.info(msg)
+        try:
+            self.username = ConfigFileParser().ZoomEyeEmail()
+            self.password = ConfigFileParser().ZoomEyePassword()
+        except:
+            pass
+
+        if bool(self.username and self.password):
+            if self.get_token():
+                return
+
+        msg = 'Automatic authorization failed.'
+        logger.warning(msg)
+        self.manual_login()
+
+    def manual_login(self):
+        msg = 'Please input your ZoomEye Email and Password below.'
+        logger.info(msg)
         self.username = raw_input('ZoomEye Username: ')
         self.password = getpass.getpass(prompt='ZoomEye Password: ')
+        if not self.get_token():
+            msg = 'Invalid ZoomEye username or password.'
+            sys.exit(logger.error(msg))
+
+    def get_token(self):
+        # Please access https://www.zoomeye.org/api/doc#login
         data = '{{"username": "{}", "password": "{}"}}'.format(self.username,
                                                                self.password)
         resp = requests.post(self.zoomeye_login_api, data=data)
         if resp and resp.status_code == 200 and 'access_token' in resp.json():
             self.token = resp.json().get('access_token')
-        return self.token
+            return self.token
+        return False
+
+    def setToken(self, token):
+        """set Token from exist token string"""
+        self.token = token.strip()
 
     def dork_search(self, dork, page=0, resource='web', facet=['ip']):
         """Search records with ZoomEye dorks.
@@ -84,10 +115,6 @@ class ZoomEye(object):
             data = resp.json()
 
         return data
-
-    def setToken(self, token):
-        """set Token from exist token string"""
-        self.token = token.strip()
 
 
 def show_site_ip(data):

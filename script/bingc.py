@@ -7,8 +7,8 @@
 基于Bing搜索引擎的 IP反查域名(默认为不使用API，开启API请在源码中配置)
 
 Usage:
-  查询C段域名  - python POC-T.py -T -m bingc -n 139.24.102.0/24 -t 20
-  批量反查域名 - python POC-T.py -T -m bingc -f ip.txt -t 20
+  查询C段域名  - python POC-T.py -s bingc -iN 139.24.102.0/24 -t 20
+  批量反查域名 - python POC-T.py -s bingc -iF ip.txt -t 20
 
 """
 import requests

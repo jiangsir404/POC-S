@@ -3,16 +3,32 @@
 # author = i@cdxy.me
 # project = https://github.com/Xyntax/POC-T
 
+
+"""
+CloudEye API
+
+Usage:
+    c = CloudEye()
+    a = c.getRandomDomain('cdxy')
+    try:
+        requests.get('http://' + a, timeout=1)
+    except Exception:
+        pass
+    print c.verifyDNS(delay=0)
+    print c.verifyHTTP(delay=0)
+    print c.getDnsRecord(delay=0)
+    print c.getHttpRecord(delay=0)
+"""
+
 import random
 import requests
 import time
 from string import ascii_lowercase
+from lib.utils.config import ConfigFileParser
 
-# your API-key in "http://cloudeye.me/?a=list"
-key = '1e860ff056xxxxxxxxxxxxxxxxxx'
-
-# your personal sub-domain, like: [user].dnslog.info
-uniq_domain = '[user]'
+# load once for all thread
+key = ConfigFileParser().CloudEyeApikey()
+uniq_domain = ConfigFileParser().ColudEyePersonaldomain().split('.')[0]
 
 
 class CloudEye:
@@ -59,16 +75,3 @@ def queryHttpRecord(domain, delay=2):
     domain = domain.replace(uniq_domain + '.dnslog.info', '').rstrip('.')
     api_base = 'http://cloudeye.me/api/{key}/{domain}/ApacheLog/'.format(key=key, domain=domain)
     return requests.post(api_base).content
-
-
-if __name__ == '__main__':
-    c = CloudEye()
-    a = c.getRandomDomain('cdxy')
-    try:
-        requests.get('http://' + a, timeout=1)
-    except Exception:
-        pass
-    print c.verifyDNS(delay=0)
-    print c.verifyHTTP(delay=0)
-    print c.getDnsRecord(delay=0)
-    print c.getHttpRecord(delay=0)

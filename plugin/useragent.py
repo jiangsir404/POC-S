@@ -23,22 +23,20 @@ these 2 methods should be called after [path-init-method] in lib.core.common
 
 import random
 from lib.core.data import conf, th, paths, logger
-from lib.core.log import CUSTOM_LOGGING
-from lib.core.common import getFileItems, debugPause
+from lib.core.common import getFileItems
 
 
 def _init_UAlist(path):
     infoMsg = "loading HTTP User-Agent header(s) from "
     infoMsg += "file '%s'" % path
-    logger.log(CUSTOM_LOGGING.SYSINFO, infoMsg)
+    logger.info(infoMsg)
 
     # TODO 此处 conf.RANDOM_UA 在其他地方暂时没有用到
     conf.RANDOM_UA = True
     th.UA_LIST = getFileItems(path)
 
     successMsg = "Total: %d" % len(th.UA_LIST)
-    logger.log(CUSTOM_LOGGING.SUCCESS, successMsg)
-    debugPause()
+    logger.info(successMsg)
 
 
 def get_random_agent(path=paths.UA_LIST_PATH):
@@ -49,7 +47,7 @@ def get_random_agent(path=paths.UA_LIST_PATH):
     except IOError, e:
         warnMsg = "unable to read HTTP User-Agent header "
         warnMsg += "file '%s'" % path
-        logger.log(CUSTOM_LOGGING.WARNING, warnMsg)
+        logger.warning(warnMsg)
         return
 
 

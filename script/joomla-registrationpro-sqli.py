@@ -13,7 +13,7 @@ version
 Type
   boolean-based blind & error-based
 Usage
-  python POC-T.py -T -m joomla-registrationpro-sqli -f ./data/joomla.txt -t 50
+  python POC-T.py -s joomla-registrationpro-sqli -iF ./data/joomla.txt -t 50
 
 """
 

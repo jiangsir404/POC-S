@@ -4,28 +4,39 @@
 # project = https://github.com/Xyntax/POC-T
 
 import shodan
-import os
+import sys
+from lib.core.data import paths, logger
 from shodan.exception import APIError
+from lib.utils.config import ConfigFileParser
 
 
-def _initial():
-    api_path = os.path.join(os.path.expanduser('~'), '.shodan-api-key')
-    if not os.path.isfile(api_path):
-        with open(api_path, 'w') as fp:
-            fp.write(raw_input('[-] First time using Shodan-API, please input your API-KEY > '))
-    API_KEY = open(api_path).read().strip()
-    return shodan.Shodan(API_KEY)
+def _readKey():
+    msg = 'Trying to auth with credentials in config file: %s.' % paths.CONFIG_PATH
+    logger.info(msg)
+    try:
+        key = ConfigFileParser().ShodanApikey()
+    except:
+        key = ''
+        msg = 'SyntaxError in config file: %s.' % paths.CONFIG_PATH
+        logger.error(msg)
+    return key
 
 
 def advancedQuery(query, offset=0, limit=100):
-    api = _initial()
+    key = _readKey()
     try:
+        api = shodan.Shodan(key)
         result = api.search(query=query, offset=offset, limit=limit)
-    except APIError, e:
-        print e
-        print 'Please re-run it and enter a new API-KEY.'
-        os.remove(os.path.join(os.path.expanduser('~'), '.shodan-api-key'))
-        return []
+    except APIError:
+        msg = 'Automatic authorization failed.'
+        logger.warning(msg)
+        key = raw_input('Input API-KEY >')
+        try:
+            api = shodan.Shodan(key)
+            result = api.search(query=query, offset=offset, limit=limit)
+        except APIError:
+            msg = 'Invalid Shodan API key.'
+            sys.exit(logger.error(msg))
     if result.has_key('matches'):
         anslist = []
         for match in result['matches']:

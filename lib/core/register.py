@@ -4,7 +4,7 @@
 # project = https://github.com/Xyntax/POC-T
 
 """
-互斥控制类 用于注册互斥的参数并给出错误提示
+用于注册互斥的参数并给出错误提示
 
 Register()
  start         最少通过量
@@ -30,7 +30,6 @@ Usage:
 import types
 import sys
 from lib.core.data import logger
-from lib.core.enums import CUSTOM_LOGGING
 from lib.core.exception import RegisterDataException, RegisterMutexException, RegisterValueException
 
 
@@ -83,7 +82,7 @@ class Register:
                 if self.mutex_errmsg is None:
                     raise RegisterMutexException('mutex error,verified func count: ' + str(len(self.verified)))
                 else:
-                    sys.exit(logger.log(CUSTOM_LOGGING.ERROR, self.mutex_errmsg))
+                    sys.exit(logger.error(self.mutex_errmsg))
 
     def __input_vector_check(self):
         if type(self.stop) is types.IntType and type(self.start) is types.IntType and type(

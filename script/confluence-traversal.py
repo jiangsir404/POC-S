@@ -12,7 +12,7 @@ http://www.cnnvd.org.cn/vulnerability/show/cv_id/2016010311
 https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2015-8399
 
 usage:
-python POC-T.py -T -m confluence-file-read -f [path/targetfile] -t [thread-num]
+python POC-T.py -s confluence-file-read -iF [path/targetfile] -t [thread-num]
 """
 
 import requests

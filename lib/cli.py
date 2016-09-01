@@ -7,7 +7,7 @@ import os.path
 from lib.parse.cmdline import cmdLineParser
 from lib.core.option import initOptions
 from lib.controller.loader import loadModule, loadPayloads
-from lib.core.common import setPaths, showDebugData, banner, systemQuit, openBrowser
+from lib.core.common import setPaths, banner, systemQuit, openBrowser
 from lib.core.data import paths, conf, logger, cmdLineOptions
 from lib.core.enums import EXIT_STATUS
 from lib.core.settings import IS_WIN
@@ -39,9 +39,6 @@ def main():
         if IS_WIN:
             winowsColorInit()
         banner()
-
-        if conf.DEBUG:
-            showDebugData()
 
         loadModule()
         loadPayloads()
