@@ -7,6 +7,10 @@ class ToolkitBaseException(Exception):
     pass
 
 
+class ToolkitConnectionException(Exception):
+    pass
+
+
 class ToolkitDataException(ToolkitBaseException):
     pass
 

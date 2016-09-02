@@ -8,9 +8,9 @@ import time
 from lib.core.data import conf, logger
 from lib.core.exception import ToolkitValueException
 from lib.core.enums import API_MODE_NAME
-from lib.api.shodan.query import advancedQuery
-from lib.api.zoomeye.search import dorkSearch
-from lib.api.google.geturl import googleSearch
+from lib.api.shodan.query import ShodanSearch
+from lib.api.zoomeye.search import ZoomEyeSearch
+from lib.api.google.geturl import GoogleSearch
 
 
 def runApi():
@@ -19,16 +19,15 @@ def runApi():
     limit = conf.API_LIMIT
     logger.info('Activate %s API' % conf.API_MODE)
     if conf.API_MODE is API_MODE_NAME.ZOOMEYE:
-        anslist = dorkSearch(query=dork, type=conf.ZOOMEYE_SEARCH_TYPE, page=conf.ZOOMEYE_MAX_PAGE)
+        anslist = ZoomEyeSearch(query=dork, limit=limit, type=conf.ZOOMEYE_SEARCH_TYPE)
     elif conf.API_MODE is API_MODE_NAME.SHODAN:
-        anslist = advancedQuery(query=dork, offset=conf.SHODAN_OFFSET, limit=limit)
+        anslist = ShodanSearch(query=dork, limit=limit, offset=conf.SHODAN_OFFSET)
     elif conf.API_MODE is API_MODE_NAME.GOOGLE:
-        googleSearch(query=dork, limit=limit)
+        anslist = GoogleSearch(query=dork, limit=limit)
     else:
         raise ToolkitValueException('Unknown API mode')
 
-    tmpIpFile = os.path.join(output, '%s_%s.txt' % (
-        dork.replace(':', '-').replace(' ', '-').strip(), time.strftime('%Y%m%d%H%M%S')))
+    tmpIpFile = os.path.join(output, '%s.txt' % (time.strftime('%Y%m%d%H%M%S')))
     with open(tmpIpFile, 'w') as fp:
         for each in anslist:
             if isinstance(each, list):  # for ZoomEye web type

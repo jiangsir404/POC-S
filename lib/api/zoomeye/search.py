@@ -22,10 +22,10 @@ def _initial():
     return z
 
 
-def dorkSearch(query, type='host', page=1):
+def ZoomEyeSearch(query, limit, type='host'):
     z = _initial()
     ans = []
-    for page_n in range(page):
+    for page_n in range(int((limit + 10 - 1) / 10)):
         data = z.dork_search(query, resource=type, page=page_n)
         if data:
             for i in data:

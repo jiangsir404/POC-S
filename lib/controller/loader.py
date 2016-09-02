@@ -81,20 +81,9 @@ def single_target_mode():
 
 
 def api_mode():
-    if conf.API_MODE is API_MODE_NAME.ZOOMEYE:
-        conf.API_OUTPUT = os.path.join(paths.DATA_PATH, 'zoomeye')
-        if not os.path.exists(conf.API_OUTPUT):
-            os.mkdir(conf.ZOOMEYE_OUTPUT_PATH)
-
-    elif conf.API_MODE is API_MODE_NAME.SHODAN:
-        conf.API_OUTPUT = os.path.join(paths.DATA_PATH, 'shodan')
-        if not os.path.exists(conf.API_OUTPUT):
-            os.mkdir(conf.SHODAN_OUTPUT_PATH)
-
-    elif conf.API_MODE is API_MODE_NAME.GOOGLE:
-        conf.API_OUTPUT = os.path.join(paths.DATA_PATH, 'google')
-        if not os.path.exists(conf.API_OUTPUT):  # TODO 用户自定义的path
-            os.mkdir(conf.SHODAN_OUTPUT_PATH)
+    conf.API_OUTPUT = os.path.join(paths.DATA_PATH, conf.API_MODE)
+    if not os.path.exists(conf.API_OUTPUT):
+        os.mkdir(conf.API_OUTPUT)
 
     file = runApi()
     for line in open(file):

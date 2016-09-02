@@ -6,15 +6,6 @@
 import sys
 from lib.core.data import th, conf, logger
 
-try:
-    from gevent import monkey
-
-    monkey.patch_all()
-    import gevent
-# TODO use monkey patch in script/*.py
-except ImportError, e:
-    logger.error(str(e) + '\nPlease run command: pip install -r requirements.txt\n')
-    sys.exit(0)
 import threading
 import time
 import traceback
@@ -26,6 +17,10 @@ from lib.core.enums import POC_RESULT_STATUS, ENGINE_MODE_STATUS
 
 def initEngine():
     th.thread_mode = True if conf.ENGINE is ENGINE_MODE_STATUS.THREAD else False
+    if conf.ENGINE is ENGINE_MODE_STATUS.GEVENT:
+        from gevent import monkey
+        monkey.patch_all()
+        import gevent
     th.module_name = conf.MODULE_NAME
     th.f_flag = conf.FILE_OUTPUT
     th.s_flag = conf.SCREEN_OUTPUT

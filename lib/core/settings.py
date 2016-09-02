@@ -16,7 +16,6 @@ LICENSE = 'GPLv2'
 IS_WIN = subprocess.mswindows
 
 # essential methods/functions in costum scripts/PoC (such as function poc())
-# TODO add info() & exp().. here
 ESSENTIAL_MODULE_METHODS = [
     'poc'
 ]

@@ -22,7 +22,7 @@ def _readKey():
     return key
 
 
-def advancedQuery(query, offset=0, limit=100):
+def ShodanSearch(query, limit, offset=0):
     key = _readKey()
     try:
         api = shodan.Shodan(key)

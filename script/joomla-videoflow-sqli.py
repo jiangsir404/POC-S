@@ -13,7 +13,7 @@ version
 Type
   boolean-based blind & error-based
 Usage
-  python POC-T.py -s joomla-videoflow-sqli -iF ./data/joomla.txt -t 50
+  python POC-T.py -s joomla-videoflow-sqli -aG "inurl:index.php?option=com_videoflow"
 
 """
 

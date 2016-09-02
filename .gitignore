@@ -8,6 +8,6 @@
 .svn
 .tox
 .idea/
+.conf
 output
 data
-tookit.conf
