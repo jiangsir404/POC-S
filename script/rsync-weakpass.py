@@ -6,10 +6,10 @@
 """
 rsync 弱口令扫描 (需要版本高于30.0)
 
-使用
- python POC-T.py -s rsync-weakpass -aZ "port=873"
+Usage
+ python POC-T.py -s rsync-weakpass -aS "port:873"
 
-输出格式
+Result
  127.0.0.1 version:31.0 Module:'share' User/Password:root/toor
 
 """

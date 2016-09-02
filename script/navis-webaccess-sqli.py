@@ -13,6 +13,9 @@ Dork
   inurl:/express/secure/Today.jsp
   navis.com webaccess
 
+Usage
+  python POC-T.py -s navis-webaccess-sqli -aG "inurl:GKEY= ext:do"
+
 """
 
 import requests

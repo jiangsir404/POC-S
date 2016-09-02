@@ -6,7 +6,8 @@
 """
 Memcached未授权访问
 
-dork"port:11211"
+Usage
+  python POC-T.py -s memcached-unauth -aS "port:11211"
 
 Results like:
   197.xxx.0.xxx:11211 | version:1.4.13 | total_items:161028

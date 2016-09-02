@@ -10,6 +10,7 @@ Apache Solr 未授权访问PoC
 Usage
   python POC-T.py -s solr-unauth -iF target.txt
   python POC-T.py -s solr-unauth -aZ "solr country:cn"
+
 """
 
 import requests

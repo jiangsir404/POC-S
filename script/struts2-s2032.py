@@ -8,6 +8,8 @@ Struts S2-032 RCE PoC
 
 Usage:
   python POC-T.py -s struts2-s2032 -iF url.txt
+  python POC-T.py -s struts2-s2032 -aG "inurl:index.action"
+
 """
 
 import random

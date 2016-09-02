@@ -11,6 +11,9 @@ Dork
   inurl:wp-content/uploads
   inurl:force-download.php?file=
 
+Usage
+  python POC-T.py -s wp-forcedownload -aG "inurl:force-download.php?file="
+
 Vendor Homepage
   http://elouai.com/force-download.php
 

@@ -6,14 +6,12 @@
 """
 Joomla com_registrationpro SQL injection Vulnerability
 
-Dork
-  inurl:index.php?option=com_registrationpro
 version
   3.2.12 - 3.2.10
 Type
   boolean-based blind & error-based
 Usage
-  python POC-T.py -s joomla-registrationpro-sqli -iF ./data/joomla.txt -t 50
+  python POC-T.py -s joomla-registrationpro-sqli -iG "inurl:index.php?option=com_registrationpro"
 
 """
 

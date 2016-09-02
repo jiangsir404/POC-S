@@ -9,7 +9,7 @@ Struts S2-devmode RCE PoC
 
 Usage:
   python POC-T.py -s struts2-devmode -iF url.txt
-  python POC-T.py -s struts2-devmode -aZ "index.action"
+  python POC-T.py -s struts2-devmode -aG "inurl:index.action"
 
 """
 

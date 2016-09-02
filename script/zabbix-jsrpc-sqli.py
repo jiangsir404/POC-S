@@ -8,8 +8,8 @@ ZABBIX jsrpc.php 参数profileIdx2 insert SQL注入漏洞
 
 zabbix的jsrpc的profileIdx2参数存在insert方式的SQL注入漏洞， 在开启guest的情况下，攻击者无需授权登陆即可登陆zabbix管理系统， 也可通过script等功能轻易直接获取zabbix服务器的操作系统权限。
 
-Dork
-  zabbix country:cn
+Usage:
+  python POC-T.py -s zabbix-jsrpc-sqli -aZ "zabbix country:us"
   
 Version
   v2.2.x, 3.0.0-3.0.3

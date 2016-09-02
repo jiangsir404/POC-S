@@ -6,12 +6,13 @@
 """
 SIEMENS IP-Camera Unauthenticated Remote Credentials Disclosure
 
-Dork(shodan)
-  title:"SIEMENS IP-Camera"
+Usage
+  python POC-T.py -s siemens-camera-getpwd -aZ "SIEMENS IP-Camera"
 
 version
   SIEMENS IP-Camera CCMW1025 x.2.2.1798, CxMS2025_V2458_SP1, x.2.2.1798, x.2.2.1235
   Honeywell IP-Camera HICC-1100PT
+
 """
 
 import requests

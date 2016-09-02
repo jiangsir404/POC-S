@@ -6,14 +6,8 @@
 """
 MetInfo 5.0.4 Sql injection PoC
 
-Dork
-  Powered by MetInfo 5.0.4
-
 Usage
-  python POC-T.py -s metinfo-504-sqli -iF ./data/metinfo.txt -t 50
-
-Result
-  25 found | 0 remaining | 607 scanned in 107.51 seconds
+  python POC-T.py -s metinfo-504-sqli -iZ "Powered by MetInfo 5.0.4"
 
 """
 
