@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# author = i@cdxy.me
 # project = https://github.com/Xyntax/POC-T
+# author = i@cdxy.me
 
 """
 Apache Solr 未授权访问PoC

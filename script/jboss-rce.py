@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# author = i@cdxy.me
 # project = https://github.com/Xyntax/POC-T
+# author = i@cdxy.me
 
 """
 JBoss 三种POC漏洞检测，修改自 https://github.com/joaomatosf/jexboss
@@ -344,7 +344,6 @@ def exploit_web_console_invoker(url):
 
 
 def auto_exploit(url, exploit_type):
-    # print(GREEN + "\n * Sending exploit code to %s. Please wait...\n" % url)
     result = 505
     if exploit_type == "jmx-console":
         result = exploit_jmx_console_file_repository(url)
@@ -359,7 +358,6 @@ def auto_exploit(url, exploit_type):
 
     if result == 200 or result == 500:
         return True
-        # shell_http(url, exploit_type)
 
 
 def poc(url):

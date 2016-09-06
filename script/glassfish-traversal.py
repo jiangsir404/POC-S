@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# author = i@cdxy.me
 # project = https://github.com/Xyntax/POC-T
+# author = i@cdxy.me
 
 """
 GlassFish directory traversal vulnerability PoC
@@ -30,5 +30,3 @@ def poc(url):
     if 'Version' in c:
         return True
     return False
-
-# print poc('120.25.1.207:4848')

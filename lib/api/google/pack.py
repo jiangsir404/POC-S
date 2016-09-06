@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# author = i@cdxy.me
 # project = https://github.com/Xyntax/POC-T
+# author = i@cdxy.me
 
 import sys
 from googleapiclient.discovery import build
@@ -9,6 +9,7 @@ from lib.core.enums import PROXY_TYPE
 from lib.utils.config import ConfigFileParser
 from lib.core.data import logger, conf
 from thirdparty.httplib2 import Http, ProxyInfo
+from socket import error as SocketError
 
 
 def _initHttpClient():
@@ -47,19 +48,23 @@ def _initHttpClient():
     return http_client
 
 
-def GoogleSearch(query, limit):  # TODO handle exception for invalid key or dork
+def GoogleSearch(query, limit):
     key = ConfigFileParser().GoogleDeveloperKey()
     engine = ConfigFileParser().GoogleEngine()
     service = build("customsearch", "v1", http=_initHttpClient(), developerKey=key)
 
-    result_info = service.cse().list(q=query, cx=engine).execute()
-    msg = 'Max query results: %s' % str(result_info['searchInformation']['totalResults'])
-    logger.info(msg)
+    try:
+        result_info = service.cse().list(q=query, cx=engine).execute()
+        msg = 'Max query results: %s' % str(result_info['searchInformation']['totalResults'])
+        logger.info(msg)
 
-    ans = set()
-    for i in range(int((limit + 10 - 1) / 10)):
-        result = service.cse().list(q=query, cx=engine, num=10, start=i * 10 + 1).execute()
-        for url in result['items']:
-            ans.add(url['link'])
-
-    return ans
+        ans = set()
+        for i in range(int((limit + 10 - 1) / 10)):
+            result = service.cse().list(q=query, cx=engine, num=10, start=i * 10 + 1).execute()
+            if 'items' in result:
+                for url in result['items']:
+                    ans.add(url['link'])
+        return ans
+    except SocketError:
+        msg = 'Unable to connect Google, maybe agent/proxy error.'
+        sys.exit(logger.error(msg))

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# Author B0t0w1
+# project = https://github.com/Xyntax/POC-T
+# author B0t0w1
 
 
 """

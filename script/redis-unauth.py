@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# author = i@cdxy.me
 # project = https://github.com/Xyntax/POC-T
+# author = i@cdxy.me
 
 """
 redis未授权访问PoC
@@ -30,7 +30,6 @@ def poc(url):
         s.close()
         if recvdata and 'redis_version' in recvdata:
             return True
-    except Exception, e:
-        # print e
+    except Exception:
         pass
     return False

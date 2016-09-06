@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# author = i@cdxy.me
 # project = https://github.com/Xyntax/POC-T
+# author = i@cdxy.me
 
 """
 Weblogic SSRF 内网扫描脚本(nmap的1000个端口)
@@ -45,8 +45,7 @@ def poc(ip_str):
                 elif 'but could not connect' in c:
                     # 主机存在但端口未开放
                     flag = True
-        except Exception, e:
-            # print e
+        except Exception:
             pass
     if flag:
         return ip_str + ':' + str('/'.join(ans))

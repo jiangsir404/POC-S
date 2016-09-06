@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# author = i@cdxy.me
 # project = https://github.com/Xyntax/POC-T
+# author = i@cdxy.me
 
 import requests
 import getpass
@@ -127,23 +127,3 @@ def show_ip_port(data):
     if data:
         for i in data:
             print(i.get('ip'), i.get('portinfo').get('port'))
-
-
-def zoomeye_api_test():
-    zoomeye = ZoomEye()
-    zoomeye.username = raw_input('ZoomEye Username: ')
-    zoomeye.password = getpass.getpass(prompt='ZoomEye Password: ')
-    zoomeye.login()
-    print(zoomeye.resources_info())
-
-    data = zoomeye.dork_search('solr')
-    show_site_ip(data)
-
-    data = zoomeye.dork_search('country:cn')
-    show_site_ip(data)
-
-    data = zoomeye.dork_search('solr country:cn')
-    show_site_ip(data)
-
-    data = zoomeye.dork_search('country:cn', resource='host', page=10)
-    show_ip_port(data)

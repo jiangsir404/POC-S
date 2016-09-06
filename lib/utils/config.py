@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# author = i@cdxy.me
 # project = https://github.com/Xyntax/POC-T
+# author = i@cdxy.me
 
 import ConfigParser
 from lib.core.data import paths
@@ -42,7 +42,3 @@ class ConfigFileParser:
 
     def GoogleEngine(self):
         return self.cf.get('google', 'search_engine')
-
-
-def setConfig():
-    pass  # TODO

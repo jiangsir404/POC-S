@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# author = i@cdxy.me
 # project = https://github.com/Xyntax/POC-T
+# author = i@cdxy.me
 
 """
 redis getshell expliot (ssh authorized_keys)
@@ -45,8 +45,7 @@ def poc(url):
             time.sleep(5)
             if testConnect(ip, 22):
                 return True
-    except Exception, e:
-        # print e
+    except Exception:
         return False
     return False
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# author = i@cdxy.me
 # project = https://github.com/Xyntax/POC-T
+# author = i@cdxy.me
 
 """
 基于Bing搜索引擎的 IP反查域名(默认为不使用API，开启API请在源码中配置)
@@ -55,8 +55,7 @@ def BingSearch(query):
         the_page = response.read()
         data = json.loads(the_page)
         return data
-    except Exception as e:
-        # print e
+    except Exception:
         pass
 
 

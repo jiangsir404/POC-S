@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# author = i@cdxy.me
 # project = https://github.com/Xyntax/POC-T
+# author = i@cdxy.me
 
 """
 zabbix 默认口令检测，支持两种zabbix版本
@@ -53,7 +53,6 @@ def poc(url):
         dic = _get_static_post_attr(c.content)
         dic['name'] = 'Admin'
         dic['password'] = 'zabbix'
-        # print dic
         r = s.post(url + '/index.php', data=dic, headers=h2, timeout=10)
         if 'chkbxRange.init();' in r.content:
             for each in blacklist:
@@ -61,6 +60,5 @@ def poc(url):
                     return False
             return True
         return False
-    except Exception, e:
-        # print e
+    except Exception:
         return False

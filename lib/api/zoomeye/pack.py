@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# author = i@cdxy.me
 # project = https://github.com/Xyntax/POC-T
+# author = i@cdxy.me
 
-import os
 import sys
-from lib.api.zoomeye.zoomeye import ZoomEye
+from lib.api.zoomeye.base import ZoomEye
 from lib.core.data import logger
 
 

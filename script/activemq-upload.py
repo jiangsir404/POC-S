@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# author = i@cdxy.me
 # project = https://github.com/Xyntax/POC-T
+# author = i@cdxy.me
 
 """
 ActiveMQ file upload exploit
@@ -33,7 +33,6 @@ def poc(base):
             if ENABLE_EXP:
                 return uri
             return uri if put_data in res2.content else False
-    except Exception, error:
-        # print error
+    except Exception:
         return False
     return False

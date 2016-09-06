@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# author = i@cdxy.me
 # project = https://github.com/Xyntax/POC-T
+# author = i@cdxy.me
 
 import os
 import glob
@@ -12,7 +12,6 @@ from lib.core.enums import TARGET_MODE_STATUS, ENGINE_MODE_STATUS
 from lib.utils.update import update
 from lib.core.enums import API_MODE_NAME
 from lib.core.register import Register
-from lib.utils.config import setConfig
 
 
 def initOptions(args):
@@ -228,8 +227,6 @@ def ApiRegister(args):
             conf.SHODAN_OFFSET = offset
     elif conf.API_MODE is API_MODE_NAME.GOOGLE:
         conf.GOOGLE_PROXY = google_proxy
-        # TODO Google
-        pass
 
 
 def Output(args):

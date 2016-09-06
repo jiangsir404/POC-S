@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# author = i@cdxy.me
 # project = https://github.com/Xyntax/POC-T
+# author = i@cdxy.me
 
 """
 Struts S2-032 RCE PoC
@@ -52,6 +52,5 @@ def poc(url):
                          headers={'User-Agent': 'Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0'},
                          timeout=10)
         return bool(s.status_code == 200 and jsp_file in s.content and 'method:' not in s.content)
-    except Exception, e:
-        # print e
+    except Exception:
         return False
