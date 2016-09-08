@@ -15,11 +15,8 @@ PLATFORM = os.name
 LICENSE = 'GPLv2'
 IS_WIN = subprocess.mswindows
 
-# essential methods/functions in costum scripts/PoC (such as function poc())
-ESSENTIAL_MODULE_METHODS = [
-    'poc'
-]
-
+# essential methods/functions in custom scripts/PoC (such as function poc())
+ESSENTIAL_MODULE_METHODS = ['poc']
 # Encoding used for Unicode data
 UNICODE_ENCODING = "utf-8"
 # String representation for NULL value
