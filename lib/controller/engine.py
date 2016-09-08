@@ -102,12 +102,7 @@ def resultHandler(status, payload):
     elif status is True or status is POC_RESULT_STATUS.SUCCESS:
         msg = payload
     else:
-        # TODO handle this exception
-        try:
-            msg = str(status)
-        except Exception, e:
-            printMessage(e)
-            return
+        msg = str(status)
     changeFoundCount(1)
     if th.s_flag:
         printMessage(msg)

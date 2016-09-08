@@ -28,9 +28,6 @@ def initOptions(args):
 
 def checkUpdate(args):
     if args.sys_update:
-        # TODO remove
-        print 'update?'
-        raw_input('!!!')
         update()
 
 

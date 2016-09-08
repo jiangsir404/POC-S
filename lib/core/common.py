@@ -133,7 +133,6 @@ def pollProcess(process, suppress_errors=False):
         if returncode is not None:
             if not suppress_errors:
                 if returncode == 0:
-                    # TODO　print导致线程资源不安全
                     print " done\n"
                 elif returncode < 0:
                     print " process terminated by signal %d\n" % returncode

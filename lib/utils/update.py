@@ -11,7 +11,6 @@ from subprocess import PIPE
 from subprocess import Popen as execute
 from lib.core.common import getSafeExString
 from lib.core.common import pollProcess
-from lib.core.data import conf
 from lib.core.data import logger
 from lib.core.data import paths
 from lib.core.settings import GIT_REPOSITORY
@@ -20,11 +19,7 @@ from lib.core.revision import getRevisionNumber
 
 
 def update():
-    if not conf.UPDATE:
-        return
-
     success = False
-
     if not os.path.exists(os.path.join(paths.ROOT_PATH, ".git")):
         errMsg = "not a git repository. Please checkout the 'Xyntax/POC-T' repository "
         errMsg += "from GitHub (e.g. 'git clone https://github.com/Xyntax/POC-T.git POC-T')"
@@ -35,7 +30,7 @@ def update():
         logger.info(infoMsg)
 
         debugMsg = "POC-T will try to update itself using 'git' command"
-        logger.debug(debugMsg)
+        logger.info(debugMsg)
 
         logger.info("update in progress ")
 

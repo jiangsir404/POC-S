@@ -13,43 +13,31 @@ logging.addLevelName(CUSTOM_LOGGING.SUCCESS, "+")
 logging.addLevelName(CUSTOM_LOGGING.ERROR, "-")
 logging.addLevelName(CUSTOM_LOGGING.WARNING, "!")
 
-LOGGER = logging.getLogger("pocketLog")
+LOGGER = logging.getLogger("TookitLogger")
 
 LOGGER_HANDLER = None
 try:
     from thirdparty.ansistrm.ansistrm import ColorizingStreamHandler
 
-    disableColor = False
-
-    # TODO disable_color in parser.py
-    for argument in sys.argv:
-        if "disable-col" in argument:
-            disableColor = True
-            break
-
-    if disableColor:
-        LOGGER_HANDLER = logging.StreamHandler(sys.stdout)
-    else:
+    try:
         LOGGER_HANDLER = ColorizingStreamHandler(sys.stdout)
         LOGGER_HANDLER.level_map[logging.getLevelName("*")] = (None, "cyan", False)
         LOGGER_HANDLER.level_map[logging.getLevelName("+")] = (None, "green", False)
         LOGGER_HANDLER.level_map[logging.getLevelName("-")] = (None, "red", False)
         LOGGER_HANDLER.level_map[logging.getLevelName("!")] = (None, "yellow", False)
+    except Exception:
+        LOGGER_HANDLER = logging.StreamHandler(sys.stdout)
+
 except ImportError:
     LOGGER_HANDLER = logging.StreamHandler(sys.stdout)
 
-# there can't be -> if conf.DEBUG:
-if "debug" in sys.argv:
-    FORMATTER = logging.Formatter("\r[%(asctime)s] [%(levelname)s] %(message)s", "%H:%M:%S")
-else:
-    FORMATTER = logging.Formatter("\r[%(levelname)s] %(message)s", "%H:%M:%S")
+FORMATTER = logging.Formatter("\r[%(levelname)s] %(message)s", "%H:%M:%S")
 
 LOGGER_HANDLER.setFormatter(FORMATTER)
 LOGGER.addHandler(LOGGER_HANDLER)
 LOGGER.setLevel(CUSTOM_LOGGING.WARNING)
 
 
-# TODO 为log level做判断，类似sqlmap的-v参数
 class MY_LOGGER:
     @staticmethod
     def success(msg):

@@ -10,7 +10,7 @@ from lib.core.settings import VERSION
 
 def cmdLineParser():
     parser = argparse.ArgumentParser(description='powered by cdxy <mail:i@cdxy.me> ',
-                                     usage='python POC-T.py -s bingc -aZ "port:8080" -oF',  # TODO add usage here
+                                     usage='python POC-T.py -s bingc -aZ "port:8080"',
                                      add_help=False)
 
     engine = parser.add_argument_group('ENGINE')
