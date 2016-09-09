@@ -12,9 +12,9 @@ import sys
 
 PYVERSION = sys.version.split()[0]
 
-if PYVERSION >= "3" or PYVERSION < "2.6":
+if PYVERSION >= "3" or PYVERSION < "2.7":
     exit("[CRITICAL] incompatible Python version detected ('%s'). "
-         "For successfully running this project, you'll have to use version 2.6 or 2.7 "
+         "For successfully running this project, you'll have to use version 2.7"
          "(visit 'http://www.python.org/download/')" % PYVERSION)
 
 extensions = ("gzip", "ssl", "sqlite3", "zlib")

@@ -209,8 +209,6 @@ def isListLike(value):
 
 
 def systemQuit(status=EXIT_STATUS.SYSETM_EXIT):
-    sys.stdout.write('\n')
-    sys.stdout.flush()
     if status == EXIT_STATUS.SYSETM_EXIT:
         logger.info('System exit.')
     elif status == EXIT_STATUS.USER_QUIT:

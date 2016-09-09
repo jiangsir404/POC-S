@@ -57,8 +57,7 @@ def redirectURL(url):
         r = requests.get(url, allow_redirects=False)
         return r.headers.get('location') if r.status_code == 302 else url
     except Exception:
-        raise ToolkitPluginException('Get redirect URL failed, plsase check your PoC code.')
-
+        return url
 
 def host2IP(url):
     """

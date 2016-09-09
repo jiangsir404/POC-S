@@ -52,8 +52,7 @@ def scan():
             status = th.module_obj.poc(payload)
             resultHandler(status, payload)
         except Exception:
-            logger.error('Errors found in current script.')
-            traceback.print_exc()
+            th.errmsg = traceback.format_exc()
             th.is_continue = False
         changeScanCount(1)
         if th.s_flag:
@@ -85,10 +84,14 @@ def run():
         while th.queue.qsize() > 0 and th.is_continue:
             gevent.joinall([gevent.spawn(scan) for i in xrange(0, th.threads_num) if
                             th.queue.qsize() > 0])
+
+    dataToStdout('\n')
+
+    if 'errmsg' in th:
+        logger.error(th.errmsg)
+
     if th.found_single:
         msg = "[single-mode] found!"
-        sys.stdout.write('\n')
-        sys.stdout.flush()
         logger.info(msg)
 
 

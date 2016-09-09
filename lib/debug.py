@@ -85,43 +85,6 @@ auto = """
 
 """
 
-invalid = """
-python3 POC-T.py
--s test
--eT --nF
--eT -s --api
--eT -s -f -n
--eT -s -f -n -iA --api
--eT -eC -s test -iA 1-10
--eT -t -1 -s test -iA 1-10
--eC -s test -iA -1-10
--eC -s test -iA a-100
--eC -s test -iA 5-1
--eT -s test213zdf -iA 1-10
--eT -s test -iA 1-10 --nF -o aaa.txt
--eT -s test -iA 1-10 --nF --browser
--eT -s test -aZ "test" --query "test"
--eT -s test -iA 1-10 -n 127.0.0.0/30
--eT -s test -iAS 111 -f test.txt
--eT -s test -iA 1-10 -aZ "country:cn" --max-page 0
--eT -s test -iA 1-10 -aZ "country:cn" --max-page defs
--eT -s test -iA 1-10 -aZ "country:cn" --max-page 1 --search-type aaa
--eT -s test -iA 1-10 -aS "country:cn" --offset -1
--eT -s test -iA 1-10 -aS "country:cn" --offset asdsafse
--eT -s test -iA 1-10 -aS "country:cn" --limit 0
--eT -s test -iA 1-10 -aS "country:cn" --limit -1
--eT -s test -iA 1-10 -aS "country:cn" --limit afefea
--eT -s ./test
--eT -s /
-"""
-
-scripts_with_plugin = """
-bingc 139.129.132.156
-confluence-file-read www.cdxy.me
-jboss-rce www.cdxy.me
-solr-unauth http://36.110.167.60:8080
-"""
-
 header = """#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # project = https://github.com/Xyntax/POC-T
@@ -172,7 +135,7 @@ def autoCheck():
         r = each.split(';')[1:]
 
         command = base + c
-        process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE,shell=True)
         o = process.stdout.read()
         e = process.stderr.read()
         if autoCheckResult(o, e, r, u):
@@ -183,7 +146,7 @@ def autoCheck():
 
 def checkInvalidVersion():
     command = 'python3 POC-T.py -h'
-    process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     o = process.stdout.read()
     e = process.stderr.read()
     if autoCheckResult(o, e, ['[CRITICAL] incompatible Python version'], []):
