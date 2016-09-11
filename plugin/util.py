@@ -10,14 +10,14 @@ import socket
 import re
 from string import ascii_lowercase, digits
 from urlparse import urlparse
-from lib.core.exception import ToolkitPluginException
 
 
 def randomString(length=8):
     """
     生成随机字母串
 
-    randomString()  ==> ndzldryt
+    :param length:生成字符串长度
+    :return 字母串
     """
     return ''.join([random.choice(ascii_lowercase) for _ in range(length)])
 
@@ -26,17 +26,19 @@ def randomDigits(length=8):
     """
     生成随机数字串
 
-    randomDigits()  ==> 73048139
+    :param length:生成字符串长度
+    :return 数字串
     """
     return ''.join([random.choice(digits) for _ in range(length)])
 
 
 def randomMD5(length=1, hex=True):
     """
-    生成随机MD5 key-value
-    hex True:32位 False:16位
+    生成随机MD5键值对
 
-    randomMD5()  ==>  ['429', '6aecac5e4af18f283d09b56e3d5dc5b8']
+    :param length:指定明文长度
+    :param hex:指定密文长度为32位
+    :returns 原文，密文(32位或16位)
     """
     plain = randomDigits(length)
     m = hashlib.md5()
@@ -45,28 +47,30 @@ def randomMD5(length=1, hex=True):
     return [plain, cipher]
 
 
-def redirectURL(url):
+def redirectURL(url, timeout=3):
     """
     获取跳转后的真实URL
 
-    http://123.132.112.21  ==>  http://123.132.112.21/dxy/index.action
+    :param url:原始URL
+    :param timeout:超时时间
+    :return 跳转后的真实URL
     """
-
     try:
         url = url if '://' in url else 'http://' + url
-        r = requests.get(url, allow_redirects=False)
+        r = requests.get(url, allow_redirects=False, timeout=timeout)
         return r.headers.get('location') if r.status_code == 302 else url
     except Exception:
         return url
 
+
 def host2IP(url):
     """
-    检查target是否为IP格式,如果是IP格式直接返回,是URL格式则自动转为IP:PORT
+    URL转IP
 
-    http://www.cdxy.me/test/index.php?id=1       ==>  139.129.132.156
-    http://www.cdxy.me:8080/test/index.php?id=1  ==>  139.129.132.156:8080
+    :param url:原始URL
+    :return IP:PORT
+    :except 返回原始URL
     """
-
     for offset in url:
         if offset.isalpha():
             break
@@ -80,22 +84,27 @@ def host2IP(url):
             ans += ':' + url.split(':')[1]
         return ans
     except Exception:
-        raise ToolkitPluginException('Get host IP failed, plsase check your PoC code.')
+        return url
 
 
-def IP2domain(base):
+def IP2domain(base, timeout=3):
     """
-    查找IP对应的域名
-    用例：def poc(ip); if passed: return IP2domain(ip); # 在poc脚本的return中使用
+    IP转域名
 
-    139.129.132.156 -> |www.cdxy.me
+    :param base:原始IP
+    :param timeout:超时时间
+    :return 域名 / False
+    :except 返回False
     """
     try:
         domains = set()
         ip = base.split(':')[0] if ':' in base else base
         q = "https://www.bing.com/search?q=ip%3A" + ip
-        c = requests.get(q, headers={
-            'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:47.0) Gecko/20100101 Firefox/47.0'}).content
+        c = requests.get(url=q,
+                         headers={
+                             'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:47.0) Gecko/20100101 Firefox/47.0'},
+                         timeout=timeout
+                         ).content
         p = re.compile(r'<cite>(.*?)</cite>')
         l = re.findall(p, c)
         for each in l:
@@ -109,12 +118,21 @@ def IP2domain(base):
         else:
             return False
     except Exception:
-        return base
+        return False
 
 
-def checkPortTcp(target, port):
+def checkPortTcp(target, port, timeout=3):
+    """
+    检查端口是否开放
+
+    :param target:目标IP
+    :param port:目标端口
+    :param timeout:超时时间
+    :return True / False
+    :except 返回False
+    """
     sk = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sk.settimeout(10)
+    sk.settimeout(timeout)
     try:
         sk.connect((target, port))
         return True
