@@ -63,7 +63,7 @@ def getTitle(input):
             content = input
         else:
             url = 'http://' + input if '://' not in input else input
-            content = requests.get(url).content
+            content = requests.get(url,timeout=3).content
         return re.findall('<title>([\s\S]*)</title>', content)[0].strip()
     except Exception:
         return ''
