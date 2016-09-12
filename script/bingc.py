@@ -16,10 +16,7 @@ import re
 import urllib
 import urllib2
 import base64
-import sys
-
-reload(sys)
-sys.setdefaultencoding('GBK')
+from plugin.extracts import getTitle
 
 try:
     import json
@@ -76,10 +73,9 @@ def poc(ip):
         for each in l:
             domain = each.split('://')[-1].split('/')[0]
             domains.add(domain)
-    if len(domains) > 0:
-        ans_1 = ip + ' -> '
-        for each in domains:
-            ans_1 += '|' + each
-        return ans_1
-    else:
+
+    title = getTitle(ip)
+    if not title and not domains:
         return False
+    else:
+        return '[%s]' % ip + '|'.join(domains) + (' (%s)' % title if title else '')
