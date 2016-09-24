@@ -4,41 +4,42 @@
 # author = i@cdxy.me
 
 import ConfigParser
-from lib.core.data import paths
+from lib.core.data import paths, logger
 
 
 class ConfigFileParser:
-    def __init__(self):
-        self.cf = ConfigParser.ConfigParser()
-        self.cf.read(paths.CONFIG_PATH)
+    def _get_option(self, section, option):
+        try:
+            cf = ConfigParser.ConfigParser()
+            cf.read(paths.CONFIG_PATH)
+            return cf.get(section=section, option=option)
+        except ConfigParser.NoOptionError:
+            logger.error('Lack of essential options, please check your config-file.')
+            return ''
 
     def ZoomEyeEmail(self):
-        return self.cf.get('zoomeye', 'email')
-
-    def setZoomEyeCertificate(self, email, password):
-        self.cf.set('zoomeye', 'email', email)
-        self.cf.set('zoomeye', 'email', password)
+        return self._get_option('zoomeye', 'email')
 
     def ZoomEyePassword(self):
-        return self.cf.get('zoomeye', 'password')
+        return self._get_option('zoomeye', 'password')
 
     def ShodanApikey(self):
-        return self.cf.get('shodan', 'api_key')
+        return self._get_option('shodan', 'api_key')
 
     def BingApikey(self):
-        return self.cf.get('bing', 'api_key')
+        return self._get_option('bing', 'api_key')
 
     def CloudEyeApikey(self):
-        return self.cf.get('cloudeye', 'api_key')
+        return self._get_option('cloudeye', 'api_key')
 
     def ColudEyePersonaldomain(self):
-        return self.cf.get('cloudeye', 'personal_domain')
+        return self._get_option('cloudeye', 'personal_domain')
 
     def GoogleProxy(self):
-        return self.cf.get('google', 'proxy')
+        return self._get_option('google', 'proxy')
 
     def GoogleDeveloperKey(self):
-        return self.cf.get('google', 'developer_key')
+        return self._get_option('google', 'developer_key')
 
     def GoogleEngine(self):
-        return self.cf.get('google', 'search_engine')
+        return self._get_option('google', 'search_engine')

@@ -53,6 +53,7 @@ def main():
     except ToolkitMissingPrivileges, e:
         logger.error(e)
         systemQuit(EXIT_STATUS.ERROR_EXIT)
+
     except ToolkitSystemException, e:
         logger.error(e)
         systemQuit(EXIT_STATUS.ERROR_EXIT)

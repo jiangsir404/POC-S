@@ -17,8 +17,6 @@ def _readKey():
         key = ConfigFileParser().ShodanApikey()
     except:
         key = ''
-        msg = 'SyntaxError in config file: %s.' % paths.CONFIG_PATH
-        logger.error(msg)
     return key
 
 

@@ -74,6 +74,7 @@ auto = """
 -s test -aG 1 --gproxy="http 127.0.0.1 fa";[-] Invalid port in GoogleProxy string
 -s test -aG 1 --gproxy="http 127.0.0.1 1894";[*] System exit.
 -s test -aG 1 --gproxy="sock5 127.0.0.1 7070";[*] System exit.
+-s test -aG 1 --gproxy "http 127.0.0.1 23124";[-] Unable to connect Google
 
 # output
 -s test -iA 1-10 -o _checko.txt;[*] System exit.

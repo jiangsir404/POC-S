@@ -51,9 +51,9 @@ def _initHttpClient():
 def GoogleSearch(query, limit):
     key = ConfigFileParser().GoogleDeveloperKey()
     engine = ConfigFileParser().GoogleEngine()
-    service = build("customsearch", "v1", http=_initHttpClient(), developerKey=key)
-
     try:
+        service = build("customsearch", "v1", http=_initHttpClient(), developerKey=key)
+
         result_info = service.cse().list(q=query, cx=engine).execute()
         msg = 'Max query results: %s' % str(result_info['searchInformation']['totalResults'])
         logger.info(msg)
