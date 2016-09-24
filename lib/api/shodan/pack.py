@@ -35,7 +35,7 @@ def ShodanSearch(query, limit, offset=0):
         except APIError:
             msg = 'Invalid Shodan API key.'
             sys.exit(logger.error(msg))
-    if result.has_key('matches'):
+    if 'matches' in result:
         anslist = []
         for match in result['matches']:
             anslist.append(match['ip_str'] + ':' + str(match['port']))

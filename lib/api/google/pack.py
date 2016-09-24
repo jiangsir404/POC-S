@@ -5,6 +5,8 @@
 
 import sys
 from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError as ServerHttpDenied
+from lib.core.common import getSafeExString
 from lib.core.enums import PROXY_TYPE
 from lib.utils.config import ConfigFileParser
 from lib.core.data import logger, conf
@@ -51,6 +53,8 @@ def _initHttpClient():
 def GoogleSearch(query, limit):
     key = ConfigFileParser().GoogleDeveloperKey()
     engine = ConfigFileParser().GoogleEngine()
+    if not key or not engine:
+        sys.exit()
     try:
         service = build("customsearch", "v1", http=_initHttpClient(), developerKey=key)
 
@@ -66,5 +70,7 @@ def GoogleSearch(query, limit):
                     ans.add(url['link'])
         return ans
     except SocketError:
-        msg = 'Unable to connect Google, maybe agent/proxy error.'
-        sys.exit(logger.error(msg))
+        sys.exit(logger.error('Unable to connect Google, maybe agent/proxy error.'))
+    except ServerHttpDenied, e:
+        logger.warning('It seems like Google-Server denied this request.')
+        sys.exit(logger.error(getSafeExString(e)))

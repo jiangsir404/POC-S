@@ -23,11 +23,11 @@ def setPaths():
     """
     Sets absolute paths for project directories and files
     """
-    ROOT_PATH = paths.ROOT_PATH
-    paths.DATA_PATH = os.path.join(ROOT_PATH, "data")
-    paths.SCRIPT_PATH = os.path.join(ROOT_PATH, "script")
-    paths.OUTPUT_PATH = os.path.join(ROOT_PATH, "output")
-    paths.CONFIG_PATH = os.path.join(ROOT_PATH, "toolkit.conf")
+    root_path = paths.ROOT_PATH
+    paths.DATA_PATH = os.path.join(root_path, "data")
+    paths.SCRIPT_PATH = os.path.join(root_path, "script")
+    paths.OUTPUT_PATH = os.path.join(root_path, "output")
+    paths.CONFIG_PATH = os.path.join(root_path, "toolkit.conf")
     if not os.path.exists(paths.SCRIPT_PATH):
         os.mkdir(paths.SCRIPT_PATH)
     if not os.path.exists(paths.OUTPUT_PATH):
@@ -39,7 +39,8 @@ def setPaths():
     paths.LARGE_WEAK_PASS = os.path.join(paths.DATA_PATH, "pass1000.txt")
     paths.UA_LIST_PATH = os.path.join(paths.DATA_PATH, "user-agents.txt")
 
-    if os.path.isfile(paths.CONFIG_PATH) and os.path.isfile(paths.WEAK_PASS) and os.path.isfile(paths.LARGE_WEAK_PASS) and os.path.isfile(paths.UA_LIST_PATH):
+    if os.path.isfile(paths.CONFIG_PATH) and os.path.isfile(paths.WEAK_PASS) and os.path.isfile(
+            paths.LARGE_WEAK_PASS) and os.path.isfile(paths.UA_LIST_PATH):
         pass
     else:
         msg = 'Some files missing, it may cause an issue.\n'
@@ -49,9 +50,8 @@ def setPaths():
 
 def checkFile(filename):
     """
-    @function Checks for file existence and readability
+    function Checks for file existence and readability
     """
-
     valid = True
 
     if filename is None or not os.path.isfile(filename):
@@ -146,7 +146,6 @@ def getSafeExString(ex, encoding=None):
     Safe way how to get the proper exception represtation as a string
     (Note: errors to be avoided: 1) "%s" % Exception(u'\u0161') and 2) "%s" % str(Exception(u'\u0161'))
     """
-
     retVal = ex
 
     if getattr(ex, "message", None):
@@ -272,25 +271,3 @@ def openBrowser():
     except Exception:
         errMsg = '\n[ERROR] Fail to open file with web browser: %s' % path
         raise ToolkitSystemException(errMsg)
-
-
-def checkSystemEncoding():
-    """
-    Checks for problematic encodings
-    """
-
-    if sys.getdefaultencoding() == "cp720":
-        try:
-            codecs.lookup("cp720")
-        except LookupError:
-            errMsg = "there is a known Python issue (#1616979) related "
-            errMsg += "to support for charset 'cp720'. Please visit "
-            errMsg += "'http://blog.oneortheother.info/tip/python-fix-cp720-encoding/index.html' "
-            errMsg += "and follow the instructions to be able to fix it"
-            logger.critical(errMsg)
-
-            warnMsg = "temporary switching to charset 'cp1256'"
-            logger.warn(warnMsg)
-
-            reload(sys)
-            sys.setdefaultencoding("cp1256")

@@ -60,7 +60,7 @@ class Register:
         self.__pretreat()
         for target in self.verified:
             if not target.get('perform'):
-                msg = 'xxx has no target'
+                msg = 'Register has no verified target'
                 raise RegisterDataException(msg)
             target.get('perform')(*target.get('args'), **target.get('kwargs'))
 

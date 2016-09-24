@@ -40,7 +40,7 @@ def _init_UAlist(path):
 
 
 def get_random_agent(path=paths.UA_LIST_PATH):
-    if not th.has_key("UA_LIST"):
+    if "UA_LIST" not in th:
         _init_UAlist(path)
     try:
         return random.sample(th.UA_LIST, 1)[0]

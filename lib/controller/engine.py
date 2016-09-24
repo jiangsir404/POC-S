@@ -3,12 +3,11 @@
 # project = https://github.com/Xyntax/POC-T
 # author = i@cdxy.me
 
-import sys
-from lib.core.data import th, conf, logger
 
 import threading
 import time
 import traceback
+from lib.core.data import th, conf, logger
 from lib.core.common import dataToStdout
 from lib.utils.console import getTerminalSize
 from lib.utils.versioncheck import PYVERSION

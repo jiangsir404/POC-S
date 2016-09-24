@@ -7,7 +7,7 @@
 import os
 import subprocess
 
-VERSION = '2.0.1'
+VERSION = '2.0.5'
 PROJECT = "POC-T"
 AUTHOR = 'cdxy'
 MAIL = 'i@cdxy.me'

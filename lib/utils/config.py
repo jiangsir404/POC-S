@@ -5,16 +5,19 @@
 
 import ConfigParser
 from lib.core.data import paths, logger
+from lib.core.common import getSafeExString
 
 
 class ConfigFileParser:
-    def _get_option(self, section, option):
+    @staticmethod
+    def _get_option(section, option):
         try:
             cf = ConfigParser.ConfigParser()
             cf.read(paths.CONFIG_PATH)
             return cf.get(section=section, option=option)
-        except ConfigParser.NoOptionError:
-            logger.error('Lack of essential options, please check your config-file.')
+        except ConfigParser.NoOptionError, e:
+            logger.warning('Missing essential options, please check your config-file.')
+            logger.error(getSafeExString(e))
             return ''
 
     def ZoomEyeEmail(self):
