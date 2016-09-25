@@ -7,7 +7,7 @@
 MetInfo 5.0.4 Sql injection PoC
 
 Usage
-  python POC-T.py -s metinfo-504-sqli -iZ "Powered by MetInfo 5.0.4"
+  python POC-T.py -s metinfo-504-sqli -aZ "Powered by MetInfo 5.0.4"
 
 """
 

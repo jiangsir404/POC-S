@@ -11,7 +11,7 @@ version
 Type
   boolean-based blind & error-based
 Usage
-  python POC-T.py -s joomla-registrationpro-sqli -iG "inurl:index.php?option=com_registrationpro"
+  python POC-T.py -s joomla-registrationpro-sqli -aG "inurl:index.php?option=com_registrationpro"
 
 """
 
