@@ -192,7 +192,7 @@ def TargetRegister(args):
 
 def ApiRegister(args):
     search_type = args.search_type
-    offset = args.shodan_offset
+    offset = args.api_offset
     google_proxy = args.google_proxy
     api_limit = args.api_limit
 
@@ -202,6 +202,12 @@ def ApiRegister(args):
     if not conf.API_DORK:
         msg = 'Empty API dork, show usage with [-h]'
         sys.exit(logger.error(msg))
+
+    if offset < 0:
+        msg = 'Invalid value in [--offset], show usage with [-h]'
+        sys.exit(logger.error(msg))
+    else:
+        conf.API_OFFSET = offset
 
     # handle typeError in cmdline.py
     if api_limit <= 0:
@@ -216,12 +222,7 @@ def ApiRegister(args):
             sys.exit(logger.error(msg))
         else:
             conf.ZOOMEYE_SEARCH_TYPE = search_type
-    elif conf.API_MODE is API_MODE_NAME.SHODAN:
-        if offset < 0:
-            msg = 'Invalid value in [--offset], show usage with [-h]'
-            sys.exit(logger.error(msg))
-        else:
-            conf.SHODAN_OFFSET = offset
+
     elif conf.API_MODE is API_MODE_NAME.GOOGLE:
         conf.GOOGLE_PROXY = google_proxy
 

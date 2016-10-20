@@ -47,11 +47,11 @@ def cmdLineParser():
     api.add_argument('-aG', '--google', metavar='DORK', dest="google_dork", type=str, default='',
                      help='Google dork (e.g. "inurl:admin.php")')
     api.add_argument('--limit', metavar='NUM', dest="api_limit", type=int, default=10,
-                     help='Maximum results, 10 by default.')
+                     help='Maximum searching results (default:10)')
+    api.add_argument('--offset', metavar='OFFSET', dest="api_offset", type=int, default=0,
+                     help="Search offset to begin getting results from (default:0)")
     api.add_argument('--search-type', metavar='TYPE', dest="search_type", action="store", default='host',
                      help="[ZoomEye] search type used in ZoomEye API, web or host (default:host)")
-    api.add_argument('--offset', metavar='OFFSET', dest="shodan_offset", type=int, default=0,
-                     help="[Shodan] search offset to begin getting results from (default:0)")
     api.add_argument('--gproxy', metavar='PROXY', dest="google_proxy", action="store", default=None,
                      help="[Google] Use proxy for Google (e.g. \"sock5 127.0.0.1 7070\" or \"http 127.0.0.1 1894\"")
 

@@ -50,7 +50,7 @@ def _initHttpClient():
     return http_client
 
 
-def GoogleSearch(query, limit):
+def GoogleSearch(query, limit, offset=0):
     key = ConfigFileParser().GoogleDeveloperKey()
     engine = ConfigFileParser().GoogleEngine()
     if not key or not engine:
@@ -63,7 +63,8 @@ def GoogleSearch(query, limit):
         logger.info(msg)
 
         ans = set()
-        for i in range(int((limit + 10 - 1) / 10)):
+        limit += offset
+        for i in range(int(offset / 10), int((limit + 10 - 1) / 10)):
             result = service.cse().list(q=query, cx=engine, num=10, start=i * 10 + 1).execute()
             if 'items' in result:
                 for url in result['items']:
