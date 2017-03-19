@@ -12,7 +12,7 @@ import redis
 from plugin.util import host2IP
 from plugin.util import randomString
 
-listen_ip = '115.28.1.1'
+listen_ip = 'x.x.x.x' # your public IP and Port
 listen_port = 9999
 
 
