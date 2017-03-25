@@ -39,8 +39,8 @@ class ZoomEye(object):
     def manual_login(self):
         msg = 'Please input your ZoomEye Email and Password below.'
         logger.info(msg)
-        self.username = raw_input('ZoomEye Username(Email): ')
-        self.password = getpass.getpass(prompt='ZoomEye Password: ')
+        self.username = raw_input('ZoomEye Username(Email): ').strip()
+        self.password = getpass.getpass(prompt='ZoomEye Password: ').strip()
         if not self.get_token():
             msg = 'Invalid ZoomEye username or password.'
             sys.exit(logger.error(msg))
