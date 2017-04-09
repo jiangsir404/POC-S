@@ -32,7 +32,7 @@ def randomDigits(length=8):
     return ''.join([random.choice(digits) for _ in range(length)])
 
 
-def randomMD5(length=1, hex=True):
+def randomMD5(length=10, hex=True):
     """
     生成随机MD5键值对
 
