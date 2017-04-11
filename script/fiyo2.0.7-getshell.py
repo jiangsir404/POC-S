@@ -4,7 +4,7 @@
 # author = i@cdxy.me
 
 """
-Fiyo CMS <= 2.0.7 Unauthorized Remote Getshell PoC
+Fiyo CMS <= 2.0.7 Unauthenticated Remote Getshell PoC
 
 Upload a shell via /dapur/apps/app_theme/libs/save_file.php then check if it exists.
 """
