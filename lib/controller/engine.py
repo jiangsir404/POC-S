@@ -95,7 +95,7 @@ def run():
 
 
 def resultHandler(status, payload):
-    if status is False or status is POC_RESULT_STATUS.FAIL:
+    if not status or status is POC_RESULT_STATUS.FAIL:
         return
     elif status is POC_RESULT_STATUS.RETRAY:
         changeScanCount(-1)
