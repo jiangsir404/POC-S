@@ -79,8 +79,6 @@ def cmdLineParser():
                         help="show program's version number and exit")
     system.add_argument('-h', '--help', action='help',
                         help='show this help message and exit')
-    system.add_argument('--config', dest="sys_config", default=False, action='store_true',
-                        help='set system/API/ config')
     system.add_argument('--update', dest="sys_update", default=False, action='store_true',
                         help='update POC-T from github source')
 

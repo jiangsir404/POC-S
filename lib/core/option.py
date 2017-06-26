@@ -17,7 +17,6 @@ from lib.core.register import Register
 def initOptions(args):
     checkUpdate(args)
     checkShow(args)
-    checkConfig(args)
     EngineRegister(args)
     ScriptRegister(args)
     TargetRegister(args)
@@ -41,12 +40,6 @@ def checkShow(args):
             if _str not in ['__init__']:
                 msg += '  %s\n' % _str
         sys.exit(logger.info(msg))
-
-
-def checkConfig(args):
-    sys_config = args.sys_config
-    if sys_config:
-        setConfig()
 
 
 def EngineRegister(args):
