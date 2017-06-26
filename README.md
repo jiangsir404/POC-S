@@ -37,7 +37,6 @@
 其他
 ---
 * [问题反馈](https://github.com/Xyntax/POC-T/issues/new)
-* [更新日志](https://github.com/Xyntax/POC-T/wiki/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)
 * [版权声明](https://github.com/Xyntax/POC-T/wiki/%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E)
 
 联系作者
