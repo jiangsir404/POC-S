@@ -46,3 +46,9 @@ class ConfigFileParser:
 
     def GoogleEngine(self):
         return self._get_option('google', 'search_engine')
+
+    def FofaEmail(self):
+        return self._get_option('fofa','email')
+
+    def FofaKey(self):
+        return self._get_option('fofa','api_key')
