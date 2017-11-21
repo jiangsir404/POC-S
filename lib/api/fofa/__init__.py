@@ -1,5 +1,4 @@
-# !/usr/bin/env python
-# -*- coding:utf-8 -*-
-__author__ = 'bit4'
-__github__ = 'https://github.com/bit4woo'
-
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# project = https://github.com/Xyntax/POC-T
+# author = bit4
