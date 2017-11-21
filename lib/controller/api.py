@@ -11,6 +11,7 @@ from lib.core.enums import API_MODE_NAME
 from lib.api.shodan.pack import ShodanSearch
 from lib.api.zoomeye.pack import ZoomEyeSearch
 from lib.api.google.pack import GoogleSearch
+from lib.api.fofa.pack import FofaSearch
 
 
 def runApi():
@@ -24,6 +25,8 @@ def runApi():
         anslist = ShodanSearch(query=dork, limit=limit, offset=conf.API_OFFSET)
     elif conf.API_MODE is API_MODE_NAME.GOOGLE:
         anslist = GoogleSearch(query=dork, limit=limit, offset=conf.API_OFFSET)
+    elif conf.API_MODE is API_MODE_NAME.FOFA:
+        anslist = FofaSearch(query=dork, limit=limit, offset=conf.API_OFFSET)
     else:
         raise ToolkitValueException('Unknown API mode')
 

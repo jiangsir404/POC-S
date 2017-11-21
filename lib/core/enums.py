@@ -31,6 +31,7 @@ class API_MODE_NAME:
     ZOOMEYE = 'ZoomEye'
     SHODAN = 'Shodan'
     GOOGLE = 'Google'
+    FOFA = 'Fofa'
 
 
 class TARGET_MODE_STATUS:

@@ -114,6 +114,7 @@ def TargetRegister(args):
     api_zoomeye = args.zoomeye_dork
     api_shodan = args.shodan_dork
     api_google = args.google_dork
+    api_fofa = args.fofa_dork
 
     def __file():
         if not os.path.isfile(input_file):
@@ -171,7 +172,12 @@ def TargetRegister(args):
         conf.API_MODE = API_MODE_NAME.GOOGLE
         conf.API_DORK = api_google
 
-    msg = 'Please load targets with [-iS|-iA|-iF|-iN] or use API with [-aZ|-aS|-aG]'
+    def __fofa():
+        conf.TARGET_MODE = TARGET_MODE_STATUS.API
+        conf.API_MODE = API_MODE_NAME.FOFA
+        conf.API_DORK = api_fofa
+
+    msg = 'Please load targets with [-iS|-iA|-iF|-iN] or use API with [-aZ|-aS|-aG|-aF]'
     r = Register(mutex=True, mutex_errmsg=msg)
     r.add(__file, input_file)
     r.add(__network, input_network)
@@ -180,6 +186,7 @@ def TargetRegister(args):
     r.add(__zoomeye, api_zoomeye)
     r.add(__shodan, api_shodan)
     r.add(__google, api_google)
+    r.add(__fofa, api_fofa)
     r.run()
 
 

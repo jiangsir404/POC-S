@@ -46,6 +46,8 @@ def cmdLineParser():
                      help='Shodan dork.')
     api.add_argument('-aG', '--google', metavar='DORK', dest="google_dork", type=str, default='',
                      help='Google dork (e.g. "inurl:admin.php")')
+    api.add_argument('-aF', '--fofa', metavar='DORK', dest="fofa_dork", type=str, default='',
+                     help='FoFa dork (e.g. "banner=users && protocol=ftp")')
     api.add_argument('--limit', metavar='NUM', dest="api_limit", type=int, default=10,
                      help='Maximum searching results (default:10)')
     api.add_argument('--offset', metavar='OFFSET', dest="api_offset", type=int, default=0,
