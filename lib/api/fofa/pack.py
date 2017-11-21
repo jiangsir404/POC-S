@@ -43,6 +43,9 @@ def FofaSearch(query, limit=100, offset=0):  # TODO 付费获取结果的功能�
         logger.info(msg)
         email = raw_input("Fofa Email: ").strip()
         key = getpass.getpass(prompt='Fofa API Key: ').strip()
+        if not check(email, key):
+            msg = 'Fofa API authorization failed, Please re-run it and enter a valid key.'
+            sys.exit(logger.error(msg))
 
     query = base64.b64encode(query)
 

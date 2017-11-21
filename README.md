@@ -17,7 +17,7 @@
 * 支持多线程/Gevent两种并发模式  
 * 极简式脚本编写，无需参考文档  
 * 内置脚本扩展及常用PoC函数  
-* 支持第三方搜索引擎API(已完成ZoomEye/Shodan/Google)  
+* 支持第三方搜索引擎API(已完成ZoomEye/Shodan/Google/Fofa免费版)  
 
 
 依赖
