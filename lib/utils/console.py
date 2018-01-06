@@ -91,7 +91,7 @@ def _getTerminalSize_linux():
             pass
     if not cr:
         try:
-            cr = (env['LINES'], env['COLUMNS'])
+            cr = (env.get('LINES'), env.get('COLUMNS'))
         except Exception:
             return None
     return int(cr[1]), int(cr[0])

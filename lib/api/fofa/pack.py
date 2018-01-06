@@ -56,10 +56,10 @@ def FofaSearch(query, limit=100, offset=0):  # TODO 付费获取结果的功能�
         resp = response.readlines()[0]
         resp = json.loads(resp)
         if resp["error"] is None:
-            for item in resp['results']:
+            for item in resp.get('results'):
                 result.append(item[0])
-            if resp['size'] >= 100:
-                logger.info("{0} items found! just 100 returned....".format(resp['size']))
+            if resp.get('size') >= 100:
+                logger.info("{0} items found! just 100 returned....".format(resp.get('size')))
     except Exception, e:
         sys.exit(logger.error(getSafeExString(e)))
     finally:

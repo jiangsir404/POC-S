@@ -34,7 +34,7 @@ class ShodanBase:
         try:
             api = shodan.Shodan(self.api_key)
             account_info = api.info()
-            msg = "Available Shodan query credits: %d" % account_info['query_credits']
+            msg = "Available Shodan query credits: %d" % account_info.get('query_credits')
             logger.info(msg)
         except APIError, e:
             sys.exit(logger.error(e))
@@ -49,8 +49,8 @@ class ShodanBase:
 
         if 'matches' in result:
             anslist = []
-            for match in result['matches']:
-                anslist.append(match['ip_str'] + ':' + str(match['port']))
+            for match in result.get('matches'):
+                anslist.append(match.get('ip_str') + ':' + str(match.get('port')))
             self.result = anslist
         else:
             self.result = []
