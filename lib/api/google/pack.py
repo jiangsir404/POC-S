@@ -60,7 +60,7 @@ def GoogleSearch(query, limit, offset=0):
         service = build("customsearch", "v1", http=_initHttpClient(), developerKey=key)
 
         result_info = service.cse().list(q=query, cx=engine).execute()
-        msg = 'Max query results: %s' % str(result_info['searchInformation']['totalResults'])
+        msg = 'Max query results: %s' % str(result_info.get('searchInformation',{}).get('totalResults'))
         logger.info(msg)
 
         ans = set()
@@ -68,8 +68,8 @@ def GoogleSearch(query, limit, offset=0):
         for i in range(int(offset / 10), int((limit + 10 - 1) / 10)):
             result = service.cse().list(q=query, cx=engine, num=10, start=i * 10 + 1).execute()
             if 'items' in result:
-                for url in result['items']:
-                    ans.add(url['link'])
+                for url in result.get('items'):
+                    ans.add(url.get('link'))
         return ans
     except SocketError:
         sys.exit(logger.error('Unable to connect Google, maybe agent/proxy error.'))

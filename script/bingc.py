@@ -60,8 +60,8 @@ def poc(ip):
     domains = set()
     if ENABLE_API:
         ans_obj = BingSearch("ip:" + ip)
-        for each in ans_obj['d']['results']:
-            domains.add(each['Url'].split('://')[-1].split('/')[0])
+        for each in ans_obj.get('d',{}).get('results'):
+            domains.add(each.get('Url').split('://')[-1].split('/')[0])
     else:
         if '://' in ip:
             ip = ip.split('://')[-1].split(':')[0]

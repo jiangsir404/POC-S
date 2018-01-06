@@ -37,7 +37,7 @@ def _get_static_post_attr(page_content):
     soup = BeautifulSoup(page_content, "html.parser")
     for each in soup.find_all('input'):
         if 'value' in each.attrs and 'name' in each.attrs:
-            _dict[each['name']] = each['value']
+            _dict[each['name']] = each.get('value')
     return _dict
 
 

@@ -266,7 +266,7 @@ def _normalize_headers(headers):
 def _parse_cache_control(headers):
     retval = {}
     if headers.has_key('cache-control'):
-        parts =  headers['cache-control'].split(',')
+        parts =  headers.get('cache-control').split(',')
         parts_with_args = [tuple([x.strip().lower() for x in part.split("=", 1)]) for part in parts if -1 != part.find("=")]
         parts_wo_args = [(name.strip().lower(), 1) for name in parts if -1 == name.find("=")]
         retval = dict(parts_with_args + parts_wo_args)
@@ -350,7 +350,7 @@ def _entry_disposition(response_headers, request_headers):
     cc = _parse_cache_control(request_headers)
     cc_response = _parse_cache_control(response_headers)
 
-    if request_headers.has_key('pragma') and request_headers['pragma'].lower().find('no-cache') != -1:
+    if request_headers.has_key('pragma') and request_headers.get('pragma').lower().find('no-cache') != -1:
         retval = "TRANSPARENT"
         if 'cache-control' not in request_headers:
             request_headers['cache-control'] = 'no-cache'
@@ -361,16 +361,16 @@ def _entry_disposition(response_headers, request_headers):
     elif cc.has_key('only-if-cached'):
         retval = "FRESH"
     elif response_headers.has_key('date'):
-        date = calendar.timegm(email.Utils.parsedate_tz(response_headers['date']))
+        date = calendar.timegm(email.Utils.parsedate_tz(response_headers.get('date')))
         now = time.time()
         current_age = max(0, now - date)
         if cc_response.has_key('max-age'):
             try:
-                freshness_lifetime = int(cc_response['max-age'])
+                freshness_lifetime = int(cc_response.get('max-age'))
             except ValueError:
                 freshness_lifetime = 0
         elif response_headers.has_key('expires'):
-            expires = email.Utils.parsedate_tz(response_headers['expires'])
+            expires = email.Utils.parsedate_tz(response_headers.get('expires'))
             if None == expires:
                 freshness_lifetime = 0
             else:
@@ -379,12 +379,12 @@ def _entry_disposition(response_headers, request_headers):
             freshness_lifetime = 0
         if cc.has_key('max-age'):
             try:
-                freshness_lifetime = int(cc['max-age'])
+                freshness_lifetime = int(cc.get('max-age'))
             except ValueError:
                 freshness_lifetime = 0
         if cc.has_key('min-fresh'):
             try:
-                min_fresh = int(cc['min-fresh'])
+                min_fresh = int(cc.get('min-fresh'))
             except ValueError:
                 min_fresh = 0
             current_age += min_fresh
@@ -513,15 +513,15 @@ class DigestAuthentication(Authentication):
     def __init__(self, credentials, host, request_uri, headers, response, content, http):
         Authentication.__init__(self, credentials, host, request_uri, headers, response, content, http)
         challenge = _parse_www_authenticate(response, 'www-authenticate')
-        self.challenge = challenge['digest']
+        self.challenge = challenge.get('digest')
         qop = self.challenge.get('qop', 'auth')
         self.challenge['qop'] = ('auth' in [x.strip() for x in qop.split()]) and 'auth' or None
-        if self.challenge['qop'] is None:
+        if self.challenge.get('qop') is None:
             raise UnimplementedDigestAuthOptionError( _("Unsupported value for qop: %s." % qop))
         self.challenge['algorithm'] = self.challenge.get('algorithm', 'MD5').upper()
-        if self.challenge['algorithm'] != 'MD5':
-            raise UnimplementedDigestAuthOptionError( _("Unsupported value for algorithm: %s." % self.challenge['algorithm']))
-        self.A1 = "".join([self.credentials[0], ":", self.challenge['realm'], ":", self.credentials[1]])
+        if self.challenge.get('algorithm') != 'MD5':
+            raise UnimplementedDigestAuthOptionError( _("Unsupported value for algorithm: %s." % self.challenge('algorithm')))
+        self.A1 = "".join([self.credentials[0], ":", self.challenge.get('realm'), ":", self.credentials[1]])
         self.challenge['nc'] = 1
 
     def request(self, method, request_uri, headers, content, cnonce = None):
@@ -546,21 +546,21 @@ class DigestAuthentication(Authentication):
                 self.challenge['nc'],
                 self.challenge['cnonce'])
         if self.challenge.get('opaque'):
-            headers['authorization'] += ', opaque="%s"' % self.challenge['opaque']
+            headers['authorization'] += ', opaque="%s"' % self.challenge.get('opaque')
         self.challenge['nc'] += 1
 
     def response(self, response, content):
         if not response.has_key('authentication-info'):
             challenge = _parse_www_authenticate(response, 'www-authenticate').get('digest', {})
             if 'true' == challenge.get('stale'):
-                self.challenge['nonce'] = challenge['nonce']
+                self.challenge['nonce'] = challenge.get('nonce')
                 self.challenge['nc'] = 1
                 return True
         else:
             updated_challenge = _parse_www_authenticate(response, 'authentication-info').get('digest', {})
 
             if updated_challenge.has_key('nextnonce'):
-                self.challenge['nonce'] = updated_challenge['nextnonce']
+                self.challenge['nonce'] = updated_challenge.get('nextnonce')
                 self.challenge['nc'] = 1
         return False
 
@@ -572,25 +572,25 @@ class HmacDigestAuthentication(Authentication):
     def __init__(self, credentials, host, request_uri, headers, response, content, http):
         Authentication.__init__(self, credentials, host, request_uri, headers, response, content, http)
         challenge = _parse_www_authenticate(response, 'www-authenticate')
-        self.challenge = challenge['hmacdigest']
+        self.challenge = challenge.get('hmacdigest')
         # TODO: self.challenge['domain']
         self.challenge['reason'] = self.challenge.get('reason', 'unauthorized')
-        if self.challenge['reason'] not in ['unauthorized', 'integrity']:
+        if self.challenge.get('reason') not in ['unauthorized', 'integrity']:
             self.challenge['reason'] = 'unauthorized'
         self.challenge['salt'] = self.challenge.get('salt', '')
         if not self.challenge.get('snonce'):
             raise UnimplementedHmacDigestAuthOptionError( _("The challenge doesn't contain a server nonce, or this one is empty."))
         self.challenge['algorithm'] = self.challenge.get('algorithm', 'HMAC-SHA-1')
-        if self.challenge['algorithm'] not in ['HMAC-SHA-1', 'HMAC-MD5']:
-            raise UnimplementedHmacDigestAuthOptionError( _("Unsupported value for algorithm: %s." % self.challenge['algorithm']))
+        if self.challenge.get('algorithm') not in ['HMAC-SHA-1', 'HMAC-MD5']:
+            raise UnimplementedHmacDigestAuthOptionError( _("Unsupported value for algorithm: %s." % self.challenge.get('algorithm')))
         self.challenge['pw-algorithm'] = self.challenge.get('pw-algorithm', 'SHA-1')
-        if self.challenge['pw-algorithm'] not in ['SHA-1', 'MD5']:
-            raise UnimplementedHmacDigestAuthOptionError( _("Unsupported value for pw-algorithm: %s." % self.challenge['pw-algorithm']))
-        if self.challenge['algorithm'] == 'HMAC-MD5':
+        if self.challenge.get('pw-algorithm') not in ['SHA-1', 'MD5']:
+            raise UnimplementedHmacDigestAuthOptionError( _("Unsupported value for pw-algorithm: %s." % self.challenge.get('pw-algorithm')))
+        if self.challenge.get('algorithm') == 'HMAC-MD5':
             self.hashmod = _md5
         else:
             self.hashmod = _sha
-        if self.challenge['pw-algorithm'] == 'MD5':
+        if self.challenge.get('pw-algorithm') == 'MD5':
             self.pwhashmod = _md5
         else:
             self.pwhashmod = _sha
@@ -606,7 +606,7 @@ class HmacDigestAuthentication(Authentication):
         headers_val = "".join([headers[k] for k in keys])
         created = time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime())
         cnonce = _cnonce()
-        request_digest = "%s:%s:%s:%s:%s" % (method, request_uri, cnonce, self.challenge['snonce'], headers_val)
+        request_digest = "%s:%s:%s:%s:%s" % (method, request_uri, cnonce, self.challenge.get('snonce'), headers_val)
         request_digest  = hmac.new(self.key, request_digest, self.hashmod).hexdigest().lower()
         headers['authorization'] = 'HMACDigest username="%s", realm="%s", snonce="%s", cnonce="%s", uri="%s", created="%s", response="%s", headers="%s"' % (
                 self.credentials[0],
@@ -654,7 +654,7 @@ class GoogleLoginAuthentication(Authentication):
         from urllib import urlencode
         Authentication.__init__(self, credentials, host, request_uri, headers, response, content, http)
         challenge = _parse_www_authenticate(response, 'www-authenticate')
-        service = challenge['googlelogin'].get('service', 'xapi')
+        service = challenge.get('googlelogin', {}).get('service', 'xapi')
         # Bloggger actually returns the service in the challenge
         # For the rest we guess based on the URI
         if service == 'xapi' and  request_uri.find("calendar") > 0:
@@ -663,7 +663,7 @@ class GoogleLoginAuthentication(Authentication):
         #elif request_uri.find("spreadsheets") > 0:
         #    service = "wise"
 
-        auth = dict(Email=credentials[0], Passwd=credentials[1], service=service, source=headers['user-agent'])
+        auth = dict(Email=credentials[0], Passwd=credentials[1], service=service, source=headers.get('user-agent'))
         resp, content = self.http.request("https://www.google.com/accounts/ClientLogin", method="POST", body=urlencode(auth), headers={'Content-Type': 'application/x-www-form-urlencoded'})
         lines = content.split('\n')
         d = dict([tuple(line.split("=", 1)) for line in lines if line])
@@ -979,10 +979,10 @@ class HTTPSConnectionWithTimeout(httplib.HTTPSConnection):
           list: A list of valid host globs.
         """
         if 'subjectAltName' in cert:
-            return [x[1] for x in cert['subjectAltName']
+            return [x[1] for x in cert.get('subjectAltName')
                     if x[0].lower() == 'dns']
         else:
-            return [x[0][1] for x in cert['subject']
+            return [x[0][1] for x in cert.get('subject')
                     if x[0][0].lower() == 'commonname']
 
     def _ValidateCertificateHostname(self, cert, hostname):
@@ -1379,7 +1379,7 @@ class Http(object):
                         if authority == None:
                             response['location'] = urlparse.urljoin(absolute_uri, location)
                     if response.status == 301 and method in ["GET", "HEAD"]:
-                        response['-x-permanent-redirect-url'] = response['location']
+                        response['-x-permanent-redirect-url'] = response.get('location')
                         if not response.has_key('content-location'):
                             response['content-location'] = absolute_uri
                         _updateCache(headers, response, content, self.cache, cachekey)
@@ -1390,7 +1390,7 @@ class Http(object):
                     if 'authorization' in headers and not self.forward_authorization_headers:
                         del headers['authorization']
                     if response.has_key('location'):
-                        location = response['location']
+                        location = response.get('location')
                         old_response = copy.deepcopy(response)
                         if not old_response.has_key('content-location'):
                             old_response['content-location'] = absolute_uri
@@ -1520,7 +1520,7 @@ class Http(object):
 
             if method in self.optimistic_concurrency_methods and self.cache and info.has_key('etag') and not self.ignore_etag and 'if-match' not in headers:
                 # http://www.w3.org/1999/04/Editing/
-                headers['if-match'] = info['etag']
+                headers['if-match'] = info.get('etag')
 
             if method not in ["GET", "HEAD"] and self.cache and cachekey:
                 # RFC 2616 Section 13.10
@@ -1529,7 +1529,7 @@ class Http(object):
             # Check the vary header in the cache to see if this request
             # matches what varies in the cache.
             if method in ['GET', 'HEAD'] and 'vary' in info:
-                vary = info['vary']
+                vary = info.get('vary')
                 vary_headers = vary.lower().replace(' ', '').split(',')
                 for header in vary_headers:
                     key = '-varied-%s' % header
@@ -1570,9 +1570,9 @@ class Http(object):
 
                     if entry_disposition == "STALE":
                         if info.has_key('etag') and not self.ignore_etag and not 'if-none-match' in headers:
-                            headers['if-none-match'] = info['etag']
+                            headers['if-none-match'] = info.get('etag')
                         if info.has_key('last-modified') and not 'last-modified' in headers:
-                            headers['if-modified-since'] = info['last-modified']
+                            headers['if-modified-since'] = info.get('last-modified')
                     elif entry_disposition == "TRANSPARENT":
                         pass
 
@@ -1681,7 +1681,7 @@ class Response(dict):
         elif isinstance(info, email.Message.Message):
             for key, value in info.items():
                 self[key.lower()] = value
-            self.status = int(self['status'])
+            self.status = int(self.get('status'))
         else:
             for key, value in info.iteritems():
                 self[key.lower()] = value

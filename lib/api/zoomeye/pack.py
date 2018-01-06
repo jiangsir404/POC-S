@@ -11,9 +11,9 @@ from lib.core.data import logger
 def _initial():
     z = ZoomEye()
     z.auto_login()
-    info = z.resources_info()['resources']
+    info = z.resources_info().get('resources')
     if info:
-        msg = 'Available ZoomEye search: (web:%s,host:%s)' % (info['web-search'], info['host-search'])
+        msg = 'Available ZoomEye search: (search:%s)' % (info.get('search', 'NO FOUND'))
         logger.info(msg)
     else:
         msg = 'ZoomEye API authorization failed, Please re-run it and enter a new token.'
