@@ -7,7 +7,7 @@
 
 脚本收录 
 ------------------------------------------------------------------
-欢迎提交PoC及实用脚本(i@cdxy.me)，您贡献的PoC相关信息将会在以下位置公开。
+欢迎提交PoC及实用脚本(提PR或邮件联系i@cdxy.me)，您贡献的PoC相关信息将会在以下位置公开。
 * [脚本库](https://github.com/Xyntax/POC-T/wiki/%E5%86%85%E7%BD%AE%E8%84%9A%E6%9C%AC%E5%BA%93)
 * [致谢](https://github.com/Xyntax/POC-T/wiki/%E8%87%B4%E8%B0%A2)
 
