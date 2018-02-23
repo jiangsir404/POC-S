@@ -17,6 +17,7 @@ from thirdparty.IPy import IPy
 
 def loadModule():
     conf.MODULE_PLUGIN = dict()
+    index = 0
     for _name in conf.MODULE_USE:
         msg = 'Load custom script: %s' % _name
         logger.success(msg)
@@ -26,12 +27,13 @@ def loadModule():
         else:
             fp, pathname, description = imp.find_module(os.path.splitext(_name)[0], [paths.SCRIPT_PATH])
         try:
-            module_obj = imp.load_module("_", fp, pathname, description)
+            index = index + 1
+            module_obj = imp.load_module('_' + str(index), fp, pathname, description)
             for each in ESSENTIAL_MODULE_METHODS:
                 if not hasattr(module_obj, each):
                     errorMsg = "Can't find essential method:'%s()' in current script，Please modify your script/PoC."
                     sys.exit(logger.error(errorMsg))
-                conf.MODULE_PLUGIN[_name] = module_obj
+            conf.MODULE_PLUGIN[_name] = module_obj
         except ImportError, e:
             errorMsg = "Your current scipt [%s.py] caused this exception\n%s\n%s" \
                     % (_name, '[Error Msg]: ' + str(e), 'Maybe you can download this module from pip or easy_install')
