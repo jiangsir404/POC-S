@@ -12,6 +12,7 @@ import time
 
 
 def poc(str):
+    return False
     time.sleep(3)
     if random.randint(1, 15) > 5:
         return True
