@@ -16,7 +16,6 @@ from lib.core.enums import POC_RESULT_STATUS, ENGINE_MODE_STATUS
 
 def initEngine():
     th.thread_mode = True if conf.ENGINE is ENGINE_MODE_STATUS.THREAD else False
-    th.module_name = conf.MODULE_NAME
     th.f_flag = conf.FILE_OUTPUT
     th.s_flag = conf.SCREEN_OUTPUT
     th.output = conf.OUTPUT_FILE_PATH
@@ -41,15 +40,17 @@ def scan():
     while 1:
         if th.thread_mode: th.load_lock.acquire()
         if th.queue.qsize() > 0 and th.is_continue:
-            payload = str(th.queue.get(timeout=1.0))
+            module = th.queue.get(timeout=1.0)
+            payload = str(module["sub"])
+            module_obj = module["poc"]
             if th.thread_mode: th.load_lock.release()
         else:
             if th.thread_mode: th.load_lock.release()
             break
         try:
             # POC在执行时报错如果不被处理，线程框架会停止并退出
-            status = th.module_obj.poc(payload)
-            resultHandler(status, payload)
+            status = module_obj.poc(payload)
+            resultHandler(status, module)
         except Exception:
             th.errmsg = traceback.format_exc()
             th.is_continue = False
@@ -102,7 +103,7 @@ def resultHandler(status, payload):
         th.queue.put(payload)
         return
     elif status is True or status is POC_RESULT_STATUS.SUCCESS:
-        msg = payload
+        msg = payload["sub"] + " -" + payload["name"]
     else:
         msg = str(status)
     changeFoundCount(1)
