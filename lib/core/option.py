@@ -117,6 +117,7 @@ def ScriptRegister(args):
             else:
                 msg = 'Script [%s] not exist. Use [--show] to view all available script in ./script/' % input_path
                 sys.exit(logger.error(msg))
+        conf.MODULE_USE.append(conf.MODULE_NAME)
 
 
 def TargetRegister(args):

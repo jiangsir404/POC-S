@@ -96,6 +96,13 @@ def run():
 
 
 def resultHandler(status, payload):
+    def printScrren(msg):    
+        if th.s_flag:
+            printMessage(msg)
+        if th.f_flag:
+            output2file(msg)
+        if th.single_mode:
+            singleMode()
     if not status or status is POC_RESULT_STATUS.FAIL:
         return
     elif status is POC_RESULT_STATUS.RETRAY:
@@ -104,15 +111,21 @@ def resultHandler(status, payload):
         return
     elif status is True or status is POC_RESULT_STATUS.SUCCESS:
         msg = payload["sub"] + " -" + payload["name"]
+        printScrren(msg)
     else:
-        msg = str(status)
+        # msg = str(status)
+        if type(status) == set:
+            for x in status:
+                printScrren(x)
+        elif type(status) == list:
+            for x in status:
+                printScrren(x)
+        else:
+            msg = str(status)
+            printScrren(msg)
     changeFoundCount(1)
-    if th.s_flag:
-        printMessage(msg)
-    if th.f_flag:
-        output2file(msg)
-    if th.single_mode:
-        singleMode()
+
+    
 
 
 def setThreadLock():

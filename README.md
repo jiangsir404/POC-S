@@ -12,7 +12,13 @@
 * [致谢](https://github.com/Xyntax/POC-T/wiki/%E8%87%B4%E8%B0%A2)
 
 ## 使用
-`poc-t.py --batch -iF 1.txt` 使用fuzz脚本
+- `poc-t.py --batch -iF 1.txt` 使用fuzz脚本
+- `poc-t.py -eT -t 20 -s xx -iF 1w.txt`
+
+## 插件
+- craw 爬虫爬取相关链接
+- waf 找出waf以及连接不上的网站去掉
+- valscan 找出sql注入以及XSS注入
 
 特点
 ---
