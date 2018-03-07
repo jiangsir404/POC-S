@@ -17,13 +17,13 @@ class spiderMain(object):
         # 在判断?/aspx/asp/php/jsp 是否在里面
         origin = self.link
         new_url = urlparse.urljoin(origin,url)
-        parse = urlparse.urlparse(url)
-        domain = parse.netloc
+        domain = urlparse.urlparse(origin).netloc
+        
         if domain not in new_url:
             return False
-        if self.url_similar_check(url) is False:
+        if self.url_similar_check(new_url) == False:
             return False
-        if '?' in new_url and ('aspx' in new_url or 'asp' in new_url or 'php' in new_url or 'jsp' in new_url):
+        if '=' in new_url and ('aspx' in new_url or 'asp' in new_url or 'php' in new_url or 'jsp' in new_url):
             return new_url
         else:
             return False
@@ -45,21 +45,27 @@ class spiderMain(object):
         header = dict()
         header["User-Agent"] = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36"
         header["Referer"] = "http://www.qq.com"
+        new_urls = set()
         try:
             r = requests.get(self.link, headers=header, timeout=5)
             if r.status_code == 200:
                 soup = BeautifulSoup(r.text, 'html.parser')
-                new_urls = set()
+                
                 links = soup.find_all('a')
                 for link in links:
                     new_url = link.get('href')
                     full_url = self.judge(new_url)
                     if full_url:
-                        new_urls.add(new_url)
+                        new_urls.add(full_url)
             else:
                 return False
         except Exception:
             return False
+        finally:
+            if new_urls:
+                return new_urls
+            else:
+                return False
 
 def poc(url):
     if '://' not in url:

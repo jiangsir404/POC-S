@@ -3,7 +3,9 @@
 # project = https://github.com/Xyntax/POC-T
 # author = i@cdxy.me
 
-
+import sys
+reload(sys)
+sys.setdefaultencoding("utf-8")
 import threading
 import time
 import traceback
@@ -113,13 +115,12 @@ def resultHandler(status, payload):
         msg = payload["sub"] + " -" + payload["name"]
         printScrren(msg)
     else:
-        # msg = str(status)
         if type(status) == set:
             for x in status:
-                printScrren(x)
+                printScrren(str(x))
         elif type(status) == list:
             for x in status:
-                printScrren(x)
+                printScrren(str(x))
         else:
             msg = str(status)
             printScrren(msg)
