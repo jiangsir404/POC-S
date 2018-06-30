@@ -8,6 +8,7 @@ def poc(url):
         url = 'http://' + url
     if not url.endswith('/'):
         url = url + "/"
+    return audit(url)
     
 def audit(arg):
     parse = urlparse.urlparse(arg)
