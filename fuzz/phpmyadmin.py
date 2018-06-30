@@ -18,7 +18,7 @@ def poc(url):
         if r.status_code == 200:
             md5_value = md5.new(r.content).hexdigest()
             if md5_value == "2059c4c1ec104e7554df5da1edb07a77":
-                return url + "phpmyadmin/"
+                return "[phpmyadmin ]" + url + "phpmyadmin/"
         else:
             return False
     except Exception:

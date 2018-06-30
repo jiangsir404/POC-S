@@ -62,10 +62,10 @@ def EngineRegister(args):
     r.add(__gevent, gevent_status)
     r.run()
 
-    if 0 < thread_num < 101:
+    if 0 < thread_num < 501:
         th.THREADS_NUM = conf.THREADS_NUM = thread_num
     else:
-        msg = 'Invalid input in [-t], range: 1 to 100'
+        msg = 'Invalid input in [-t], range: 1 to 500'
         sys.exit(logger.error(msg))
 
 def loadAllPlugins():
