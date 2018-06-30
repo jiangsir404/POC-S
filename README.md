@@ -8,4 +8,5 @@
 - waf 检测waf 并返回没有waf的url
 - craw 爬取链接中的相关地址
 - vulscan 检测sql注入漏洞
+- portscan 端口扫描，检测弱口令服务
   
