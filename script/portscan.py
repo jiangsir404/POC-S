@@ -308,9 +308,12 @@ def poc(ip):
             server_name = server_discern(task_host,task_port,data)
             if server_name:
                 results.append("%s:%s is %s"%(task_host,task_port,server_name))
-                result = pass_crack(server_name,task_host,task_port)
-                if result:
-                    log =  "%s:%d %s %s"%(task_host,int(task_port),server_name,result)
+                try:
+                    result = pass_crack(server_name,task_host,task_port)
+                except:
+                    result = False
+                if result and result!=3:
+                    log =  "[*] %s:%d %s %s"%(task_host,int(task_port),server_name,result)
                     results.append(log)
     if results:
         return results
