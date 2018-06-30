@@ -73,7 +73,7 @@ flashfxp.tar.gz
             r = requests.get(loads, headers=header, timeout=5)
 
             if r.status_code == 200 and "Content-Type" in r.headers and "application" in r.headers["Content-Type"] :
-                warning_list.append(loads)
+                warning_list.append("[BAKFILE] " + loads)
         except Exception:
             pass
         

