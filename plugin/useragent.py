@@ -9,7 +9,7 @@ edit by cdxy [i@cdxy.me]
 May 9 Mon, 2016
 
 usage:
-from lib.util.useragent import *
+from plugin.useragent import *
 str1 = get_random_agent()
 str2 = firefox()
 str3 = iphone()
