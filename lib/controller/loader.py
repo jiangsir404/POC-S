@@ -21,7 +21,7 @@ def loadModule():
     for _name in conf.MODULE_USE:
         msg = 'Load custom script: %s' % _name
         logger.success(msg)
-
+        # fp为file对象
         if conf.batchfuzz:
             fp, pathname, description = imp.find_module(os.path.splitext(_name)[0], [paths.FUZZ_PATH])
         else:
@@ -29,6 +29,7 @@ def loadModule():
         try:
             index = index + 1
             module_obj = imp.load_module('_' + str(index), fp, pathname, description)
+            # ESSENTIAL_MODULE_METHODS值为poc
             for each in ESSENTIAL_MODULE_METHODS:
                 if not hasattr(module_obj, each):
                     errorMsg = "Can't find essential method:'%s()' in current script，Please modify your script/PoC."
@@ -61,6 +62,7 @@ def loadPayloads():
 
 
 def file_mode():
+    """iF模式，将target和poc两次循环遍历放入队列中"""
     for line in open(conf.INPUT_FILE_PATH):
         for name,exp in conf.MODULE_PLUGIN.items():
             sub = line.strip()
@@ -86,7 +88,7 @@ def int_mode():
 def net_mode():
     ori_str = conf.NETWORK_STR
     try:
-        _list = IPy.IP(ori_str)
+        _list = IPy.IP(ori_str, make_net=1)
     except Exception, e:
         sys.exit(logger.error('Invalid IP/MASK,%s' % e))
     for each in _list:
@@ -99,6 +101,7 @@ def net_mode():
 
 
 def single_target_mode():
+    """遍历每个poc放入到队列中"""
     for name,exp in conf.MODULE_PLUGIN.items():
         module = dict()
         module["sub"] = str(conf.SINGLE_TARGET_STR)

@@ -7,7 +7,6 @@ import argparse
 import sys
 from lib.core.settings import VERSION
 
-
 def cmdLineParser():
     parser = argparse.ArgumentParser(description='powered by cdxy <mail:i@cdxy.me> ',
                                      usage='python POC-T.py -s bingc -aZ "port:8080"',
@@ -27,8 +26,8 @@ def cmdLineParser():
 
     script.add_argument('-s', metavar='NAME', dest="script_name", type=str, default='',
                         help='load script by name (-s jboss-rce) or path (-s ./script/jboss.py)')
-    script.add_argument('--batch',dest="batch",default=False,action='store_true',
-                        help='batch fuzz using fuzz script')
+    script.add_argument('-b', '--batch',dest="batch",default='',type=str,
+                        help='batch fuzz, under script')
 
     target = parser.add_argument_group('TARGET')
 

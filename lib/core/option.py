@@ -17,8 +17,8 @@ from lib.core.register import Register
 def initOptions(args):
     checkUpdate(args)
     checkShow(args)
-    EngineRegister(args)
-    ScriptRegister(args)
+    EngineRegister(args) #设置线程数量
+    ScriptRegister(args) #poc注册
     TargetRegister(args)
     ApiRegister(args)
     Output(args)
@@ -68,14 +68,17 @@ def EngineRegister(args):
         msg = 'Invalid input in [-t], range: 1 to 500'
         sys.exit(logger.error(msg))
 
-def loadAllPlugins():
+def loadAllPlugins(batch):
+    """加载script某个目录下面的所有poc文件"""
     conf.batchfuzz = True
+    paths.FUZZ_PATH = paths.SCRIPT_PATH + '/' + batch
     for dirpath, dirnames, filenames in os.walk(paths.FUZZ_PATH):
         for filename in filenames:
             if '__init__' not in filename and '.pyc' not in filename:
                 conf.MODULE_USE.append(filename)
 
 def ScriptRegister(args):
+    """加载poc名到conf.MODULE_USE字典"""
     input_path = args.script_name
     batch = args.batch
     conf.MODULE_USE = []
@@ -86,7 +89,7 @@ def ScriptRegister(args):
         sys.exit(logger.error(msg))
 
     if batch:
-        loadAllPlugins()
+        loadAllPlugins(batch)
 
     # handle input: "-s ./script/spider.py"
     if input_path:

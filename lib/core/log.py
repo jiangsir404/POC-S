@@ -31,7 +31,10 @@ try:
 except ImportError:
     LOGGER_HANDLER = logging.StreamHandler(sys.stdout)
 
-FORMATTER = logging.Formatter("\r[%(levelname)s] %(message)s", "%H:%M:%S")
+contentFmt = "%(asctime)s [%(filename)s:%(lineno)d][%(levelname)s]:%(message)s"
+datetimeFmt = '%Y-%m-%d %H:%M:%S'
+FORMATTER = logging.Formatter(contentFmt, datetimeFmt)
+#FORMATTER = logging.Formatter("\r[%(levelname)s] %(message)s", "%H:%M:%S")
 
 LOGGER_HANDLER.setFormatter(FORMATTER)
 LOGGER.addHandler(LOGGER_HANDLER)

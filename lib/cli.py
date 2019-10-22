@@ -32,18 +32,20 @@ def main():
             errMsg += "Please move the project root directory to another location"
             logger.error(errMsg)
             raise SystemExit
+        # 设置全局路径paths
         setPaths()
-
+        # 解析參數到cmdLineOptions字典
         cmdLineOptions.update(cmdLineParser().__dict__)
         initOptions(cmdLineOptions)
 
         if IS_WIN:
             winowsColorInit()
         banner()
-
+        # 遍历所有conf.MODULE_USE，根据模块名动态加载到conf.MODULE_PLUGIN字典
         loadModule()
+        # 加载target到队列
         loadPayloads()
-
+        # 多线程运行
         run()
 
         if conf.OPEN_BROWSER:
