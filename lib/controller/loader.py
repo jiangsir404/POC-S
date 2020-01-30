@@ -21,7 +21,7 @@ def loadModule():
     for _name in conf.MODULE_USE:
         msg = 'Load custom script: %s' % _name
         logger.success(msg)
-        # fp为file对象
+        # add batch by jiangsir404
         if conf.batchfuzz:
             fp, pathname, description = imp.find_module(os.path.splitext(_name)[0], [paths.FUZZ_PATH])
         else:
