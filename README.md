@@ -6,13 +6,14 @@
 ## 使用 
 > 由于第三方接口需要认证，您可以在根目录下的新建tookit.conf配置文件中预先设置好您的API-KEY。如无预配置，程序将在运行时提示您输入API-KEY。
 
-some command: 
+脚本加载:
+- `poc-s.py  -s test2 -iF targets.txt` //使用test2脚本来测试目标文件(可以是当前文件夹，也可以是script文件夹下)
+- `python .\POC-S.py -b test -t 20 -iF targets.txt`//批量使用test目录下的脚本来测试文件
+- `python POC-S.py -b test -s test2.py -iF targets.txt`//使用test目录下的test2.py测试目标文件
 
-- `poc-s.py --batch -iF 1.txt` 使用fuzz脚本
-- `poc-s.py -eT -t 20 -s xx -iF 1w.txt`
-- `python .\POC-S.py -b test -t 20 -iF .\data\Shodan\20200130230506.txt` //
-批量使用test脚本来测试
-- `python POC-S.py -b redis -t 50 -aZ "port:6379" --limit 100` 测试redis漏洞
+
+搜索引擎的利用
+- `python POC-S.py -b redis -t 50 -aZ "port:6379" --limit 100` 利用zoomeye测试redis漏洞
 
 ## 插件
 一共有四个分类的POC: Fuzz POC, OWASP POC, Vuln POC, Tool POC.

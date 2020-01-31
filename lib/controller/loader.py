@@ -15,17 +15,27 @@ from lib.controller.api import runApi
 from thirdparty.IPy import IPy
 
 
-def loadModule():
+def loadModule(script_name, batch):
     conf.MODULE_PLUGIN = dict()
     index = 0
     for _name in conf.MODULE_USE:
         msg = 'Load custom script: %s' % _name
         logger.success(msg)
+        
+        #获取真实脚本路径
+        # 1. 当存在script_name, 首先从当前目录查找，如果不存在则在script目录下查找
+        # 2. 当存在batch, 直接从script目录下查找
+        if script_name:
+            script_path = os.path.dirname(os.path.abspath(script_name))
+            if not os.path.exists(script_path + '/' + _name):
+                dirname = os.path.split(script_name)
+                script_path = paths.SCRIPT_PATH + '/' + dirname[0]
+        if batch:
+            script_path = paths.SCRIPT_PATH + '/' + batch
+
+        print '[debug]', script_path
         # add batch by jiangsir404
-        if conf.batchfuzz:
-            fp, pathname, description = imp.find_module(os.path.splitext(_name)[0], [paths.FUZZ_PATH])
-        else:
-            fp, pathname, description = imp.find_module(os.path.splitext(_name)[0], [paths.SCRIPT_PATH])
+        fp, pathname, description = imp.find_module(os.path.splitext(_name)[0], [script_path])
         try:
             index = index + 1
             module_obj = imp.load_module('_' + str(index), fp, pathname, description)

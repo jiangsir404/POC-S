@@ -42,7 +42,7 @@ def main():
             winowsColorInit()
         banner()
         # 遍历所有conf.MODULE_USE，根据模块名动态加载到conf.MODULE_PLUGIN字典
-        loadModule()
+        loadModule(cmdLineOptions.script_name, cmdLineOptions.batch)
         # 加载target到队列
         loadPayloads()
         # 多线程运行
