@@ -4,6 +4,8 @@
 # author = i@cdxy.me
 
 """
+Java Deserialization Vulnerabilities verify script
+
 JBoss 三种POC漏洞检测，修改自 https://github.com/joaomatosf/jexboss
 
 cdxy copied and edited from https://github.com/joaomatosf/jexboss

@@ -17,7 +17,6 @@ from plugin.static import JSP_UPLOAD
 
 ENABLE_EXP = False
 
-
 def poc(base):
     base = "http://" + base if '://' not in base else base
     name = randomString(5)
