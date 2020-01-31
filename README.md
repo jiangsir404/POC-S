@@ -1,20 +1,21 @@
-# POC-T: *Pentest Over Concurrent Toolkit* 
+# POC-S: *POC-T Stong Version POC-T加强版* 
 
 详细wiki文档请看doc目录
 
 
-## 使用
+## 使用 
 > 由于第三方接口需要认证，您可以在根目录下的新建tookit.conf配置文件中预先设置好您的API-KEY。如无预配置，程序将在运行时提示您输入API-KEY。
 
 some command: 
 
-- `poc-t.py --batch -iF 1.txt` 使用fuzz脚本
-- `poc-t.py -eT -t 20 -s xx -iF 1w.txt`
-- `python .\POC-T.py -b test -t 20 -iF .\data\Shodan\20200130230506.txt` //
+- `poc-s.py --batch -iF 1.txt` 使用fuzz脚本
+- `poc-s.py -eT -t 20 -s xx -iF 1w.txt`
+- `python .\POC-S.py -b test -t 20 -iF .\data\Shodan\20200130230506.txt` //
 批量使用test脚本来测试
-- `python POC-T.py -b redis -t 50 -aZ "port:6379" --limit 100` 测试redis漏洞
+- `python POC-S.py -b redis -t 50 -aZ "port:6379" --limit 100` 测试redis漏洞
 
 ## 插件
+一共有四个分类的POC: Fuzz POC, OWASP POC, Vuln POC, Tool POC.
 
 ### Fuzz POC
 来源: boy-hack/POC-T
