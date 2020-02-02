@@ -24,16 +24,18 @@ def loadModule(script_name, batch):
         
         #获取真实脚本路径
         # 1. 当存在script_name, 首先从当前目录查找，如果不存在则在script目录下查找
-        # 2. 当存在batch, 直接从script目录下查找
+        # 2. 当存在batch, 也是一样的思路.
         if script_name:
             script_path = os.path.dirname(os.path.abspath(script_name))
             if not os.path.exists(script_path + '/' + _name):
                 dirname = os.path.split(script_name)
                 script_path = paths.SCRIPT_PATH + '/' + dirname[0]
         if batch:
-            script_path = paths.SCRIPT_PATH + '/' + batch
+            script_path = os.getcwd() + '/' + batch
+            if not os.path.exists(script_path):
+                script_path = paths.SCRIPT_PATH + '/' + batch
 
-        print '[debug]', script_path
+        #print '[debug]', script_path
         # add batch by jiangsir404
         fp, pathname, description = imp.find_module(os.path.splitext(_name)[0], [script_path])
         try:

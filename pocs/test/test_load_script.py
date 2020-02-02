@@ -7,7 +7,6 @@ import sys
 import subprocess
 import os
 
-sys.path.append('../')
 os.chdir('../')
 
 def load_module():
@@ -26,27 +25,27 @@ class TestSearchApi(unittest.TestCase):
 		pass
 
 	def test_cmd1(self):
-		cmd = "python .\POC-S.py -s test/test2.py -iS 127.0.0.1"
+		cmd = "python pocs.py -s test/test2.py -iS 127.0.0.1"
 		res = subprocess.call(cmd, stdout=subprocess.PIPE, shell=True)
 		self.assertTrue(res == 0)
 
 	def test_cmd2(self):
-		cmd = "python .\POC-S.py -s ./script/test/test2.py -iS 127.0.0.1"
+		cmd = "python pocs.py -s ./script/test/test2.py -iS 127.0.0.1"
 		res = subprocess.call(cmd, stdout=subprocess.PIPE, shell=True)
 		self.assertTrue(res == 0)
 
 	def test_cmd3(self):
-		cmd = "python .\POC-S.py -b test -iS 127.0.0.1"
+		cmd = "python pocs.py -s test2 -iS 127.0.0.1"
 		res = subprocess.call(cmd, stdout=subprocess.PIPE, shell=True)
 		self.assertTrue(res == 0)
 
 	def test_cmd4(self):
-		cmd = "python .\POC-S.py -b test -iS 127.0.0.1"
+		cmd = "python pocs.py -b test -iS 127.0.0.1"
 		res = subprocess.call(cmd, stdout=subprocess.PIPE, shell=True)
 		self.assertTrue(res == 0)
 
 	def test_cmd5(self):
-		cmd = "python .\POC-S.py -b test -s test2.py -iS 127.0.0.1"
+		cmd = "python pocs.py -b test -s test2.py -iS 127.0.0.1"
 		res = subprocess.call(cmd, stdout=subprocess.PIPE, shell=True)
 		self.assertTrue(res == 0)
 

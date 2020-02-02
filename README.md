@@ -1,22 +1,39 @@
-# POC-S: *POC-T Stong Version POC-T加强版* 
+# POC-S: *POC-T Strengthen Version POC-T加强版* 
 
-详细wiki文档请看doc目录
+POC-T的wiki文档请看doc目录
 
+## 法律免责声明
+未经事先双方同意，使用POC-S攻击目标是非法的。
+POC-S仅用于安全测试目的
+
+## 特点
+- 兼容POC-T的语法
+- 良好的poc分类，灵活的poc加载方式，支持单文件，批量，任意目录的加载方式
+- 提供pocs/poc-s终端命令，让框架和poc分离，可以将自定义的poc放在任意目录
+- 提供良好的单元测试
 
 ## 使用 
 > 由于第三方接口需要认证，您可以在根目录下的新建tookit.conf配置文件中预先设置好您的API-KEY。如无预配置，程序将在运行时提示您输入API-KEY。
 
-脚本加载:
-- `poc-s.py  -s test2 -iF targets.txt` //使用test2脚本来测试目标文件(可以是当前文件夹，也可以是script文件夹下)
-- `python .\POC-S.py -b test -t 20 -iF targets.txt`//批量使用test目录下的脚本来测试文件
-- `python POC-S.py -b test -s test2.py -iF targets.txt`//使用test目录下的test2.py测试目标文件
+1. 更加灵活的插件加载方式
+```
+pocs -s test/test2.py -iS 127.0.0.1 #加载script/test/test2.py脚本
+pocs -s test2 -iS 127.0.0.1 # 加载script/test2.py脚本
 
+pocs -b test -iS 127.0.0.1 # 批量加载/script/test目录下的所有脚本
+pocs -b test -s test2.py -iS 127.0.0.1 #加载script/test/test2.py脚本
 
-搜索引擎的利用
-- `python POC-S.py -b redis -t 50 -aZ "port:6379" --limit 100` 利用zoomeye测试redis漏洞
+pocs -s myself_script.py -iS 127.0.0.1 # 加载自定义的脚本和脚本目录
+pocs -b mydir -iS 127.0.0.1
+```
+
+2. 搜索引擎的利用
+- `pocs -b redis -t 50 -aZ "port:6379" --limit 50 -o res.txt` 利用zoomeye测试redis漏洞
+
+3. 单元测试脚本请看test目录下
 
 ## 插件
-一共有四个分类的POC: Fuzz POC, OWASP POC, Vuln POC, Tool POC.
+pocs 提供更加灵活的插件分类方式，一共有四个分类的POC: Fuzz POC, OWASP POC, Vuln POC, Tool POC.
 
 ### Fuzz POC
 来源: boy-hack/POC-T

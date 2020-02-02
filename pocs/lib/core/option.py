@@ -74,7 +74,10 @@ def loadAllPlugins(batch):
     """加载script某个目录下面的所有poc文件"""
     conf.batchfuzz = True
     # paths.FUZZ_PATH = paths.SCRIPT_PATH + '/' + batch
-    for dirpath, dirnames, filenames in os.walk(paths.SCRIPT_PATH + '/' + batch):
+    script_path = os.getcwd() + '/' + batch
+    if not os.path.exists(script_path):
+        script_path = paths.SCRIPT_PATH + '/' + batch
+    for dirpath, dirnames, filenames in os.walk(script_path):
         for filename in filenames:
             if '__init__' not in filename and '.pyc' not in filename:
                 conf.MODULE_USE.append(filename)

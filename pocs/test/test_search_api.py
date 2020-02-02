@@ -7,9 +7,12 @@
 
 import unittest
 import sys
-
+import os
 sys.path.append('../')
+
 from lib.core.data import logger, paths
+from lib.api.zoomeye.pack import ZoomEyeSearch
+
 paths.CONFIG_PATH = "../toolkit.conf"
 
 class TestSearchApi(unittest.TestCase):

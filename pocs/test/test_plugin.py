@@ -11,7 +11,7 @@ def test_util():
 	print checkPortTcp("123.206.65.167", 81)
 
 def test_cloudeye():
-	
+	pass
 
 if __name__ == '__main__':
 	test_util()
