@@ -11,3 +11,6 @@
 .idea
 output
 data
+build
+dist
+pocs.egg-info
