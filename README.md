@@ -10,12 +10,21 @@ POC-S仅用于安全测试目的
 - 兼容POC-T的语法
 - 良好的poc分类，灵活的poc加载方式，支持单文件，批量，任意目录的加载方式
 - 提供pocs/poc-s终端命令，让框架和poc分离，可以将自定义的poc放在任意目录
-- 提供良好的单元测试
+- 提供良好的单元测试脚本
+
+TODO
+- [ ] 收集和完善POC, 具体可以看我的POC分类
+- [ ] 添加pocsapi.py, 类似sqlmapapi的功能
+- [ ] 增加py3版本的POC-S
 
 ## 使用 
 > 由于第三方接口需要认证，您可以在根目录下的新建tookit.conf配置文件中预先设置好您的API-KEY。如无预配置，程序将在运行时提示您输入API-KEY。
 
+	git clone https://github.com/jiangsir404/POC-S.git
+	python setup.py install
+
 1. 更加灵活的插件加载方式
+
 ```
 pocs -s test/test2.py -iS 127.0.0.1 #加载script/test/test2.py脚本
 pocs -s test2 -iS 127.0.0.1 # 加载script/test2.py脚本
@@ -33,7 +42,7 @@ pocs -b mydir -iS 127.0.0.1
 3. 单元测试脚本请看test目录下
 
 ## 插件
-pocs 提供更加灵活的插件分类方式，一共有四个分类的POC: Fuzz POC, OWASP POC, Vuln POC, Tool POC.
+pocs 提供更加灵活的插件分类方式，目前收集到的总结有四类POC: Fuzz POC, OWASP POC, Vuln POC, Tool POC.  POC这块会尽量收集一些github上面已有的POC, 但不会太多，还是需要个人自己去收集整理。
 
 ### Fuzz POC
 来源: boy-hack/POC-T
@@ -54,16 +63,16 @@ pocs 提供更加灵活的插件分类方式，一共有四个分类的POC: Fuzz
 ### OWASP POC
 来源hunter的检测脚本
 
-- cmd_exec
-- sql_injection
-- xss
-- xxe
-- csrf
-- jsonp_xss
-- jsonp_hijacking
-- file_read
-- ssti
-- ssrf
+- [ ] cmd_exec
+- [ ] sql_injection
+- [ ] xss
+- [ ] xxe
+- [ ] csrf
+- [ ] jsonp_xss
+- [ ] jsonp_hijacking
+- [ ] file_read
+- [ ] ssti
+- [ ] ssrf
   
 ### Vuln POC
 主要来源于vulhub 以及 POC-T自带的插件poc
@@ -152,3 +161,6 @@ pocs 提供更加灵活的插件分类方式，一共有四个分类的POC: Fuzz
 - [ ] domain2ip 域名查询ip
 - [ ] whois 查询whois信息
 - [ ] icp icp查询
+
+
+其他开源的POC比如https://github.com/boy-hack/airbug 项目收集了一些poc可以直接使用，但有一个HackReqeust库是py3的，需要改一下成Python2的， 可以直接安装我改过后的py2库: 

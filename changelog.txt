@@ -1,6 +1,10 @@
-jiangsir404, 12 minutes ago : Merge remote-tracking branch 'origin/2.0' into jiangsir
-jiangsir404, 71 minutes ago : [UPDATE] 更新测试文件
-jiangsir404, 3 months ago : [ADD] 添加poc phpstudy_backdoor.py, 并且修改批量fuzz功能
+jiangsir404, 2 days ago : [ADD] 添加setup.py安装文件
+jiangsir404, 4 days ago : [OPT] 优化插件加载的方式
+jiangsir404, 4 days ago : [UPDATE] 更新文档
+jiangsir404, 4 days ago : [OPT] 更新Readme.md文件
+jiangsir404, 5 days ago : Merge remote-tracking branch 'origin/2.0' into jiangsir
+jiangsir404, 5 days ago : [UPDATE] 更新测试文件
+jiangsir404, 4 months ago : [ADD] 添加poc phpstudy_backdoor.py, 并且修改批量fuzz功能
 cdxy, 1 year, 2 months ago : Merge pull request #38 from zer0yu/2.0
 zeroyu, 1 year, 2 months ago : add bing and google dork
 zeroyu, 1 year, 2 months ago : fix the import path
@@ -14,7 +18,3 @@ boy-hack, 1 year, 7 months ago : add fuzz plugin for swf xss
 boy-hack, 1 year, 7 months ago : patch for phpmyadmin
 boy-hack, 1 year, 7 months ago : add fuzz plugin for phpmyadmin
 boy-hack, 1 year, 7 months ago : add fuzz plugin for bakfile
-boy-hack, 1 year, 7 months ago : patch
-boy-hack, 1 year, 7 months ago : add crossdomain fuzz plugin
-boy-hack, 1 year, 7 months ago :  patch
-boy-hack, 1 year, 7 months ago : 增加Fuzz phpinfo探测
