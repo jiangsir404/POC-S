@@ -3,6 +3,7 @@
 *.log
 *.lprof
 *.py[cod]
+*.pyc
 *.swp
 *.conf
 .coverage
@@ -10,4 +11,6 @@
 .tox
 .idea
 output
-data
+build
+dist
+pocs.egg-info
