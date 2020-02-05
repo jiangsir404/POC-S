@@ -18,10 +18,16 @@ TODO
 - [ ] 增加py3版本的POC-S
 
 ## 使用 
-> 由于第三方接口需要认证，您可以在根目录下的新建tookit.conf配置文件中预先设置好您的API-KEY。如无预配置，程序将在运行时提示您输入API-KEY。
+> 由于第三方接口需要认证，您需要在/pocs目录下(pip安装需要到对应目录下) 的tookit.conf配置文件中预先设置好您的API-KEY。如无预配置，程序将在运行时提示您输入API-KEY。
 
+	pip install pocs
+
+源码安装: 
+
+```
 	git clone https://github.com/jiangsir404/POC-S.git
 	python setup.py install
+```
 
 1. 更加灵活的插件加载方式
 
@@ -163,4 +169,4 @@ pocs 提供更加灵活的插件分类方式，目前收集到的总结有四类
 - [ ] icp icp查询
 
 
-其他开源的POC比如https://github.com/boy-hack/airbug 项目收集了一些poc可以直接使用，但有一个HackReqeust库是py3的，需要改一下成Python2的， 可以直接安装我改过后的py2库: 
+其他开源的POC比如https://github.com/boy-hack/airbug 项目收集了一些poc可以直接使用，但有一个HackReqeust库是py3的，需要改一下成Python2的， 可以直接安装我改过后的py2库:https://github.com/jiangsir404/hack-requests 
