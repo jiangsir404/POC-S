@@ -29,6 +29,8 @@ TODO
 	python setup.py install
 ```
 
+> 如果pip按照pcos出现Some files missing的报错，则需要去到pocs的安装目录(python2.7\Lib\site-packages\pocs)重命名tookit.conf.
+
 1. 更加灵活的插件加载方式
 
 ```
@@ -43,7 +45,11 @@ pocs -b mydir -iS 127.0.0.1
 ```
 
 2. 搜索引擎的利用
-- `pocs -b redis -t 50 -aZ "port:6379" --limit 50 -o res.txt` 利用zoomeye测试redis漏洞
+```
+pocs -b redis -t 50 -aZ "port:6379" --limit 50 -o res.txt
+pocs -s test2.py -aZ "ThinkPHP"
+
+```
 
 3. 单元测试脚本请看test目录下
 
@@ -170,3 +176,4 @@ pocs 提供更加灵活的插件分类方式，目前收集到的总结有四类
 
 
 其他开源的POC比如https://github.com/boy-hack/airbug 项目收集了一些poc可以直接使用，但有一个HackReqeust库是py3的，需要改一下成Python2的， 可以直接安装我改过后的py2库:https://github.com/jiangsir404/hack-requests 
+
