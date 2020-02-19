@@ -92,7 +92,6 @@ pocs 提供更加灵活的插件分类方式，目前收集到的总结有四类
 	- [x] 5-rce
 	- [ ] 2-rce
 	- [x] 5.0.23-rce
-	- [ ] in-sqlinjection
 
 - [ ] unauth
 	- [x] redis-unauth.py

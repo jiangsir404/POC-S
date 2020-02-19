@@ -30,8 +30,8 @@ def poc(url):
             res = requests.get(vulnurl)
             if "allow_url_fopen" in res.text:
                 return True
-        except:
-            return False
+        except Exception as e:
+            print(e)
     return False
 
 
