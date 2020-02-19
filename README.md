@@ -48,7 +48,6 @@ pocs -b mydir -iS 127.0.0.1
 ```
 pocs -b redis -t 50 -aZ "port:6379" --limit 50 -o res.txt
 pocs -s test2.py -aZ "ThinkPHP"
-
 ```
 
 3. 单元测试脚本请看test目录下
@@ -90,9 +89,9 @@ pocs 提供更加灵活的插件分类方式，目前收集到的总结有四类
 主要来源于vulhub 以及 POC-T自带的插件poc
 
 - [ ] thinkphp
-	- [ ] 5-rce
+	- [x] 5-rce
 	- [ ] 2-rce
-	- [ ] 5.0.23-rce
+	- [x] 5.0.23-rce
 	- [ ] in-sqlinjection
 
 - [ ] unauth
@@ -105,6 +104,8 @@ pocs 提供更加灵活的插件分类方式，目前收集到的总结有四类
 	- [ ] docker-unauth-rce.py
 	- [ ] hadoop-unauth.py
 
+- [ ] supervisor
+	- [x] supervisord-RCE-CVE-2017-11610.py
 
 - [ ] weakpass
 	- [ ] mysql
