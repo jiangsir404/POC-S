@@ -52,7 +52,9 @@ pocs -s test2.py -aZ "ThinkPHP"
 
 利用ZoomEye批量搜索CNVD-2020-10487 tomcat ajp lfi漏洞(需要在toolkit.conf中配置zoomeye)
 
-	./pcos -s apache -aZ "app:tomcat" --limit 50 -o ajp.txt
+	./pcos -s apache -aZ "app:tomcat" --limit 50 -t 30 -o ajp.txt
+
+![test](./doc/test.png)
 
 3. 单元测试脚本请看test目录下
 

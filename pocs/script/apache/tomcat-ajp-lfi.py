@@ -2,7 +2,7 @@
 #coding:utf-8
 
 """
-Tomcat-Ajp协议文件读取漏洞
+Tomcat-Ajp协议文件读取漏洞 CNVD-2020-10487
 
 Version
 	7.*分支7.0.100之前版本，建议更新到7.0.100版本；
@@ -14,7 +14,7 @@ Referer
 	Tomcat-Ajp协议漏洞分析 https://mp.weixin.qq.com/s/GzqLkwlIQi_i3AVIXn59FQ
 
 Usage
-	./pcos -s apache -aZ "app:tomcat" --limit 50 -o ajp.txt
+	./pcos -s apache -aZ "app:tomcat" --limit 50  -t 30 -o ajp.txt
 """
 
 import struct
