@@ -12,6 +12,9 @@ Referer
 	https://tomcat.apache.org/connectors-doc/ajp/ajpv13a.html
 	https://www.chaitin.cn/zh/ghostcat
 	Tomcat-Ajp协议漏洞分析 https://mp.weixin.qq.com/s/GzqLkwlIQi_i3AVIXn59FQ
+
+Usage
+	./pcos -s apache -aZ "app:tomcat" --limit 50 -o ajp.txt
 """
 
 import struct

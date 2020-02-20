@@ -88,6 +88,9 @@ pocs 提供更加灵活的插件分类方式，目前收集到的总结有四类
 ### Vuln POC
 主要来源于vulhub 以及 POC-T自带的插件poc
 
+- [ ] apache
+	- [x] CNVD-2020-10487 tomcat-ajp-lfi.py
+
 - [ ] thinkphp
 	- [x] 5-rce
 	- [ ] 2-rce
