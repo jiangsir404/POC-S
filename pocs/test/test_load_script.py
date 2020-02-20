@@ -50,10 +50,10 @@ class TestSearchApi(unittest.TestCase):
 		self.assertTrue(res == 0)
 
 def test():
-	unittest.main()
-	# suite = unittest.TestSuite()
-	# suite.addTest(TestSearchApi("test_cmd1"))
-	# unittest.TextTestRunner().run(suite)  	
+	# unittest.main()
+	suite = unittest.TestSuite()
+	suite.addTest(TestSearchApi("test_cmd1"))
+	unittest.TextTestRunner().run(suite)
 
 if __name__ == '__main__':
 	test()

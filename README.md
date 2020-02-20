@@ -132,9 +132,11 @@ pocs 提供更加灵活的插件分类方式，目前收集到的总结有四类
 	- [ ] CVE-2018-19518
 
 - [ ] struts2
-	- [x] struts2-s2045.py
-	- [x] struts2-s2032.py
-	- [ ] struts2-s2016.py
+	- [x] s2-045.py
+	- [x] s2-032.py
+	- [x] s2-016.py
+	- [x] s2-015.py
+	- [x] s2-005.py
 
 - [ ] weblogic
 	- [x] weblogic-ssrf-netmap.py
