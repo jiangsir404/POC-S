@@ -316,9 +316,10 @@ def poc(host):
 		#print("".join([d.data for d in data])[:30])
 		return '[Vuln Exist]' + host
 	except Exception as e:
-		print(e)
+		#print(e)
+		pass
 	return False
 
 
 if __name__ == '__main__':
-	print poc("127.0.0.1")
+	print poc("190.183.62.206")

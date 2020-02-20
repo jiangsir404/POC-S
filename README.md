@@ -50,7 +50,12 @@ pocs -b redis -t 50 -aZ "port:6379" --limit 50 -o res.txt
 pocs -s test2.py -aZ "ThinkPHP"
 ```
 
+利用ZoomEye批量搜索CNVD-2020-10487 tomcat ajp lfi漏洞(需要在toolkit.conf中配置zoomeye)
+
+	./pcos -s apache -aZ "app:tomcat" --limit 50 -o ajp.txt
+
 3. 单元测试脚本请看test目录下
+
 
 ## 插件
 pocs 提供更加灵活的插件分类方式，目前收集到的总结有四类POC: Fuzz POC, OWASP POC, Vuln POC, Tool POC.  POC这块会尽量收集一些github上面已有的POC, 但不会太多，还是需要个人自己去收集整理。
