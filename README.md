@@ -50,9 +50,10 @@ pocs -b redis -t 50 -aZ "port:6379" --limit 50 -o res.txt
 pocs -s test2.py -aZ "ThinkPHP"
 ```
 
-利用ZoomEye批量搜索CNVD-2020-10487 tomcat ajp lfi漏洞(需要在toolkit.conf中配置zoomeye)
+利用ZoomEye批量搜索CNVD-2020-10487 tomcat ajp lfi漏洞
 
-	./pocs -s apache -aZ "app:tomcat" --limit 50 -t 30 -o ajp.txt
+	pip install pocs==1.3
+	pocs -b apache -aZ "app:tomcat" --limit 50 -t 30 -o ajp.txt
 
 ![](test.png)
 
