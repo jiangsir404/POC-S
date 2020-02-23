@@ -101,7 +101,6 @@ pocs 提供更加灵活的插件分类方式，目前收集到的总结有四类
 
 - [ ] thinkphp
 	- [x] 5-rce
-	- [ ] 2-rce
 	- [x] 5.0.23-rce
 
 - [ ] unauth
@@ -143,12 +142,16 @@ pocs 提供更加灵活的插件分类方式，目前收集到的总结有四类
 	- [ ] CVE-2018-19518
 
 - [ ] struts2
-	- [x] s2-045.py
-	- [x] s2-032.py
-	- [x] s2-016.py
-	- [x] s2-015.py
-	- [x] s2-005.py
-
+    - [x] s2-005.py
+    - [x] s2-015.py
+    - [x] s2-016.py
+    - [x] s2-032.py
+    - [x] s2-045.py
+    - [x] s2-052.py
+    - [x] s2-053.py
+    - [x] s2-058.py
+    - [x] struts2-devmode.py
+	
 - [ ] weblogic
 	- [x] weblogic-ssrf-netmap.py
 	- [ ] weblogc_wls_rce.py
