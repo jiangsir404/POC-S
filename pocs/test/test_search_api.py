@@ -14,7 +14,7 @@ from pocs.lib.api.zoomeye.pack import ZoomEyeSearch
 from pocs.lib.api.zoomeye.pack import ZoomEyeSearch
 from pocs.lib.api.fofa.pack import FofaSearch
 
-paths.COFIG_PATH = "../toolkit.conf"
+paths.CONFIG_PATH = "../toolkit.conf"
 # paths.CONFIG_PATH = os.path.dirname(os.path.dirname(__file__)) + "/toolkit.conf"
 # print paths
 

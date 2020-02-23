@@ -38,6 +38,12 @@ class ConfigFileParser:
     def ColudEyePersonaldomain(self):
         return self._get_option('cloudeye', 'personal_domain')
 
+    def CeyeApikey(self):
+        return self._get_option('ceye', 'api_key')
+
+    def CeyePersonaldomain(self):
+        return self._get_option('ceye', 'personal_domain')
+
     def GoogleProxy(self):
         return self._get_option('google', 'proxy')
 
