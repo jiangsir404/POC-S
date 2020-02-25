@@ -20,6 +20,7 @@ Referer:
 import requests
 
 def poc(url):
+	"""无回显payload, 暂不提供检测"""
 	url = url if '://' in url else 'http://' + url
 	url = url.split('#')[0].split('?')[0]
 
@@ -35,9 +36,9 @@ def poc(url):
 		if len(resp.text) == 0:
 			"""无漏洞网站返回的页面为空"""
 			return False
-		if len(page1.text) == len(resp.text):
-			# 无回显payload, 判断与页面是否一致来判断
-			return "[S2-005]" + url
+		# if len(page1.text) == len(resp.text):
+		# 	# 无回显payload, 判断与页面是否一致来判断
+		# 	return "[S2-005]" + url
 	return False
 
 if __name__ == '__main__':

