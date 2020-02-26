@@ -13,7 +13,8 @@ POC-S仅用于安全测试目的
 - 提供良好的单元测试脚本
 
 TODO
-- [ ] 根据vulhub靶机及开源项目收集和完善POC, 具体可以看我的POC分类
+- [x] 根据vulhub靶机及开源项目收集和完善POC, 具体可以看我的POC分类
+- [x] 添加ceye, DNSLog这些平台的插件
 - [ ] 添加pocsapi.py, 类似sqlmapapi的功能
 - [ ] 增加py3版本的POC-S
 
