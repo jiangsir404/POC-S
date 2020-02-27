@@ -34,7 +34,6 @@ def poc(url):
         if res.text.startswith("rivirsir"):
             return True
     except Exception as e:
-    	# print e
         return False
     return False
 

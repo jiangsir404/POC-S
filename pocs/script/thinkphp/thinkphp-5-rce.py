@@ -16,7 +16,6 @@ Usage:
 Referer
 	https://www.seebug.org/vuldb/ssvid-9771
 """
-
 import requests
 
 def poc(url):
