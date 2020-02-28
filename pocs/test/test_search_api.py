@@ -40,6 +40,7 @@ class TestSearchApi(unittest.TestCase):
 		res = FofaSearch('domain="sangfor.com.cn"')
 		print res
 
+
 if __name__ == '__main__':
 	suite = unittest.TestSuite()
 	suite.addTest(TestSearchApi("testZoomeye"))
