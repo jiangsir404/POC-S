@@ -25,7 +25,6 @@ from lib.utils.config import ConfigFileParser
 key = ConfigFileParser().CeyeApikey()
 uniq_domain = ConfigFileParser().CeyePersonaldomain().split('.')[0]
 
-
 class Ceye:
     def __init__(self):
         self.unique = uniq_domain

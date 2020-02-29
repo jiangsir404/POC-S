@@ -4,7 +4,7 @@
 from setuptools import setup, find_packages
 import sys, os
 
-version = '1.3'
+version = '1.4'
 
 setup(name='pocs',
       version=version,
@@ -25,12 +25,15 @@ rivir""",
           'requests',
           'gevent',
           'shodan',
-          'google-api-python-client'
+          'google-api-python-client',
+          "bottle",
+          "paste"
       ],
       entry_points={
           "console_scripts": [
               "poc-s=pocs.pocs:main",
-              "pocs=pocs.pocs:main"
+              "pocs=pocs.pocs:main",
+              "pocs_dnslog=pocs.pocs_dnslog:main"
           ]
       },
       )
