@@ -10,6 +10,7 @@ POC-S仅用于安全测试目的
 - 兼容POC-T的语法
 - 良好的poc分类，灵活的poc加载方式，支持单文件，批量，任意目录的加载方式
 - 提供pocs/poc-s终端命令，让框架和poc分离，可以将自定义的poc放在任意目录
+- 提供简易的dns平台，只需要一个域名一个公网ip即可运行, 可用于快速验证命令盲注和sql盲注，简单高效。
 - 提供良好的单元测试脚本
 
 TODO
@@ -57,8 +58,23 @@ pocs -s test2.py -aZ "ThinkPHP"
 
 ![](test.png)
 
-3. 单元测试脚本请看test目录下
+3. dnslog平台使用
 
+如果你还在纠结于ceye的不稳定，没有时间精力搭建DNSLog平台(需要两个域名，一个公网ip, 且域名还需要能够修改dns服务器)
+那么不妨试一试POC-S提供的简易dnslog平台，只需要一个域名和一个公网ip即可搭建，提供api接口进行验证(无界面)
+
+在公网(x.x.x.x)运行命令: 
+```
+pip install pocs
+pocs_dnslog  (如果不是pip安装的可以直接运行pocs.dnslog.py脚本)
+>>> dns domain: xxx.cn
+>>>api: rivir
+```
+
+dns log命令，只支持如下: `nslookup 1234.pocs.xxx.cn x.x.x.x`  //xxx.cn是你的公网域名，x.x.x.x是公网ip
+web log命令: `curl xxx.cn:88/weblog/poc123`
+
+api接口地址: `http://x.x.x.x:88/api/?token={token}&type={dns}&filter=1234.pocs.xxx.cn`
 
 ## POC
 pocs 提供更加灵活的插件分类方式，目前收集到的总结有四类POC: Fuzz POC, OWASP POC, Vuln POC, Tool POC.  POC这块会尽量收集一些github上面已有的POC, 但不会太多，还是需要个人自己去收集整理。f  
