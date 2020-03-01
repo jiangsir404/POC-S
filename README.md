@@ -68,15 +68,17 @@ pocs -s test2.py -aZ "ThinkPHP"
 如果你还在纠结于ceye的不稳定，没有时间精力搭建DNSLog平台(需要两个域名，一个公网ip, 且域名还需要能够修改dns服务器)
 那么不妨试一试POC-S提供的简易dnslog平台，只需要一个域名和一个公网ip即可搭建，提供api接口进行验证(无界面)
 
+假设dnslog.xxx.cn是你的公网域名，x.x.x.x是公网ip，请确保dnslog.xxx.cn可以正常解析到x.x.x.x, 否则无法正常访问api
 在公网(x.x.x.x)运行命令: 
 ```
 pip install pocs
-pocs_dnslog  (如果不是pip安装的可以直接运行pocs.dnslog.py脚本)
->>> dns domain: xxx.cn
->>>api key: rivir
+pocs_dnslog -h 0.0.0.0 -p 88(如果不是pip安装的可以直接运行pocs.dnslog.py脚本)
+>>> dns domain: dnslog.xxx.cn
+>>> api key: rivir
 ```
 
-dns log命令，只支持如下: `nslookup 1234.pocs.xxx.cn x.x.x.x`  //xxx.cn是你的公网域名，x.x.x.x是公网ip
+dns log命令，只支持nslookup命令: `nslookup 1234.dnslog.xxx.cn x.x.x.x`  
+> 如果你想用ping 1234.dnslog.xxx.cn命令，也可以给xxx.cn域名配置自定义的域名服务器(参考DNSLog的配置)
 
 web log命令: `curl xxx.cn:88/weblog/poc123`
 

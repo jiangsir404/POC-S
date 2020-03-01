@@ -68,12 +68,6 @@ class ConfigFileParser:
     def CeyePersonaldomain(self):
         return self._get_option('ceye', 'personal_domain')
 
-    def DNSLogApiKey(self):
-        return self._get_option('dnslog', 'api_key')
-
-    def DNSLogDomain(self):
-        return self._get_option('dnslog', 'dns_domain')
-
     def GoogleProxy(self):
         return self._get_option('google', 'proxy')
 

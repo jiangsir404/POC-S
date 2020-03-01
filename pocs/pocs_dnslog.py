@@ -60,7 +60,7 @@ class JsonLogger(object):
                 }
             }
         """
-        domain = request.q.qname.__str__().lower()
+        domain = request.q.qname.__str__().lower().rstrip('.')
         if self.domain in domain:
             type = QTYPE[request.q.qtype]
             # 只记录A记录
@@ -256,7 +256,7 @@ class DNSLogApi(object):
         run(server='paste', host=host, port=port, debug=True)
 
 @click.command()
-@click.option('-h', '--host', default="127.0.0.1", help='host')
+@click.option('-h', '--host', default="0.0.0.0", help='host')
 @click.option('-p', '--port', default=88, help="port")
 @click.option('-o', '--output', default="./dnslog.json")
 @click.option('--dns-domain', prompt="dns domain")
