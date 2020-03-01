@@ -22,10 +22,8 @@ import requests
 import time
 from string import ascii_lowercase
 import sys, json
-
 sys.path.append('../')
 from lib.core.data import logger, paths
-
 paths.CONFIG_PATH = "../toolkit.conf"
 from lib.utils.config import ConfigFileParser
 
@@ -96,5 +94,5 @@ if __name__ == "__main__":
     command = c.getCommand("dns")
     print(command)
     subprocess.call(command, shell=True)
-    res = c.getDnsRecord(5)
+    res = c.verifyDNS(3)
     print(res)

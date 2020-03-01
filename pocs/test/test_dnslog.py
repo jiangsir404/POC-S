@@ -5,33 +5,39 @@
 import sys
 import unittest
 sys.path.append('../')
-from plugin.ceye import Ceye
+from plugin.dnslog import Dnslog
 import os, requests
 
 class TestCeye(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.dnslog = Ceye()
-        cls.domain = cls.dnslog.getRandomDomain('s2045')
+        cls.dnslog = Dnslog("s7045")
+        cls.domain = cls.dnslog.getDomain()
+        cls.dns_command = cls.dnslog.getCommand("dns")
+        cls.web_command = cls.dnslog.getCommand("web")
 
-    def test_getRandomDomain(self):
-        self.assertTrue("s2045" in self.domain)
+    def test_getDomain(self):
+        print("domain: %s" % self.domain)
+
+    def test_getCommand(self):
+        print("dns command: %s" % self.dns_command)
+        print("web command: %s" % self.web_command)
 
     def test_getDnsRecord(self):
-        os.popen("ping -n 1 %s" % self.domain).read()
+        os.popen(self.dns_command).read()
         resp = self.dnslog.getDnsRecord(delay=2)
         print("[test_getDnsRecord] %s" % resp)
-        self.assertTrue('{"code": 200, "message": "OK"}' in resp)
+        self.assertTrue('"status": "success"' in resp)
 
     def test_getHttpRecord(self):
-        requests.get("http://%s" % self.domain)
+        os.popen(self.web_command).read()
         resp = self.dnslog.getHttpRecord(delay=2)
         print("[test_getHttpRecord] %s" % resp)
-        self.assertTrue('{"code": 200, "message": "OK"}' in resp)
+        self.assertTrue('"status": "success"' in resp)
 
 def test_single():
     suite = unittest.TestSuite()
-    suite.addTest(TestCeye('test_getRandomDomain'))
+    suite.addTest(TestCeye('test_getdomain'))
     unittest.TextTestRunner(verbosity=2).run(suite)
 
 if __name__ == '__main__':
