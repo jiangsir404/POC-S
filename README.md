@@ -29,8 +29,8 @@ TODO
 源码安装: 
 
 ```
-	git clone https://github.com/jiangsir404/POC-S.git
-	python setup.py install
+git clone https://github.com/jiangsir404/POC-S.git
+python setup.py install
 ```
 
 > 如果pip按照pcos出现Some files missing的报错，则需要去到pocs的安装目录(python2.7\Lib\site-packages\pocs)重命名tookit.conf.
@@ -81,10 +81,13 @@ pocs_dnslog -h 0.0.0.0 -p 88(如果不是pip安装的可以直接运行pocs.dnsl
 dns log命令，只支持nslookup命令: `nslookup 1234.dnslog.xxx.cn x.x.x.x`  
 > 如果你想用ping 1234.dnslog.xxx.cn命令，也可以给xxx.cn域名配置自定义的域名服务器(参考DNSLog的配置)
 
-web log命令: `curl xxx.cn:88/weblog/poc123`
+web log命令: `curl http://dnslog.xxx.cn:88/weblog/poc123`
 
-api接口地址: `http://x.x.x.x:88/api/?token={token}&type={dns}&filter=1234.pocs.xxx.cn`
-
+api接口地址: `http://x.x.x.x:88/api/?token={token}&type={dns}&filter=1234.dnslog.xxx.cn`
+参数:
+    - token 必填, 搭建dnslog时输入的api_key
+    - type 必填，可选值有dns/web
+    - filter 选填，过滤出记录，完全匹配
 ## POC
 pocs 提供更加灵活的插件分类方式，目前收集到的总结有四类POC: Fuzz POC, OWASP POC, Vuln POC, Tool POC.  POC这块会尽量收集一些github上面已有的POC, 但不会太多，还是需要个人自己去收集整理。f  
 
