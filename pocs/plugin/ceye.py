@@ -11,6 +11,12 @@ param
     token: your ceye api token.
     type: type of query, 'dns' or 'request'.
     filter: match url name rule, the filter max length is 20.
+
+return
+    {"meta": {"code": 200, "message": "OK"}, "data": [
+        {"id": "39493615", "name": "svlzqvohnw.s2045.h7x7ty.ceye.io", "remote_addr": "183.235.39.38", "created_at": "2020-03-01 04:16:39"},
+        {"id": "39493614", "name": "svlzqvohnw.s2045.h7x7ty.ceye.io", "remote_addr": "211.139.129.230", "created_at": "2020-03-01 04:16:39"}
+    ]}
 """
 import random
 import requests
@@ -57,19 +63,6 @@ class Ceye:
     def verifyHTTP(self, delay=2):
         return '{"code": 200, "message": "OK"}' in self.getHttpRecord(delay)
 
-
-def queryDnsRecord(domain, delay=2):
-    time.sleep(delay)
-    domain = domain.replace(uniq_domain + '.dnslog.info', '').rstrip('.')
-    api_base = 'http://cloudeye.me/api/{key}/{domain}/DNSLog/'.format(key=key, domain=domain)
-    return requests.post(api_base).content
-
-
-def queryHttpRecord(domain, delay=2):
-    time.sleep(delay)
-    domain = domain.replace(uniq_domain + '.dnslog.info', '').rstrip('.')
-    api_base = 'http://cloudeye.me/api/{key}/{domain}/ApacheLog/'.format(key=key, domain=domain)
-    return requests.post(api_base).content
 
 if __name__ == "__main__":
     import subprocess

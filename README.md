@@ -21,7 +21,7 @@ TODO
 - [ ] 增加py3版本的POC-S
 
 ## 使用 
-> 由于第三方接口需要认证，您需要在/pocs目录下(pip安装需要到对应目录下) 的tookit.conf配置文件中预先设置好您的API-KEY。如无预配置，程序将在运行时提示您输入API-KEY。
+> 由于第三方接口需要认证，可以通过--init参数来初始化你的相关接口配置，eg: --init zoomeye
 
 	pip install pocs
 
@@ -33,6 +33,8 @@ TODO
 ```
 
 > 如果pip按照pcos出现Some files missing的报错，则需要去到pocs的安装目录(python2.7\Lib\site-packages\pocs)重命名tookit.conf.
+> 如果出现`WARNING: Generating metadata for package cachetools produced metadata for project name unknown. Fix your #egg=cachetools fragments.`报错，则是包依赖的问题
+> 请检测并更新几个包的版本的问题: setuptools==39.0.1 cachetools==3.1.1 google-api-python-client==1.7.11
 
 1. 更加灵活的插件加载方式
 

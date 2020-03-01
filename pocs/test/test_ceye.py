@@ -16,6 +16,7 @@ class TestCeye(unittest.TestCase):
     def setUpClass(cls):
         cls.dnslog = Ceye()
         cls.domain = cls.dnslog.getRandomDomain('s2045')
+        print("domain: %s" % cls.domain)
 
     def test_getRandomDomain(self):
         self.assertTrue("s2045" in self.domain)
