@@ -79,6 +79,8 @@ class JsonLogger(object):
                     if os.path.exists(self.file):
                         with open(self.file) as f:
                             dnslog_content = json.load(f)
+                    if "dns" not in dnslog_content:
+                        dnslog_content["dns"] = {}
                     dnslog_content["dns"].update(data)
                     with open(self.file, 'w') as ff:
                         json.dump(dnslog_content, ff, indent=4)
@@ -210,6 +212,8 @@ class DNSLogApi(object):
             if os.path.exists(DNSLogApi.file):
                 with open(DNSLogApi.file) as f:
                     dnslog_content = json.load(f)
+            if "web" not in dnslog_content:
+                dnslog_content["web"] = {}
             dnslog_content["web"].update(data)
             with open(DNSLogApi.file, 'w') as ff:
                 json.dump(dnslog_content, ff, indent=4)

@@ -17,6 +17,7 @@ TODO
 - [x] 根据vulhub靶机及开源项目收集和完善POC, 具体可以看我的POC分类
 - [x] 提供--init参数动态更新tookit.conf配置文件,eg: --init zoomeye, 初始化zoomeye的配置信息
 - [x] 添加dnslog, weblog平台用于快速验证漏洞
+- [x] 添加ceye.py和dnslog.py 两种验证插件
 - [ ] 添加pocsapi.py, 类似sqlmapapi的功能
 - [ ] 增加py3版本的POC-S
 
