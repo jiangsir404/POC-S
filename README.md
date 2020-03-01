@@ -14,7 +14,9 @@ POC-S仅用于安全测试目的
 - 提供良好的单元测试脚本
 
 TODO
-- [ ] 根据vulhub靶机及开源项目收集和完善POC, 具体可以看我的POC分类
+- [x] 根据vulhub靶机及开源项目收集和完善POC, 具体可以看我的POC分类
+- [x] 提供--init参数动态更新tookit.conf配置文件,eg: --init zoomeye, 初始化zoomeye的配置信息
+- [x] 添加dnslog, weblog平台用于快速验证漏洞
 - [ ] 添加pocsapi.py, 类似sqlmapapi的功能
 - [ ] 增加py3版本的POC-S
 
@@ -47,6 +49,7 @@ pocs -b mydir -iS 127.0.0.1
 
 2. 搜索引擎的利用
 ```
+pocs --init zoomeye //初始化zoomeye的配置信息
 pocs -b redis -t 50 -aZ "port:6379" --limit 50 -o res.txt
 pocs -s test2.py -aZ "ThinkPHP"
 ```
@@ -68,10 +71,11 @@ pocs -s test2.py -aZ "ThinkPHP"
 pip install pocs
 pocs_dnslog  (如果不是pip安装的可以直接运行pocs.dnslog.py脚本)
 >>> dns domain: xxx.cn
->>>api: rivir
+>>>api key: rivir
 ```
 
 dns log命令，只支持如下: `nslookup 1234.pocs.xxx.cn x.x.x.x`  //xxx.cn是你的公网域名，x.x.x.x是公网ip
+
 web log命令: `curl xxx.cn:88/weblog/poc123`
 
 api接口地址: `http://x.x.x.x:88/api/?token={token}&type={dns}&filter=1234.pocs.xxx.cn`

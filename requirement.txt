@@ -2,3 +2,6 @@ requests
 gevent
 shodan
 google-api-python-client
+click
+bottle
+paste

@@ -12,18 +12,38 @@ from lib.core.enums import TARGET_MODE_STATUS, ENGINE_MODE_STATUS
 from lib.utils.update import update
 from lib.core.enums import API_MODE_NAME
 from lib.core.register import Register
-
+from lib.utils.config import ConfigFileParser
 
 def initOptions(args):
+    """初始化参数
+    :param args: AttribDict类
+    """
+    initConfig(args)
     checkUpdate(args)
     checkShow(args)
-    EngineRegister(args) #设置线程数量
-    ScriptRegister(args) #poc注册
+    EngineRegister(args)
+    ScriptRegister(args)
     TargetRegister(args)
     ApiRegister(args)
     Output(args)
     Misc(args)
 
+def initConfig(args):
+    """初始化配置文件toolkit.conf"""
+    if args.init_config:
+        cf = ConfigFileParser()
+        section = args.init_config
+        option_keys = cf._get_options(section)
+        update = True
+        for key in option_keys:
+            value = raw_input("please input %s:" % key)
+            res = cf._set_option(section, key, value)
+            if res == False:
+                update = False
+                logger.error("Update Toolkit.conf Fail!")
+        if update:
+            logger.info("Update Toolkit.conf Success!")
+        sys.exit(0)
 
 def checkUpdate(args):
     if args.sys_update:

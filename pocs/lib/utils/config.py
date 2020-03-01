@@ -9,16 +9,40 @@ from lib.core.common import getSafeExString
 
 
 class ConfigFileParser:
-    @staticmethod
-    def _get_option(section, option):
+    def __init__(self):
         try:
-            cf = ConfigParser.ConfigParser()
-            cf.read(paths.CONFIG_PATH)
-            return cf.get(section=section, option=option)
+            self.cf = ConfigParser.ConfigParser()
+            self.cf.read(paths.CONFIG_PATH)
         except ConfigParser.NoOptionError, e:
             logger.warning('Missing essential options, please check your config-file.')
             logger.error(getSafeExString(e))
-            return ''
+
+    def _get_option(self, section, option):
+        try:
+            return self.cf.get(section=section, option=option)
+        except Exception as e:
+            logger.error(e)
+            return ""
+
+    def _set_option(self, section, key, value):
+        try:
+            self.cf.set(section, key, value)
+            self.cf.write(open(paths.CONFIG_PATH, 'w'))
+        except Exception, e:
+            logger.error(e)
+            return False
+        return True
+
+    def _get_options(self, section):
+        """获取该section的所有options的keys()内容
+
+        :return: [key1, key2, key3]
+        """
+        try:
+            return self.cf.options(section=section)
+        except Exception as e:
+            logger.error(e)
+            return []
 
     def ZoomEyeEmail(self):
         return self._get_option('zoomeye', 'email')
@@ -60,7 +84,7 @@ class ConfigFileParser:
         return self._get_option('google', 'search_engine')
 
     def FofaEmail(self):
-        return self._get_option('fofa','email')
+        return self._get_option('fofa', 'email')
 
     def FofaKey(self):
-        return self._get_option('fofa','api_key')
+        return self._get_option('fofa', 'api_key')

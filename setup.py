@@ -27,7 +27,8 @@ rivir""",
           'shodan',
           'google-api-python-client',
           "bottle",
-          "paste"
+          "paste",
+          "click"
       ],
       entry_points={
           "console_scripts": [
