@@ -193,7 +193,7 @@ def poc(url):
     - [x] s2-045.py
     - [x] s2-052.py
     - [x] s2-053.py
-    - [x] s2-058.py
+    - [x] s2-057.py
     - [x] struts2-devmode.py
 
 
