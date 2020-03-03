@@ -22,9 +22,10 @@ import requests
 import time
 from string import ascii_lowercase
 import sys, json
+
 sys.path.append('../')
 from lib.core.data import logger, paths
-paths.CONFIG_PATH = "../toolkit.conf"
+# paths.CONFIG_PATH = "../toolkit.conf"
 from lib.utils.config import ConfigFileParser
 
 API_KEY = ConfigFileParser()._get_option("dnslog", "api_key")
@@ -34,13 +35,16 @@ API_PORT = ConfigFileParser()._get_option("dnslog", "api_port")
 
 
 class Dnslog:
-    def __init__(self, custom="vuln"):
+    def __init__(self, custom_preix="vuln"):
         self.dns_domain = DNS_DOMAIN
         self.dns_ip = DNS_IP
         self.api_key = API_KEY
         self.api_port = API_PORT
+        self.custom_preix = custom_preix
         self.random = ''.join([random.choice(ascii_lowercase) for _ in range(10)])
-        self.custom_domain = '%s.%s.%s' % (self.random, custom, self.dns_domain)
+        self.custom_domain = '%s.%s.%s' % (self.random, custom_preix, self.dns_domain)
+        self.custom_weburl = "http://%s:%s/weblog/%s-%s" % (
+        self.dns_domain, self.api_port, self.custom_preix, self.random)
 
     def getDomain(self, custom='poc'):
         """获取随机域名
@@ -51,7 +55,9 @@ class Dnslog:
         if type == "dns":
             return "nslookup %s %s" % (self.custom_domain, self.dns_ip)
         elif type == "web":
-            return "wget http://%s:88/weblog/%s" % (self.dns_domain, self.random)
+            return "wget %s" % self.custom_weburl
+        elif type == "web_curl":
+            return "curl %s" % self.custom_weburl
 
     def getDnsRecord(self, delay=2):
         time.sleep(delay)
@@ -66,7 +72,7 @@ class Dnslog:
         api_base = 'http://{0}:{1}/api/?token={2}&type=web&filter={3}'.format(self.dns_domain,
                                                                               self.api_port,
                                                                               self.api_key,
-                                                                              self.custom_domain)
+                                                                              self.custom_weburl)
         return requests.get(api_base).content
 
     def verifyDNS(self, delay=2):

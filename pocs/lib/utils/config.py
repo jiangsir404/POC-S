@@ -7,7 +7,6 @@ import ConfigParser
 from lib.core.data import paths, logger
 from lib.core.common import getSafeExString
 
-
 class ConfigFileParser:
     def __init__(self):
         try:

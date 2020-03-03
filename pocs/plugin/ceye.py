@@ -25,7 +25,7 @@ from string import ascii_lowercase
 import sys
 sys.path.append('../')
 from lib.core.data import logger, paths
-paths.CONFIG_PATH = "../toolkit.conf"
+# paths.CONFIG_PATH = "../toolkit.conf"
 from lib.utils.config import ConfigFileParser
 
 key = ConfigFileParser().CeyeApikey()

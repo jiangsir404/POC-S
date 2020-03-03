@@ -40,20 +40,23 @@ LOGGER_HANDLER.setFormatter(FORMATTER)
 LOGGER.addHandler(LOGGER_HANDLER)
 LOGGER.setLevel(CUSTOM_LOGGING.WARNING)
 
+# 调试log用
+MY_LOGGER = LOGGER
+LOGGER.success = LOGGER.info
 
-class MY_LOGGER:
-    @staticmethod
-    def success(msg):
-        return LOGGER.log(CUSTOM_LOGGING.SUCCESS, msg)
-
-    @staticmethod
-    def info(msg):
-        return LOGGER.log(CUSTOM_LOGGING.SYSINFO, msg)
-
-    @staticmethod
-    def warning(msg):
-        return LOGGER.log(CUSTOM_LOGGING.WARNING, msg)
-
-    @staticmethod
-    def error(msg):
-        return LOGGER.log(CUSTOM_LOGGING.ERROR, msg)
+# class MY_LOGGER:
+#     @staticmethod
+#     def success(msg):
+#         return LOGGER.log(CUSTOM_LOGGING.SUCCESS, msg)
+#
+#     @staticmethod
+#     def info(msg):
+#         return LOGGER.log(CUSTOM_LOGGING.SYSINFO, msg)
+#
+#     @staticmethod
+#     def warning(msg):
+#         return LOGGER.log(CUSTOM_LOGGING.WARNING, msg)
+#
+#     @staticmethod
+#     def error(msg):
+#         return LOGGER.log(CUSTOM_LOGGING.ERROR, msg)

@@ -29,9 +29,9 @@ class TestCeye(unittest.TestCase):
         self.assertTrue(res == True)
 
     def test_get_options(self):
-        options = self.cf._get_options("zoomeye")
+        options = self.cf._get_options("dnslog")
         print("[test_get_options] %s" % options)
-        self.assertTrue(options == ["email", "password"])
+        self.assertTrue(options)
 
     def test_get_wrong(self):
         no_key  = self.cf._get_option("zoomeye", "aaa")
