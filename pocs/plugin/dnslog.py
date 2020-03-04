@@ -46,10 +46,15 @@ class Dnslog:
         self.custom_weburl = "http://%s:%s/weblog/%s-%s" % (
         self.dns_domain, self.api_port, self.custom_preix, self.random)
 
-    def getDomain(self, custom='poc'):
+    def getDomain(self):
         """获取随机域名
         """
         return self.custom_domain
+
+    def getWeburl(self):
+        """获取随机url
+        """
+        return self.custom_weburl
 
     def getCommand(self, type="dns"):
         if type == "dns":

@@ -149,12 +149,12 @@ class ZoneResolver(BaseResolver):
         return reply
 
 
-def run_dns_server(dnsdomain, outfile):
+def run_dns_server(dns_domain, dns_ip, outfile):
     """运行dns服务器, 监听53端口"""
-    dnsdomain = dnsdomain
+    dnsdomain = dns_domain
     ns1domain = "ns1." + dnsdomain
     ns2domain = "ns2." + dnsdomain
-    serverip = "0.0.0.0"
+    serverip = dns_ip
     zone = '''
 *.{dnsdomain}.       IN      NS      {ns1domain}.
 *.{dnsdomain}.       IN      NS      {ns2domain}.
@@ -264,12 +264,13 @@ class DNSLogApi(object):
 @click.option('-p', '--port', default=88, help="port")
 @click.option('-o', '--output', default="./dnslog.json")
 @click.option('--dns-domain', prompt="dns domain")
+@click.option('--dns-ip', prompt="dns ip")
 @click.option('--api-key', prompt="api key")
-def main(host, port, output, dns_domain, api_key):
+def main(host, port, output, dns_domain, dns_ip, api_key):
     logging.basicConfig(level=logging.INFO)
     logging.getLogger("paste").setLevel(logging.WARNING)
     logging.debug("%s, %s, %s", api_key, dns_domain, output)
-    p = multiprocessing.Process(target=run_dns_server, args=(dns_domain, output))
+    p = multiprocessing.Process(target=run_dns_server, args=(dns_domain, dns_ip, output))
     p.daemon = True
     p.start()
 
