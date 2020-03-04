@@ -57,12 +57,21 @@ class Dnslog:
         return self.custom_weburl
 
     def getCommand(self, type="dns"):
+        """
+        dns默认使用nslookup命令，web默认使用wget命令，如果要修改可以自定义如下命令
+        :param type: web/dns
+        :return:
+        """
+        nslookup_cmd = "nslookup %s %s" % (self.custom_domain, self.dns_ip)
+        ping_cmd = "ping %s" % self.custom_domain
+        curl_cmd = "curl %s" % self.custom_weburl
+        wget_cmd = "wget %s" % self.custom_weburl
         if type == "dns":
-            return "nslookup %s %s" % (self.custom_domain, self.dns_ip)
+            return ping_cmd
         elif type == "web":
-            return "wget %s" % self.custom_weburl
-        elif type == "web_curl":
-            return "curl %s" % self.custom_weburl
+            return curl_cmd
+        else:
+            return ""
 
     def getDnsRecord(self, delay=2):
         time.sleep(delay)

