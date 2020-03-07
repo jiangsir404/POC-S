@@ -120,12 +120,18 @@ def poc(url):
 
 ### Vuln POC
 主要来源于vulhub的插件编写 以及 POC-T自带的插件poc, 只添加一些高可用的POC
+下面列出的每个POC基本都是自己搭建环境一个一个验证过可用的，如果有错误的POC, 请提issues联系我。
 
-- [x] apache
-	- [x] CNVD-2020-10487 tomcat-ajp-lfi.py
-	- [ ] tomcat-upload.py
-    - [ ] tomcat-weak-pass.py
-    
+- [x] struts2
+    - [x] s2-005.py
+    - [x] s2-015.py
+    - [x] s2-016.py
+    - [x] s2-032.py
+    - [x] s2-045.py
+    - [x] s2-052.py
+    - [x] s2-053.py
+    - [x] s2-057.py
+    - [x] struts2-devmode.py    
 - [x] weblogic
 	- [x] weblogic-ssrf-netmap.py  cve-2014-4210
 	- [x] weblogc-cve-2017-10271.py (CVE-2017-10271)
@@ -133,35 +139,13 @@ def poc(url):
 	- [x] weblogic-cve-2019-2725.py
 	- [x] weblogic-cve-2019-2729.py
 	- [ ] weblogic-upload-getshell.py (CVE-2018-2894)
-	
-
 - [x] thinkphp
 	- [x] 5-rce
 	- [x] 5.0.23-rce
-
-- [x] spring
-    - [x] spring-oauth2-rce.py
-    - [ ] cve-2018-1273
-- [x] Citrix
-    - [ ] cve-2019-19781
-- [x] Jboss
-    - [ ] jboss-rce.py
-    - [ ] CVE-2017-12149
-    - [ ] CVE-2013-4810
-
-- [ ] unauth
-	- [x] redis-unauth.py
-	- [x] mongodb-unauth.py
-	- [x] memcached-unauth.py
-	- [x] elasticsearch-unauth.py
-	- [x] kubernetes-unauth.py
-	- [x] jenkins-unauth.py
-	- [ ] docker-unauth-rce.py
-	- [ ] hadoop-unauth.py
-
-- [ ] supervisor
-	- [x] supervisord-RCE-CVE-2017-11610.py
-
+- [ ] Jenkins
+    - [ ] jenkins-cve-2015-8103.py
+    - [ ] jenkins-cve-2017-1000353.py
+    - [ ] jenkins-cve-2018-1000861.py
 - [ ] weakpass
 	- [ ] mysql
 	- [ ] redis
@@ -172,44 +156,51 @@ def poc(url):
 	- [ ] web弱口令(通用无验证码后台)
 	- [ ] http-basic-auth
 	- [ ] coremail
-	...
-
+	- [ ] jboss
+	- [ ] jenkins
+	- [ ] weblogic
+- [ ] unauth
+	- [x] redis-unauth.py
+	- [x] mongodb-unauth.py
+	- [x] memcached-unauth.py
+	- [x] elasticsearch-unauth.py
+	- [x] kubernetes-unauth.py
+	- [x] jenkins-unauth.py
+	- [ ] docker-unauth-rce.py
+	- [ ] hadoop-unauth.py
+- [x] apache
+	- [x] CNVD-2020-10487 tomcat-ajp-lfi.py
+	- [ ] tomcat-upload.py
+    - [ ] tomcat-weak-pass.py
+- [x] Citrix
+    - [ ] cve-2019-19781
+- [x] supervisor
+	- [x] supervisord-RCE-CVE-2017-11610.py
+- [ ] Jboss
+    - [x] jboss-rce.py
+    - [ ] CVE-2017-12149
+    - [ ] CVE-2013-4810
+- [x] spring
+    - [x] spring-oauth2-rce.py
+    - [ ] cve-2018-1273
 - [ ] phpmyadmin
 	- [x] phpmyadmin-auth-rce.py
 	- [ ] phpmyadmin4.8.1-RFI.py
-
 - [ ] kibana
 	- cve-2019-7609
 	- cve-2018-17246
-
 - [ ] php
 	- [x] fpm-rce.py
 	- [ ] CVE-2019-11043
 	- [ ] CVE-2018-19518
-
-- [ ] struts2
-    - [x] s2-005.py
-    - [x] s2-015.py
-    - [x] s2-016.py
-    - [x] s2-032.py
-    - [x] s2-045.py
-    - [x] s2-052.py
-    - [x] s2-053.py
-    - [x] s2-057.py
-    - [x] struts2-devmode.py
-
-
 - [ ] discuz
 	- [ ] x3.4-arbitrary-file-deletion
-
 - [ ] zabbix
 	- [x] zabbix-jsrpc-mysql-exp.py
 	- [x] zabbix-jsrpc-sqli.py
 	- [x] zabbix-weakpass.py
 	- [x] zabbix_latest_sqli.py
-
 - [x] dns-zone-transfer
-
 - [ ] confluence
 	- [x] confulence-traversal.py
 	- [ ] confluence 路径穿越与命令执行漏洞
