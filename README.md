@@ -130,9 +130,9 @@ def poc(url):
 	- [x] weblogic-ssrf-netmap.py  cve-2014-4210
 	- [x] weblogc-cve-2017-10271.py (CVE-2017-10271)
 	- [x] weblogic-cve-2018-2628.py 
+	- [x] weblogic-cve-2019-2725.py
 	- [ ] weblogic-upload-getshell.py (CVE-2018-2894)
-	- [ ] weblogic-deserial-cve20192725.py (CVE-2019-2725)
-	- [ ] weblogic-2019-2725
+	
 
 - [ ] thinkphp
 	- [x] 5-rce
