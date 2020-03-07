@@ -5,8 +5,12 @@
 
 import logging
 import sys
-
+import requests
 from lib.core.enums import CUSTOM_LOGGING
+
+logging.getLogger("urllib3").setLevel(logging.CRITICAL)
+logging.getLogger("requests").setLevel(logging.CRITICAL)
+requests.packages.urllib3.disable_warnings()
 
 logging.addLevelName(CUSTOM_LOGGING.SYSINFO, "*")
 logging.addLevelName(CUSTOM_LOGGING.SUCCESS, "+")

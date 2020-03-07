@@ -76,6 +76,7 @@ def cmdLineParser():
     misc.add_argument('--browser', dest="open_browser", default=False, action='store_true',
                       help='Open notepad or web browser to view report after task finished.')
     misc.add_argument('--init', dest="init_config", default="",help='init config toolkit.conf,eg: zoomeye,shdoan,fofa')
+    misc.add_argument('--logging', dest="logging_level", default="", help='DEBUG/INFO/ERROR')
 
     system = parser.add_argument_group('SYSTEM')
 
