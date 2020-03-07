@@ -12,4 +12,6 @@
 output
 build
 dist
+/data/Zoomeye/*
+/data/Shodan/*
 pocs.egg-info
