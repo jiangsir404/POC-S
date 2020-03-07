@@ -17,7 +17,7 @@ python POC-T.py -s struts2-s2045 -iF FILE.txt
 
 import requests
 import random
-
+import logging
 
 def poc(url):
     url = url if '://' in url else 'http://' + url
@@ -45,7 +45,7 @@ def poc(url):
             if r.headers.get("vulhub", "") == "54289" or str(c) in r.text:
                 return '[S2-045]' + url
         except Exception as e:
-            print(e)
+            logging.debug(e)
     return False
 
 

@@ -13,6 +13,8 @@ Desc
     namespace将由用户从uri传入，并作为OGNL表达式计算，最终造成任意命令执行漏洞。回显位置在headers中的Location字段中。
 Version
     小于等于 Struts 2.3.34 与 Struts 2.5.16
+Type
+    有回显命令执行
 Referer
     - https://cwiki.apache.org/confluence/display/WW/S2-057
     - https://lgtm.com/blog/apache_struts_CVE-2018-11776
@@ -20,6 +22,7 @@ Referer
     - https://mp.weixin.qq.com/s/iBLrrXHvs7agPywVW7TZrg
 """
 import requests
+import logging
 from six.moves.urllib import parse
 
 
@@ -48,7 +51,7 @@ def poc(url):
             if "rivirsirfortest" in location:
                 return True
         except Exception as e:
-            pass
+            logging.debug(e)
     return False
 
 

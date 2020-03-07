@@ -14,6 +14,7 @@ Usage:
 """
 
 import requests
+import logging
 from plugin.useragent import firefox
 from plugin.util import randomString, redirectURL
 
@@ -33,5 +34,5 @@ def poc(url):
         if key in c and 'xwork2.dispatcher' not in c:
             return url
     except Exception, e:
-        return False
+        logging.debug(e)
     return False

@@ -12,7 +12,7 @@ from plugin.dnslog import Dnslog
 
 import os, requests
 
-class TestCeye(unittest.TestCase):
+class TestDnslog(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.dnslog = Dnslog("weblogic")
@@ -29,19 +29,19 @@ class TestCeye(unittest.TestCase):
 
     def test_getDnsRecord(self):
         os.popen(self.dns_command).read()
-        resp = self.dnslog.getDnsRecord(delay=2)
+        resp = self.dnslog.getDnsRecord(delay=3)
         print("[test_getDnsRecord] %s" % resp)
         self.assertTrue('"status": "success"' in resp)
 
     def test_getHttpRecord(self):
         os.popen(self.web_command).read()
-        resp = self.dnslog.getHttpRecord(delay=2)
+        resp = self.dnslog.getHttpRecord(delay=3)
         print("[test_getHttpRecord] %s" % resp)
         self.assertTrue('"status": "success"' in resp)
 
 def test_single():
     suite = unittest.TestSuite()
-    suite.addTest(TestCeye('test_getdomain'))
+    suite.addTest(TestDnslog('test_getdomain'))
     unittest.TextTestRunner(verbosity=2).run(suite)
 
 if __name__ == '__main__':

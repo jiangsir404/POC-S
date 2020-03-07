@@ -18,6 +18,7 @@ Referer:
 
 import requests
 import urllib
+import logging
 from plugin.dnslog import Dnslog
 
 def poc(url):
@@ -55,7 +56,7 @@ def poc(url):
             if mydnslog.verifyHTTP(3):
                 return "[S2-016][weblog]%s" + url
         except Exception as e:
-            print(e)
+            logging.debug(e)
     return False
 
 

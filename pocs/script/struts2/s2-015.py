@@ -24,6 +24,7 @@ Referer:
 import requests
 import urllib
 import re
+import logging
 
 def poc(url):
 	url = url if '://' in url else 'http://' + url
@@ -47,8 +48,7 @@ def poc(url):
 			if re.search("Message</b> /uid", resp.text):
 				return '[S2-015][Linux] ' + url
 		except Exception as e:
-			print(e)
-			pass
+			logging.debug(e)
 
 	return False
 

