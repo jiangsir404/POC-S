@@ -119,7 +119,7 @@ def poc(url):
 ```
 
 ### Vuln POC
-主要来源于vulhub的插件编写 以及 POC-T自带的插件poc, 只添加实际
+主要来源于vulhub的插件编写 以及 POC-T自带的插件poc, 只添加一些高可用的POC
 
 - [x] apache
 	- [x] CNVD-2020-10487 tomcat-ajp-lfi.py
@@ -131,10 +131,11 @@ def poc(url):
 	- [x] weblogc-cve-2017-10271.py (CVE-2017-10271)
 	- [x] weblogic-cve-2018-2628.py 
 	- [x] weblogic-cve-2019-2725.py
+	- [x] weblogic-cve-2019-2729.py
 	- [ ] weblogic-upload-getshell.py (CVE-2018-2894)
 	
 
-- [ ] thinkphp
+- [x] thinkphp
 	- [x] 5-rce
 	- [x] 5.0.23-rce
 
