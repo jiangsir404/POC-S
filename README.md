@@ -2,6 +2,8 @@
 
 POC-T的wiki文档请看doc目录
 
+前言: 目前
+
 ## 法律免责声明
 未经事先双方同意，使用POC-S攻击目标是非法的。
 POC-S仅用于安全测试目的
@@ -59,7 +61,7 @@ pocs -s test2.py -aZ "ThinkPHP"
 
 利用ZoomEye批量搜索CNVD-2020-10487 tomcat ajp lfi漏洞
 
-	pip install pocs==1.3
+	pip install pocs
 	pocs -b apache -aZ "app:tomcat" --limit 50 -t 30 -o ajp.txt
 
 ![](test.png)
@@ -76,6 +78,7 @@ pip install pocs
 pocs_dnslog -h 0.0.0.0 -p 88(如果不是pip安装的可以直接运行pocs.dnslog.py脚本)
 >>> dns domain: dnslog.xxx.cn
 >>> api key: rivir
+>>>dns ip: x.x.x.x
 ```
 
 dns log命令，只支持nslookup命令: `nslookup 1234.dnslog.xxx.cn x.x.x.x`  
