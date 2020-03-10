@@ -141,6 +141,7 @@ def poc(url):
 	- [x] weblogic-cve-2018-2628.py 
 	- [x] weblogic-cve-2019-2725.py
 	- [x] weblogic-cve-2019-2729.py
+	- [x] weblogic-cve-2020-2551.py
 	- [ ] weblogic-upload-getshell.py (CVE-2018-2894)
 - [x] thinkphp
 	- [x] 5-rce
