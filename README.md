@@ -32,6 +32,7 @@ TODO
 
 ```
 git clone https://github.com/jiangsir404/POC-S.git
+mv pocs/toolkit.conf.bak mv pocs/toolkit.conf
 python setup.py install
 ```
 
