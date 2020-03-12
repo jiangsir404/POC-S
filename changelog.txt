@@ -1,20 +1,60 @@
-jiangsir404, 2 days ago : [ADD] 添加setup.py安装文件
-jiangsir404, 4 days ago : [OPT] 优化插件加载的方式
-jiangsir404, 4 days ago : [UPDATE] 更新文档
-jiangsir404, 4 days ago : [OPT] 更新Readme.md文件
-jiangsir404, 5 days ago : Merge remote-tracking branch 'origin/2.0' into jiangsir
-jiangsir404, 5 days ago : [UPDATE] 更新测试文件
-jiangsir404, 4 months ago : [ADD] 添加poc phpstudy_backdoor.py, 并且修改批量fuzz功能
-cdxy, 1 year, 2 months ago : Merge pull request #38 from zer0yu/2.0
-zeroyu, 1 year, 2 months ago : add bing and google dork
-zeroyu, 1 year, 2 months ago : fix the import path
-boy-hack, 1 year, 7 months ago : update readme
-boy-hack, 1 year, 7 months ago : little patch
-boy-hack, 1 year, 7 months ago : add script portscan
-boy-hack, 1 year, 7 months ago : little patch for bakfile
-boy-hack, 1 year, 7 months ago : 修改线程限制 &&phpmyadmin patch
-boy-hack, 1 year, 7 months ago : little patch
-boy-hack, 1 year, 7 months ago : add fuzz plugin for swf xss
-boy-hack, 1 year, 7 months ago : patch for phpmyadmin
-boy-hack, 1 year, 7 months ago : add fuzz plugin for phpmyadmin
-boy-hack, 1 year, 7 months ago : add fuzz plugin for bakfile
+9fae95d - jiangsir404, 2 days ago : [FIX] 更新supervisord-RCE-CVE-2018-11610.py
+0fe1128 - jiangsir404, 4 days ago : [UPDATE] 更新README.md列表文档，列出需要编写的高可用Poc
+efc102d - jiangsir404, 4 days ago : [UPDATE] 更新README.md文档
+6cef166 - jiangsir404, 4 days ago : [ADD] 添加weblogic-cve-2019-2729.py
+01580b4 - luojiang19243, 4 days ago : [UPDATE] 更新文档
+92e37c5 - luojiang19243, 4 days ago : [ADD] 添加webloigc-cve-2019-2725
+0bacd2a - jiangsir404, 4 days ago : [UPDATE] 更新.gitigore
+3f6ea71 - jiangsir404, 4 days ago : [OPT] 优化struts2漏洞poc
+25910b0 - jiangsir404, 7 days ago : [UPDATE] 修改s2-016,s2-052,weblogic-wls-xmldecoder的验证方式为dnslog
+cae9ff2 - jiangsir404, 7 days ago : [UPDATE] 更新dnslog平台代码
+5bd69f7 - jiangsir404, 8 days ago : [ADD] 修改dnslog的验证bug
+0340d50 - jiangsir404, 9 days ago : [UPDATE] 更新toolkit.conf
+08eafd6 - jiangsir404, 10 days ago : [UPDATE] 更新README.md文档
+91e839c - jiangsir404, 10 days ago : [UPDATE] 更新pypi版本号
+beacf2b - jiangsir404, 10 days ago : [FIX] 修复dnslog一个文件写入错误的bug
+0e4f078 - jiangsir404, 10 days ago : [ADD] 添加poc检测插件dnslog.py以及单元测试脚本
+402e8f4 - jiangsir404, 10 days ago : [FIX] 修复dnslog平台一个bug
+b1ae067 - jiangsir404, 10 days ago : [UPDATE] 更新解决一个安装依赖版本的问题(cachetols,google-api-python-client)
+9125055 - jiangsir404, 10 days ago : Merge branch 'master' of github.com:jiangsir404/POC-S
+6f04b1e - jiangsir404, 10 days ago : [OPT] 优化ConfigFileParser类，添加单元测试文件
+91b31f5 - jiangsir404, 10 days ago : [OPT] 优化ConfigFileParser类，添加单元测试文件
+dc7ae42 - jiangsir404, 11 days ago : [UPDATE] 更新README.md文档
+928be4b - jiangsir404, 11 days ago : [ADD] 添加dnslog平台
+00114a6 - jiangsir404, 12 days ago : [ADD] 添加ceye的单元测试脚本
+0276263 - jiangsir404, 13 days ago : [ADD] 添加weblogic-wls-xmldecoder.py
+55ead1d - jiangsir404, 13 days ago : [ADD] 添加weblogic-wls-xmldecoer.py
+c908c09 - jiangsir404, 2 weeks ago : [UPDATE] 更新README.md文档
+2541c17 - jiangsir404, 2 weeks ago : [UPDATE] 更新README.md 文档
+b7e8305 - jiangsir404, 2 weeks ago : [UPDATE] 更新Readme.md文档
+2d39381 - jiangsir404, 2 weeks ago : [ADD] 添加spring-oauth2-rce.py
+54b36bc - jiangsir404, 2 weeks ago : [UPDATE] 更新文档
+d5467b3 - jiangsir404, 2 weeks ago : [ADD] 更新脚本和插件
+c39d43b - jiangsir404, 3 weeks ago : [UPDATE] 更新test.png
+9f52dad - jiangsir404, 3 weeks ago : [OPT] 修改tomcat-ajp-lfi.py Poc验证方式
+061ca3c - jiangsir404, 3 weeks ago : [UPDATE] 更新文档
+a994761 - jiangsir404, 3 weeks ago : [OPT] 添加test.png
+f249a07 - jiangsir404, 3 weeks ago : [ADD] 更新tomcat-ajp-lfi.py
+16d276d - jiangsir404, 3 weeks ago : [OPT] 更新
+a92d499 - jiangsir404, 3 weeks ago : [OPT] 修改README.md
+214b678 - jiangsir404, 3 weeks ago : [ADD] 添加tomcat-ajp-lfi.py
+59db2e9 - jiangsir404, 3 weeks ago : [ADD] 添加struts2 s2-015 s2-005 poc
+47da913 - jiangsir404, 3 weeks ago : [ADD] 添加struts2 的s2016,s2045 poc
+3d707e6 - jiangsir404, 3 weeks ago : [ADD] 添加supervisord-RCE-CVE-2017-11610.py
+6325681 - jiangsir404, 3 weeks ago : [ADD] 添加thinphp-5.0.23-rce.py
+92e1ab4 - jiangsir404, 5 weeks ago : [UPDATE] 更新README.md文档
+e82f7c1 - jiangsir404, 5 weeks ago : [OPT] 添加toolkit.conf
+003f6fa - jiangsir404, 5 weeks ago : [OPT] 更新RAADME.md
+3b72054 - jiangsir404, 5 weeks ago : [ADD] add MAINFEST.in
+bfa0caa - jiangsir404, 5 weeks ago : Merge branch 'master' of github.com:jiangsir404/POC-S
+8004f6f - jiangsir404, 5 weeks ago : [OPT] 修改ReadME.md
+b850fd9 - jiangsir404, 5 weeks ago : [OPT] 修改ReadME.md
+ab2426a - jiangsir404, 5 weeks ago : [OPT] 优化安装
+08ab77d - jiangsir404, 5 weeks ago : [ADD] 添加setup.py安装文件
+6092628 - jiangsir404, 6 weeks ago : [OPT] 优化插件加载的方式
+a48543b - jiangsir404, 6 weeks ago : [UPDATE] 更新文档
+fb2368c - jiangsir404, 6 weeks ago : [OPT] 更新Readme.md文件
+1a1c9ee - jiangsir404, 6 weeks ago : Merge remote-tracking branch 'origin/2.0' into jiangsir
+c8778e6 - jiangsir404, 6 weeks ago : [UPDATE] 更新测试文件
+59a64f3 - jiangsir404, 5 months ago : [ADD] 添加poc phpstudy_backdoor.py, 并且修改批量fuzz功能
+c6424eb - cdxy, 1 year, 3 months ago : Merge pull request #38 from zer0yu/2.0

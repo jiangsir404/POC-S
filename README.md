@@ -148,7 +148,7 @@ def poc(url):
 	- [x] 5.0.23-rce
 - [ ] Jenkins
     - [ ] jenkins-cve-2015-8103.py
-    - [ ] jenkins-cve-2017-1000353.py
+    - [x] jenkins-cve-2017-1000353.py
     - [ ] jenkins-cve-2018-1000861.py
 - [ ] weakpass
 	- [ ] mysql
